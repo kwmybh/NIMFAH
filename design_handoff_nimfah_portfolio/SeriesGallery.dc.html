@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="border:1px solid var(--line,#242428);background:var(--surface,#101012);padding:clamp(16px,2.4vw,30px);box-sizing:border-box">
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:clamp(16px,2vh,22px)">
+    <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">
+      <span style="font:500 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--gold,#5FE12C)">Series {{ index }}</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(24px,3vw,40px);line-height:1;letter-spacing:-.02em;color:var(--fg,#F4F3EE)">{{ title }}</h2>
+    </div>
+    <span style="font:400 12px 'Bricolage Grotesque',sans-serif;color:var(--dim,#9a9aa2)">{{ meta }}</span>
+  </div>
+
+  <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#0a0a0b;border:1px solid var(--line,#242428)">
+    <sc-if value="{{ isPhoto }}" hint-placeholder-val="{{ true }}">
+      <image-slot id="{{ activeSlot }}" src="{{ activePhotoSrc }}" shape="rect" placeholder="{{ photoPrompt }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></image-slot>
+    </sc-if>
+    <sc-if value="{{ isFilm }}" hint-placeholder-val="{{ false }}">
+      <video ref="{{ videoRef }}" src="{{ filmSrc }}" poster="{{ poster }}" onLoadedMetadata="{{ onMeta }}" onEnded="{{ onEnded }}" preload="metadata" playsinline aria-label="Placeholder film reel for the {{ title }} series" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#0a0a0b">
+        <track ref="{{ trackRef }}" kind="captions" srclang="en" label="English" default>
+      </video>
+      <div aria-hidden="true" style="position:absolute;top:12px;left:14px;display:flex;align-items:center;gap:8px;pointer-events:none;background:rgba(10,10,11,.55);padding:5px 9px">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--gold,#5FE12C)"></span>
+        <span style="font:500 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.18em;color:#fff">REEL / {{ index }}</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isSound }}" hint-placeholder-val="{{ false }}">
+      <canvas ref="{{ barsRef }}" width="1280" height="800" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+      <div aria-hidden="true" style="position:absolute;left:clamp(16px,2vw,26px);bottom:clamp(16px,2.4vh,24px);pointer-events:none">
+        <div style="font:500 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold,#5FE12C);margin-bottom:8px">Field recording</div>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:500;font-size:clamp(18px,2.2vw,26px);color:#F4F3EE">{{ soundMeta }}</div>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ isMedia }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
+    <button onClick="{{ togglePlay }}" aria-label="{{ playLabel }}" style="flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold,#5FE12C);background:transparent;color:var(--gold,#5FE12C);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--gold,#5FE12C);color:#0a0a0b" style-focus="outline:2px solid var(--gold,#5FE12C);outline-offset:2px">{{ playGlyph }}</button>
+    <span ref="{{ timeRef }}" aria-hidden="true" style="flex:none;font:500 12px 'Bricolage Grotesque',sans-serif;color:var(--dim,#9a9aa2);min-width:86px">0:00 / 0:00</span>
+    <input ref="{{ seekRef }}" onInput="{{ onSeek }}" type="range" min="0" max="1000" value="0" aria-label="Seek position" style="flex:1;min-width:80px;height:4px;accent-color:var(--gold,#5FE12C);cursor:pointer">
+    <sc-if value="{{ isFilm }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ toggleCC }}" aria-pressed="{{ ccPressed }}" aria-label="{{ ccLabel }}" style="flex:none;height:34px;padding:0 10px;border:1px solid {{ ccBorder }};background:transparent;color:{{ ccColor }};font:600 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.1em;cursor:pointer" style-focus="outline:2px solid var(--gold,#5FE12C);outline-offset:2px">CC</button>
+    </sc-if>
+    <button onClick="{{ toggleMute }}" aria-label="{{ muteLabel }}" style="flex:none;width:34px;height:34px;border:1px solid var(--line,#2c2c30);background:transparent;color:var(--dim,#9a9aa2);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:var(--fg,#F4F3EE);border-color:var(--fg,#F4F3EE)" style-focus="outline:2px solid var(--gold,#5FE12C);outline-offset:2px">{{ muteGlyph }}</button>
+    <input onInput="{{ onVol }}" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" style="flex:none;width:72px;height:4px;accent-color:var(--gold,#5FE12C);cursor:pointer">
+  </div>
+  <audio ref="{{ audioRef }}" onLoadedMetadata="{{ onMeta }}" onEnded="{{ onEnded }}" preload="auto" style="display:none"></audio>
+  </sc-if>
+
+  <div aria-live="polite" style="margin-top:16px;min-height:38px">
+    <div style="font:400 12px/1.65 'Bricolage Grotesque',sans-serif;color:var(--dim,#9a9aa2);max-width:64ch">{{ caption }}</div>
+  </div>
+
+  <div role="tablist" aria-label="{{ tablistLabel }}" onKeyDown="{{ onRailKey }}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+    <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+    <button role="tab" aria-selected="{{ tb.selected }}" tabindex="{{ tb.tabindex }}" onClick="{{ tb.select }}" style="display:flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid {{ tb.border }};background:{{ tb.bg }};color:{{ tb.color }};font:500 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer" style-focus="outline:2px solid var(--gold,#5FE12C);outline-offset:2px">
+      <span aria-hidden="true" style="font-size:11px">{{ tb.glyph }}</span>{{ tb.label }}
+    </button>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:660},&quot;index&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;01&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Santa Maria&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;meta&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2023 · 18 frames · Silver gelatin&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;photoA&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;photoB&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;photoC&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;seed&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;santamaria&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;grayscale&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;true&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;filmSrc&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;poster&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;filmMeta&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;16mm transfer · placeholder&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;soundMeta&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Accra harbour, dawn&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;soundBase&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;transcript&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Transcript — ambient location audio, no dialogue.&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { active:0, playing:false, volume:0.8, muted:false, cc:false };
+
+  buildItems() {
+    const p = this.props;
+    return [
+      { kind:'photo', slot:p.photoA || 'nimfah-photo-a', label:'Frame 01', n:1 },
+      { kind:'film',  label:'Reel' },
+      { kind:'photo', slot:p.photoB || 'nimfah-photo-b', label:'Frame 02', n:2 },
+      { kind:'sound', label:'Sound' },
+      { kind:'photo', slot:p.photoC || 'nimfah-photo-c', label:'Frame 03', n:3 },
+    ];
+  }
+  items() { return this._items || (this._items = this.buildItems()); }
+  activeKind() { const it = this.items()[this.state.active]; return it ? it.kind : 'photo'; }
+  mediaEl() { const k = this.activeKind(); return k === 'film' ? this._video : k === 'sound' ? this._audio : null; }
+  photoSrc(n) {
+    const seed = this.props.seed || 'nimfah';
+    const gs = String(this.props.grayscale) === 'true' ? '?grayscale' : '';
+    return 'https://picsum.photos/seed/' + seed + '-' + n + '/1280/800' + gs;
+  }
+
+  barsRef = (el) => { this._bars = el; };
+  timeRef = (el) => { this._time = el; };
+  seekRef = (el) => { this._seek = el; };
+  videoRef = (el) => { this._video = el; if (el) { el.volume = this.state.volume; el.muted = this.state.muted; } };
+  trackRef = (el) => { if (el && !el.src) { try { el.src = this.makeVtt(); } catch (e) {} } };
+  audioRef = (el) => { this._audio = el; if (el) { if (!el.getAttribute('src')) el.src = this.makeWav(); el.volume = this.state.volume; el.muted = this.state.muted; } };
+
+  makeVtt() {
+    if (this._vttUrl) return this._vttUrl;
+    const t = this.props.title || 'Series';
+    const vtt = 'WEBVTT\n\n00:00.000 --> 00:05.000\n[ ' + t + ' \u2014 ambient location sound ]\n\n00:05.000 --> 00:11.000\n[ ' + (this.props.filmMeta || 'placeholder reel') + ' ]\n\n00:11.000 --> 00:18.000\n[ no dialogue ]\n';
+    this._vttUrl = URL.createObjectURL(new Blob([vtt], { type:'text/vtt' }));
+    return this._vttUrl;
+  }
+  makeWav() {
+    if (this._wavUrl) return this._wavUrl;
+    const sr = 22050, dur = 22, n = sr * dur, base = parseFloat(this.props.soundBase) || 110;
+    const buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf);
+    const wr = (o, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
+    wr(0,'RIFF'); dv.setUint32(4, 36 + n*2, true); wr(8,'WAVE'); wr(12,'fmt '); dv.setUint32(16,16,true);
+    dv.setUint16(20,1,true); dv.setUint16(22,1,true); dv.setUint32(24,sr,true); dv.setUint32(28,sr*2,true);
+    dv.setUint16(32,2,true); dv.setUint16(34,16,true); wr(36,'data'); dv.setUint32(40,n*2,true);
+    let o = 44;
+    for (let i = 0; i < n; i++) {
+      const t = i / sr;
+      const swell = 0.45 + 0.55 * Math.sin(2*Math.PI*t/dur - Math.PI/2);
+      const lfo = 0.6 + 0.4 * Math.sin(2*Math.PI*0.07*t);
+      let s = Math.sin(2*Math.PI*base*t) + 0.6*Math.sin(2*Math.PI*base*1.5*t) + 0.4*Math.sin(2*Math.PI*base*2*t);
+      s += 0.14 * (Math.random()*2 - 1);
+      let v = Math.max(-1, Math.min(1, s * 0.11 * swell * lfo));
+      dv.setInt16(o, v * 32767, true); o += 2;
+    }
+    this._wavUrl = URL.createObjectURL(new Blob([buf], { type:'audio/wav' }));
+    return this._wavUrl;
+  }
+
+  componentDidMount() { this._raf = requestAnimationFrame(this.tick); }
+  componentWillUnmount() { if (this._raf) cancelAnimationFrame(this._raf); if (this._audio) this._audio.pause(); if (this._video) this._video.pause(); if (this._wavUrl) URL.revokeObjectURL(this._wavUrl); if (this._vttUrl) URL.revokeObjectURL(this._vttUrl); }
+
+  fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s/60) + ':' + String(s % 60).padStart(2,'0'); }
+
+  tick = () => {
+    const k = this.activeKind();
+    const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (k === 'sound') this.drawBars(this.state.playing && !reduce);
+    if (k === 'film' || k === 'sound') {
+      const el = this.mediaEl(); const cur = el ? el.currentTime || 0 : 0; const dur = el && el.duration ? el.duration : 0;
+      if (this._time) this._time.textContent = this.fmt(cur) + ' / ' + this.fmt(dur);
+      if (this._seek && document.activeElement !== this._seek) this._seek.value = dur > 0 ? Math.round(cur/dur*1000) : 0;
+    }
+    this._raf = requestAnimationFrame(this.tick);
+  };
+
+  drawBars(active) {
+    const c = this._bars; if (!c) return; const ctx = c.getContext('2d'); const w = c.width, h = c.height;
+    if (!this._green) { try { this._green = (getComputedStyle(c).getPropertyValue('--gold') || '').trim() || '#5FE12C'; } catch (e) { this._green = '#5FE12C'; } }
+    ctx.fillStyle = '#0a0a0b'; ctx.fillRect(0,0,w,h);
+    const nb = 46, bw = w/nb, now = performance.now()/1000;
+    for (let i = 0; i < nb; i++) {
+      const amp = active ? (0.18 + 0.82*Math.abs(Math.sin(now*2.2 + i*0.5) * Math.cos(now*0.7 + i*0.22))) : (0.1 + 0.03*Math.sin(i*0.6));
+      const bh = amp * h * 0.62, x = i*bw + bw*0.22;
+      ctx.fillStyle = (i % 3 === 0) ? this._green : 'rgba(130,130,140,0.45)';
+      ctx.fillRect(x, h/2 - bh/2, bw*0.56, bh);
+    }
+  }
+
+  togglePlay = () => {
+    const el = this.mediaEl(); if (!el) return;
+    if (this.state.playing) { el.pause(); this.setState({ playing:false }); }
+    else { const p = el.play(); if (p && p.catch) p.catch(()=>{}); this.setState({ playing:true }); }
+  };
+  onSeek = (e) => { const el = this.mediaEl(); if (el && el.duration) el.currentTime = (+e.target.value)/1000 * el.duration; };
+  onVol = (e) => { const v = +e.target.value; const m = v === 0; this.setState({ volume:v, muted:m }); if (this._audio) { this._audio.volume = v; this._audio.muted = m; } if (this._video) { this._video.volume = v; this._video.muted = m; } };
+  toggleMute = () => { const m = !this.state.muted; this.setState({ muted:m }); if (this._audio) this._audio.muted = m; if (this._video) this._video.muted = m; };
+  toggleCC = () => { const v = this._video, tt = v && v.textTracks && v.textTracks[0]; if (!tt) return; const on = !this.state.cc; tt.mode = on ? 'showing' : 'hidden'; this.setState({ cc:on }); };
+  onMeta = () => { this.forceUpdate(); };
+  onEnded = () => { this.setState({ playing:false }); };
+
+  select = (i) => { const el = this.mediaEl(); if (el) el.pause(); if (this._seek) this._seek.value = 0; this.setState({ active:i, playing:false }); };
+  onRailKey = (e) => {
+    const n = this.items().length; let i = this.state.active;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') i = (i+1) % n;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') i = (i-1+n) % n;
+    else if (e.key === 'Home') i = 0; else if (e.key === 'End') i = n-1; else return;
+    e.preventDefault(); this.select(i);
+    const tabs = e.currentTarget.querySelectorAll('[role=tab]'); if (tabs[i]) tabs[i].focus();
+  };
+
+  renderVals() {
+    const items = this.items();
+    const a = this.state.active, item = items[a] || items[0], k = item.kind;
+    const isPhoto = k === 'photo', isFilm = k === 'film', isSound = k === 'sound';
+    const playing = this.state.playing, muted = this.state.muted;
+    const title = this.props.title || 'Series';
+    const caption = isPhoto
+      ? (item.label + ' \u2014 royalty-free placeholder shown; drag your own photograph onto the frame to replace it. Arrow keys move through the series.')
+      : isFilm
+      ? ('Film reel \u2014 ' + (this.props.filmMeta || 'placeholder clip') + '. Royalty-free sample footage. Play, scrub, or use captions.')
+      : (this.props.transcript || 'Transcript \u2014 ambient location audio, no dialogue.');
+    const tabs = items.map((it, i) => ({
+      selected: i === a ? 'true' : 'false',
+      tabindex: i === a ? '0' : '-1',
+      select: () => this.select(i),
+      border: i === a ? 'var(--gold,#5FE12C)' : 'var(--line,#2c2c30)',
+      bg: i === a ? 'rgba(95,225,44,0.08)' : 'transparent',
+      color: i === a ? 'var(--gold,#5FE12C)' : 'var(--dim,#9a9aa2)',
+      glyph: it.kind === 'photo' ? '\u25A3' : it.kind === 'film' ? '\u25B6' : '\u266A',
+      label: it.label,
+    }));
+    return {
+      index: this.props.index || '01', title, meta: this.props.meta || '',
+      isPhoto, isFilm, isSound, isMedia: isFilm || isSound,
+      activeSlot: item.slot, activePhotoSrc: isPhoto ? this.photoSrc(item.n) : '',
+      photoPrompt: 'Drag ' + title + ' \u2014 ' + item.label,
+      filmSrc: this.props.filmSrc || '', poster: this.props.poster || '',
+      barsRef: this.barsRef, timeRef: this.timeRef, seekRef: this.seekRef, videoRef: this.videoRef, trackRef: this.trackRef, audioRef: this.audioRef,
+      togglePlay: this.togglePlay, onSeek: this.onSeek, onVol: this.onVol, toggleMute: this.toggleMute, onMeta: this.onMeta, onEnded: this.onEnded, onRailKey: this.onRailKey,
+      playLabel: playing ? 'Pause' : 'Play', playGlyph: playing ? '\u275A\u275A' : '\u25B6',
+      muteLabel: muted ? 'Unmute' : 'Mute', muteGlyph: muted ? '\u2715' : '\u266A',
+      toggleCC: this.toggleCC, ccPressed: this.state.cc ? 'true' : 'false', ccLabel: this.state.cc ? 'Turn captions off' : 'Turn captions on',
+      ccBorder: this.state.cc ? 'var(--gold,#5FE12C)' : 'var(--line,#2c2c30)', ccColor: this.state.cc ? 'var(--gold,#5FE12C)' : 'var(--dim,#9a9aa2)',
+      soundMeta: this.props.soundMeta || 'Location audio',
+      caption, tabs, tablistLabel: title + ' media selector',
+    };
+  }
+}
+</script>
+</body>
+</html>

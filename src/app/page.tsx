@@ -1,28 +1,38 @@
+import type { Metadata } from "next";
+import { SERIES } from "@/lib/data";
+import { SeriesGallery } from "@/components/series-gallery";
+
+export const metadata: Metadata = {
+  // `absolute` because the root-segment page doesn't inherit the layout's title template.
+  title: { absolute: "NIMFAH — Artwork" },
+};
+
+// Artwork (home): oversized wordmark over a lead artwork, then the four series galleries.
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col justify-center px-6 py-16">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500">
-        Nimfah
-      </p>
-      <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-        Full-stack starter
-      </h1>
-      <p className="mt-4 max-w-xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
-        A clean Next.js App Router foundation — front-end and typed API route
-        handlers in one stack. Edit{" "}
-        <code className="rounded bg-neutral-100 px-1.5 py-0.5 font-mono text-sm dark:bg-neutral-800">
-          src/app/page.tsx
-        </code>{" "}
-        to begin.
-      </p>
-      <div className="mt-8">
-        <a
-          href="/api/health"
-          className="inline-block rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white transition-colors hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
-        >
-          Check API health →
-        </a>
+    <section>
+      <div className="hero">
+        <div className="hero-frame">
+          <div className="hero-img">
+            {/* eslint-disable-next-line @next/next/no-img-element -- royalty-free placeholder, replaced with client work */}
+            <img
+              src="https://picsum.photos/seed/nimfah-a/1800/1070?grayscale"
+              alt="Lead artwork — monochrome photograph"
+            />
+          </div>
+        </div>
+        <h1 className="wordmark" aria-label="NIMFAH">
+          NIMFAH
+        </h1>
       </div>
-    </main>
+
+      <p className="locations">Accra – Toronto – Washington DC</p>
+
+      <div className="galleries">
+        {SERIES.map((s) => (
+          <SeriesGallery key={s.idx} cfg={s} />
+        ))}
+      </div>
+    </section>
   );
 }

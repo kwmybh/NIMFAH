@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design handoff reference material — prototypes, not source to lint.
+    "design_handoff_nimfah_portfolio/**",
   ]),
 ]);
 

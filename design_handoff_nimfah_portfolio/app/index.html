@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NIMFAH — multidisciplinary practice at the intersection of engineering and fine-art photography.">
+<title>NIMFAH — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --fg:#101013; --dim:#4c4c53; --dim2:#66666e; --dim3:#6e6e75;
+  --surface:#F6F6F4; --line:rgba(0,0,0,.14); --line2:rgba(0,0,0,.08); --linestrong:rgba(0,0,0,.36);
+  --accent:#2E7D17;
+}
+[data-theme="dark"]{
+  --bg:#0A0A0B; --fg:#F4F3EE; --dim:#9a9aa2; --dim2:#8f8f97; --dim3:#7a7a82;
+  --surface:#101012; --line:rgba(255,255,255,.12); --line2:rgba(255,255,255,.07); --linestrong:rgba(255,255,255,.24);
+  --accent:#5FE12C;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:'Bricolage Grotesque',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(95,225,44,.30)}
+button{font-family:inherit;background:none;border:none;cursor:pointer;color:inherit}
+a{color:var(--fg)}
+a:hover{color:var(--dim)}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+img,video{display:block}
+.skip{position:absolute;left:-9999px;top:0;background:var(--fg);color:var(--bg);padding:10px 16px;z-index:200}
+.skip:focus{left:12px;top:12px}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+
+/* Header */
+header{padding:clamp(22px,3.4vh,38px) clamp(20px,4vw,56px) 0}
+.header-top{position:relative;display:flex;align-items:center;justify-content:center;min-height:34px}
+#themeToggle{position:absolute;right:0;top:50%;transform:translateY(-50%);width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--dim2)}
+#themeToggle:hover{color:var(--fg)}
+.nav{display:flex;justify-content:space-evenly;align-items:center;margin-top:clamp(8px,1.6vh,18px);padding-bottom:clamp(16px,2.4vh,24px);flex-wrap:wrap}
+.nav button,.nav a{padding:8px 10px;font:400 12px/1 'Bricolage Grotesque';letter-spacing:.32em;text-transform:uppercase;color:var(--dim2);text-decoration:none}
+.nav button:hover,.nav a:hover{color:var(--fg)}
+.nav button[aria-current="page"]{font-weight:600;color:var(--fg)}
+
+/* Hero */
+.hero{position:relative}
+.hero-frame{padding:0 clamp(20px,8vw,150px)}
+.hero-img{position:relative;aspect-ratio:16/9.5;overflow:hidden;background:var(--surface)}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wordmark{margin:clamp(-30px,-4vw,-78px) 0 0;font-weight:800;font-size:clamp(62px,15.4vw,238px);line-height:.82;letter-spacing:-.02em;text-align:center;white-space:nowrap;position:relative;z-index:2}
+.locations{max-width:760px;margin:0 auto;padding:clamp(40px,7vh,84px) clamp(20px,4vw,56px);text-align:center;font:400 12px 'Bricolage Grotesque';letter-spacing:.24em;text-transform:uppercase;color:var(--dim2)}
+
+/* Galleries */
+.galleries{max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(72px,11vh,130px);display:flex;flex-direction:column;gap:clamp(40px,7vh,80px)}
+.series{border:1px solid var(--line);background:var(--surface);padding:clamp(16px,2.4vw,30px)}
+.series-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:clamp(16px,2vh,22px)}
+.series-head .idx{font:500 12px 'Bricolage Grotesque';letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.series-head h2{margin:0;font:800 clamp(24px,3vw,40px)/1 'Bricolage Grotesque';letter-spacing:-.02em}
+.series-head .meta{font:400 12px 'Bricolage Grotesque';color:var(--dim)}
+.stage{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#0a0a0b;border:1px solid var(--line)}
+.stage img,.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage .badge{position:absolute;top:12px;left:14px;display:flex;align-items:center;gap:8px;background:rgba(10,10,11,.55);padding:5px 9px;pointer-events:none}
+.stage .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.stage .badge span{font:500 11px 'Bricolage Grotesque';letter-spacing:.18em;color:#fff}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.stage .sound-label{position:absolute;left:clamp(16px,2vw,26px);bottom:clamp(16px,2.4vh,24px);pointer-events:none}
+.stage .sound-label .k{font:500 12px 'Bricolage Grotesque';letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.stage .sound-label .v{font:500 clamp(18px,2.2vw,26px) 'Bricolage Grotesque';color:#F4F3EE}
+.transport{display:flex;align-items:center;gap:14px;margin-top:14px}
+.transport[hidden]{display:none}
+.transport .play{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-size:12px;display:flex;align-items:center;justify-content:center}
+.transport .play:hover{background:var(--accent);color:var(--bg)}
+.transport .time{flex:none;font:500 12px 'Bricolage Grotesque';color:var(--dim);min-width:92px}
+.transport input[type=range]{flex:1;min-width:80px;height:4px;accent-color:var(--accent);cursor:pointer}
+.transport .vol{flex:none;width:76px}
+.transport .cc,.transport .mute{flex:none;height:34px;padding:0 10px;border:1px solid var(--line);color:var(--dim);font:600 12px 'Bricolage Grotesque';letter-spacing:.1em}
+.transport .cc[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.transport .cc:hover,.transport .mute:hover{color:var(--fg);border-color:var(--fg)}
+.caption{margin-top:16px;min-height:38px;font:400 13px/1.65 'Bricolage Grotesque';color:var(--dim);max-width:64ch}
+.rail{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.rail button{display:flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--line);color:var(--dim);font:500 12px 'Bricolage Grotesque';letter-spacing:.12em;text-transform:uppercase}
+.rail button[aria-selected="true"]{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb, var(--accent) 8%, transparent)}
+
+/* Work */
+.page{max-width:1100px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(20px,4vw,56px) clamp(80px,12vh,140px);min-height:70vh}
+.page h1{margin:0 0 18px;font-weight:800;font-size:clamp(36px,6vw,84px);line-height:.92;letter-spacing:-.03em}
+.page .lede{max-width:520px;margin:0 0 clamp(38px,6vh,60px);font:400 15px/1.7 'Bricolage Grotesque';color:var(--dim)}
+.tabs{display:flex;gap:28px;border-bottom:1px solid var(--line);margin-bottom:clamp(28px,4vh,44px)}
+.tabs button{border-bottom:2px solid transparent;color:var(--dim2);padding:0 0 13px;margin-bottom:-1px;font:500 13px 'Bricolage Grotesque'}
+.tabs button[aria-selected="true"]{border-bottom-color:var(--fg);color:var(--fg)}
+.rows .row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:22px 2px;border-bottom:1px solid var(--line2);width:100%;text-align:left}
+.rows .row:hover{color:var(--dim)}
+.rows .row .n{flex:none;font:600 clamp(18px,1.8vw,24px) 'Bricolage Grotesque';letter-spacing:-.01em}
+.rows .row .d{flex:1;font:400 14px 'Bricolage Grotesque';color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rows .row .y{flex:none;display:inline-flex;align-items:center;gap:7px;font:400 12px 'Bricolage Grotesque';color:var(--dim2)}
+.rows .row .y .dot{width:5px;height:5px;border-radius:50%}
+.infra-card{border:1px solid var(--line);padding:clamp(22px,2.8vw,32px);display:flex;flex-direction:column;gap:22px;margin-bottom:clamp(16px,2.6vh,24px)}
+.infra-card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.infra-card h3{margin:0 0 8px;font:600 clamp(19px,1.9vw,26px) 'Bricolage Grotesque';letter-spacing:-.02em}
+.infra-card p{margin:0;font:400 14px/1.65 'Bricolage Grotesque';color:var(--dim);max-width:540px}
+.infra-card .deploy{flex:none;font:500 12px 'Bricolage Grotesque';border:1px solid var(--linestrong);padding:9px 14px}
+.infra-card .deploy:hover{background:var(--fg);color:var(--bg)}
+.infra-card .tag{font:400 12px 'Bricolage Grotesque';letter-spacing:.14em;text-transform:uppercase;color:var(--dim3)}
+.diagram{position:relative;display:flex;align-items:center;justify-content:space-between;padding:6px 0}
+.diagram::before{content:"";position:absolute;left:6%;right:6%;top:50%;height:1px;background:var(--line)}
+.diagram .node{position:relative;background:var(--bg);border:1px solid var(--line);padding:8px 12px;font:400 12px 'Bricolage Grotesque';letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* Vault */
+.vault-wrap{min-height:70vh;display:flex;align-items:flex-start;justify-content:center;padding:clamp(36px,6vh,64px) 20px 80px}
+.vault{width:100%;max-width:440px}
+.vault-title{text-align:center;margin-bottom:32px}
+.vault-title .t{font:600 13px 'Bricolage Grotesque';letter-spacing:.34em;text-transform:uppercase;margin-bottom:9px}
+.vault-title .s{font:400 12px 'Bricolage Grotesque';color:var(--dim2)}
+.vault-card{border:1px solid var(--linestrong);background:var(--bg);padding:clamp(24px,3.8vw,34px)}
+.vtabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:28px}
+.vtabs button{flex:1;border-bottom:2px solid transparent;color:var(--dim2);padding:0 0 13px;margin-bottom:-1px;font:500 13px 'Bricolage Grotesque'}
+.vtabs button[aria-selected="true"]{border-bottom-color:var(--fg);color:var(--fg)}
+.vault form{display:flex;flex-direction:column;gap:24px}
+.vault label span{display:block;font:400 12px 'Bricolage Grotesque';color:var(--dim2);margin-bottom:8px}
+.vault input,.vault textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--linestrong);padding:8px 2px;color:var(--fg);font:400 15px 'Bricolage Grotesque';outline:none;resize:none}
+.vault input:focus,.vault textarea:focus{border-bottom-color:var(--fg)}
+.vault .primary{width:100%;margin-top:4px;background:var(--fg);color:var(--bg);border:1px solid var(--fg);padding:14px;font:500 13px 'Bricolage Grotesque';letter-spacing:.04em}
+.vault .primary:hover{opacity:.85}
+.vault .secondary{width:100%;margin-top:4px;border:1px solid var(--linestrong);padding:14px;font:500 13px 'Bricolage Grotesque';letter-spacing:.04em}
+.vault .secondary:hover{background:var(--fg);color:var(--bg)}
+.vault .fine{display:flex;align-items:center;gap:9px;margin-top:26px;font:400 11px 'Bricolage Grotesque';letter-spacing:.08em;color:var(--dim3)}
+.vault .fine .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.doc{display:flex;align-items:center;gap:14px;padding:17px 2px;border-bottom:1px solid var(--line2);width:100%;text-align:left}
+.doc:hover{color:var(--dim)}
+.doc .type{flex:none;font:600 11px 'Bricolage Grotesque';letter-spacing:.1em;color:var(--dim);border:1px solid var(--line);padding:4px 6px}
+.doc .name{font:500 14px 'Bricolage Grotesque';margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc .m{font:400 12px 'Bricolage Grotesque';color:var(--dim3)}
+.doc-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.doc-head .st{display:inline-flex;align-items:center;gap:9px;font:400 12px 'Bricolage Grotesque';letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.doc-head .st .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.doc-head button{font:400 12px 'Bricolage Grotesque';letter-spacing:.14em;text-transform:uppercase;color:var(--dim2)}
+.doc-head button:hover{color:var(--fg)}
+
+/* Footer */
+footer{border-top:1px solid var(--line2)}
+.foot{max-width:1560px;margin:0 auto;padding:clamp(70px,11vh,120px) clamp(20px,4vw,56px) clamp(28px,4vh,42px);text-align:center}
+.foot .line{font:300 clamp(24px,2.8vw,40px)/1.15 'Bricolage Grotesque';letter-spacing:-.01em;color:var(--dim);margin-bottom:18px}
+.foot .mail{display:inline-block;font:500 clamp(17px,1.9vw,24px) 'Bricolage Grotesque';color:var(--fg);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:3px}
+.foot .mail:hover{color:var(--dim)}
+.foot .socials{display:flex;justify-content:center;gap:clamp(12px,2vw,24px);margin-top:clamp(36px,6vh,56px);flex-wrap:wrap}
+.foot .socials a,.foot .socials button{font:400 12px 'Bricolage Grotesque';letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);padding:8px 10px;text-decoration:none}
+.foot .socials a:hover,.foot .socials button:hover{color:var(--fg)}
+.foot .socials .vault-link{border-bottom:1px solid var(--accent)}
+.foot .copy{margin-top:clamp(40px,6vh,64px);font:400 12px 'Bricolage Grotesque';letter-spacing:.16em;text-transform:uppercase;color:var(--dim3)}
+
+/* Series detail */
+.detail{max-width:1560px;margin:0 auto;padding:clamp(20px,4vh,44px) clamp(20px,4vw,56px) clamp(72px,11vh,130px)}
+.detail .back{font:400 13px 'Bricolage Grotesque';color:var(--dim2);padding:8px 10px 8px 0}
+.detail .back:hover{color:var(--fg)}
+.detail h1{margin:10px 0 6px;font-weight:800;font-size:clamp(34px,5.4vw,76px);line-height:.94;letter-spacing:-.03em}
+.detail .meta{font:400 13px 'Bricolage Grotesque';color:var(--dim);margin-bottom:clamp(26px,4vh,44px)}
+.frame-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:clamp(10px,1.2vw,18px)}
+.frame-grid figure{margin:0}
+.frame-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--surface)}
+.frame-grid figcaption{font:400 12px 'Bricolage Grotesque';color:var(--dim3);padding:8px 2px}
+.view-all{margin-top:14px;font:500 13px 'Bricolage Grotesque';color:var(--fg);border-bottom:1px solid var(--accent);padding:6px 2px}
+.view-all:hover{color:var(--dim)}
+.vault-context{max-width:340px;margin:0 auto 26px;text-align:center;font:400 13px/1.6 'Bricolage Grotesque';color:var(--dim)}
+
+/* Mobile */
+@media (max-width:640px){
+  .transport{flex-wrap:wrap}
+  .transport .seek{flex-basis:100%;order:5}
+}
+@media (max-width:480px){
+  .wordmark{font-size:clamp(44px,13.5vw,64px);margin-top:-10px}
+  .nav button,.nav a{letter-spacing:.2em;padding:8px 6px}
+}
+
+/* Toasts */
+#toasts{position:fixed;bottom:24px;right:24px;z-index:90;display:flex;flex-direction:column;gap:10px;width:330px;max-width:calc(100vw - 48px)}
+.toast{display:flex;gap:12px;background:var(--bg);border:1px solid var(--linestrong);border-left:2px solid var(--tint,#8a8a92);padding:13px 15px;box-shadow:0 14px 34px rgba(0,0,0,.18)}
+.toast .code{flex:none;font:600 11px 'Bricolage Grotesque';color:var(--tint,#8a8a92);padding-top:2px}
+.toast .t{font:600 12px 'Bricolage Grotesque';margin-bottom:3px}
+.toast .m{font:400 11px/1.5 'Bricolage Grotesque';color:var(--dim)}
+</style>
+</head>
+<body id="root">
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="header-top">
+    <button id="themeToggle" aria-label="Toggle light or dark mode">☾</button>
+  </div>
+  <nav class="nav" aria-label="Primary">
+    <button data-route="artwork" aria-current="page">Artwork</button>
+    <button data-route="vault">Vault</button>
+    <a href="mailto:studio@nimfah.com">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- ARTWORK -->
+  <section id="view-artwork" data-screen-label="Artwork">
+    <div class="hero">
+      <div class="hero-frame">
+        <div class="hero-img"><img src="https://picsum.photos/seed/nimfah-a/1800/1070?grayscale" alt="Lead artwork — monochrome photograph"></div>
+      </div>
+      <h1 class="wordmark" aria-label="NIMFAH">NIMFAH</h1>
+    </div>
+    <p class="locations">Accra – Toronto – Washington DC</p>
+    <div class="galleries" id="galleries"></div>
+  </section>
+
+  <!-- SERIES DETAIL -->
+  <section id="view-series" data-screen-label="Series detail" hidden>
+    <div class="detail">
+      <button class="back" data-route="artwork">← All artwork</button>
+      <h1 id="detailTitle"></h1>
+      <p class="meta" id="detailMeta"></p>
+      <div class="frame-grid" id="detailGrid"></div>
+    </div>
+  </section>
+
+  <!-- VAULT -->
+  <section id="view-vault" data-screen-label="Vault" hidden>
+    <div class="vault-wrap">
+      <div class="vault">
+        <div class="vault-title">
+          <div class="t">Client Vault</div>
+          <div class="s">Private creative direction · invite only</div>
+        </div>
+        <p class="vault-context">A private room for commissioned direction — pitches, edits, and prints shared one client at a time.</p>
+        <div class="vault-card" id="vaultAuth">
+          <div class="vtabs" role="tablist" aria-label="Vault access">
+            <button role="tab" aria-selected="true" data-vtab="signin">Sign In</button>
+            <button role="tab" aria-selected="false" data-vtab="request">Request Access</button>
+          </div>
+          <form id="signinForm" novalidate>
+            <label><span>Email</span><input type="email" id="siEmail" placeholder="name@studio.com" autocomplete="email" required></label>
+            <label><span>Passphrase</span><input type="password" id="siPass" placeholder="••••••••" autocomplete="current-password" required minlength="6"></label>
+            <button type="submit" class="primary">Establish Session →</button>
+          </form>
+          <form id="requestForm" hidden novalidate>
+            <label><span>Full name</span><input type="text" id="rqName" placeholder="Your name" autocomplete="name" required></label>
+            <label><span>Work email</span><input type="email" id="rqEmail" placeholder="name@company.com" autocomplete="email" required></label>
+            <label><span>Brief</span><textarea id="rqNote" rows="3" placeholder="One line on the engagement" required></textarea></label>
+            <button type="submit" class="secondary">Transmit Request →</button>
+          </form>
+          <div class="fine"><span class="dot"></span>TLS 1.3 · AES-256-GCM · EPHEMERAL SESSION</div>
+        </div>
+        <div class="vault-card" id="vaultDocs" hidden>
+          <div class="doc-head">
+            <span class="st"><span class="dot"></span>Session ephemeral</span>
+            <button id="lockBtn">Seal ✕</button>
+          </div>
+          <div id="docList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <p class="line">Let's build something enduring</p>
+    <a class="mail" href="mailto:studio@nimfah.com">studio@nimfah.com</a>
+    <div class="socials">
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://vsco.co" target="_blank" rel="noopener">VSCO</a>
+      <button class="vault-link" data-route="vault">Client Vault</button>
+    </div>
+    <div class="copy">© 2026 NIMFAH · Accra – Toronto – Washington DC</div>
+  </div>
+</footer>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* ---------- Data ---------- */
+const SERIES = [
+  { idx:'01', title:'Mary & Eve', meta:'2023 · 18 frames · Silver gelatin', seed:'santamaria', gs:true,
+    film:'https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4', filmMeta:'16mm transfer · 00:15',
+    sound:'Accra harbour, dawn', base:110,
+    transcript:'Transcript — waves against the hull, distant dockworkers, a ship\u2019s bell every few seconds. Ambient, no dialogue.' },
+  { idx:'02', title:'Adam & Joseph', meta:'2024 · 26 frames · Available light', seed:'joseph', gs:false,
+    film:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', filmMeta:'Super 8 transfer · 00:15',
+    sound:'Workshop, mid-morning', base:146,
+    transcript:'Transcript — a hand plane over timber, rhythmic; a mallet; birdsong through an open door. Ambient, no dialogue.' },
+  { idx:'03', title:'Tatted', meta:'2025 · 21 frames · Monochrome', seed:'tatted', gs:true,
+    film:'https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4', filmMeta:'16mm transfer · 00:15',
+    sound:'Studio session, late night', base:92,
+    transcript:'Transcript — the hum of a tattoo machine, steady; paper towel; quiet conversation between passes. Ambient, no dialogue.' },
+  { idx:'04', title:"Man's Best Friends", meta:'2025 · 30 frames · Available light', seed:'bestfriends', gs:false,
+    film:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', filmMeta:'Super 8 transfer · 00:15',
+    sound:'Park, early morning', base:130,
+    transcript:'Transcript — paws on gravel, a shaken collar, distant fetch calls across the field. Ambient, no dialogue.' },
+];
+const DOCS = [
+  { n:'Mary & Eve — Print Edition Pitch', t:'PDF', m:'24 pp · 2 days ago' },
+  { n:'Tatted — Gallery Concept', t:'KEY', m:'40 pp · 5 days ago' },
+  { n:"Man's Best Friends — Book Dummy", t:'PDF', m:'56 pp · 1 week ago' },
+  { n:'Adam & Joseph — Exhibition', t:'PDF', m:'32 pp · 3 weeks ago' },
+];
+
+/* ---------- Utilities ---------- */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const fmt = (s) => { s = Math.max(0, Math.floor(s||0)); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); };
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function toast(kind, title, msg){
+  const tints = { success:'#39B54A', error:'#E5484D', info:'#8a8a92' };
+  const codes = { success:'200', error:'422', info:'···' };
+  const el = document.createElement('div');
+  el.className = 'toast'; el.style.setProperty('--tint', tints[kind]||tints.info); el.setAttribute('role','status');
+  el.innerHTML = '<span class="code">'+(codes[kind]||codes.info)+'</span><div><div class="t">'+esc(title)+'</div><div class="m">'+esc(msg)+'</div></div>';
+  $('#toasts').appendChild(el);
+  setTimeout(() => el.remove(), 4800);
+}
+
+/* ---------- Theme (persisted) ---------- */
+const THEME_KEY = 'nimfah-theme';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $('#themeToggle').textContent = t === 'dark' ? '☀' : '☾';
+  try { localStorage.setItem(THEME_KEY, t); } catch(e){}
+}
+applyTheme((() => { try { return localStorage.getItem(THEME_KEY) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); } catch(e){ return 'light'; } })());
+$('#themeToggle').addEventListener('click', () => applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+/* ---------- Router (hash) ---------- */
+const VIEWS = ['artwork','vault','series'];
+function navigate(route, push=true){
+  let view = route, series = null;
+  if (route && route.startsWith('series/')){ view = 'series'; series = route.split('/')[1]; }
+  if (!VIEWS.includes(view)) { view = 'artwork'; route = 'artwork'; }
+  VIEWS.forEach(r => { $('#view-'+r).hidden = r !== view; });
+  $$('.nav button[data-route]').forEach(b => { if (b.dataset.route === route) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  if (series) renderSeriesDetail(series);
+  if (push) location.hash = '#/' + route;
+  window.scrollTo(0,0);
+  document.title = 'NIMFAH — ' + (series ? (SERIES.find(s=>s.idx===series)||{title:'Series'}).title : view.charAt(0).toUpperCase()+view.slice(1));
+}
+function renderSeriesDetail(idx){
+  const s = SERIES.find(x => x.idx === idx); if (!s) return;
+  $('#detailTitle').textContent = s.title;
+  $('#detailMeta').textContent = 'Series ' + s.idx + ' · ' + s.meta;
+  const count = parseInt(s.meta.match(/(\d+) frames/)[1], 10);
+  $('#detailGrid').innerHTML = Array.from({length: count}, (_,i) =>
+    '<figure><img loading="lazy" src="https://picsum.photos/seed/'+s.seed+'-f'+(i+1)+'/720/900'+(s.gs?'?grayscale':'')+'" alt="'+esc(s.title)+' — frame '+String(i+1).padStart(2,'0')+' (placeholder)">'+
+    '<figcaption>'+String(i+1).padStart(2,'0')+' / '+count+'</figcaption></figure>').join('');
+}
+$$('button[data-route]').forEach(b => b.addEventListener('click', () => navigate(b.dataset.route)));
+window.addEventListener('hashchange', () => navigate(location.hash.replace('#/',''), false));
+navigate(location.hash.replace('#/','') || 'artwork', false);
+
+/* ---------- Generated audio (WAV) ---------- */
+function makeWav(base){
+  const sr = 22050, dur = 22, n = sr * dur;
+  const buf = new ArrayBuffer(44 + n*2), dv = new DataView(buf);
+  const wr = (o,s) => { for (let i=0;i<s.length;i++) dv.setUint8(o+i, s.charCodeAt(i)); };
+  wr(0,'RIFF'); dv.setUint32(4,36+n*2,true); wr(8,'WAVE'); wr(12,'fmt '); dv.setUint32(16,16,true);
+  dv.setUint16(20,1,true); dv.setUint16(22,1,true); dv.setUint32(24,sr,true); dv.setUint32(28,sr*2,true);
+  dv.setUint16(32,2,true); dv.setUint16(34,16,true); wr(36,'data'); dv.setUint32(40,n*2,true);
+  let o = 44;
+  for (let i=0;i<n;i++){
+    const t = i/sr;
+    const swell = .45 + .55*Math.sin(2*Math.PI*t/dur - Math.PI/2);
+    const lfo = .6 + .4*Math.sin(2*Math.PI*.07*t);
+    let s = Math.sin(2*Math.PI*base*t) + .6*Math.sin(2*Math.PI*base*1.5*t) + .4*Math.sin(2*Math.PI*base*2*t);
+    s += .14*(Math.random()*2-1);
+    dv.setInt16(o, Math.max(-1,Math.min(1, s*.11*swell*lfo))*32767, true); o += 2;
+  }
+  return URL.createObjectURL(new Blob([buf],{type:'audio/wav'}));
+}
+function makeVtt(title, filmMeta){
+  const vtt = 'WEBVTT\n\n00:00.000 --> 00:05.000\n[ '+title+' — ambient location sound ]\n\n00:05.000 --> 00:11.000\n[ '+filmMeta+' ]\n\n00:11.000 --> 00:18.000\n[ no dialogue ]\n';
+  return URL.createObjectURL(new Blob([vtt],{type:'text/vtt'}));
+}
+
+/* ---------- Gallery component ---------- */
+function buildGallery(cfg){
+  const root = document.createElement('article');
+  root.className = 'series';
+  const items = [
+    { kind:'photo', label:'Frame 01', n:1 },{ kind:'film', label:'Reel' },{ kind:'photo', label:'Frame 02', n:2 },
+    { kind:'sound', label:'Sound' },{ kind:'photo', label:'Frame 03', n:3 },
+  ];
+  let active = 0, playing = false, cc = false, raf = null, wavUrl = null;
+
+  root.innerHTML =
+    '<div class="series-head"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">'+
+    '<span class="idx">Series '+cfg.idx+'</span><h2>'+esc(cfg.title)+'</h2></div>'+
+    '<span class="meta">'+esc(cfg.meta)+'</span></div>'+
+    '<div class="stage"></div>'+
+    '<div class="transport" hidden>'+
+      '<button class="play" aria-label="Play">▶</button>'+
+      '<span class="time" aria-hidden="true">0:00 / 0:00</span>'+
+      '<input class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek position">'+
+      '<button class="cc" aria-pressed="false" aria-label="Turn captions on" hidden>CC</button>'+
+      '<button class="mute" aria-label="Mute">♪</button>'+
+      '<input class="vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">'+
+    '</div>'+
+    '<div class="caption" aria-live="polite"></div>'+
+    '<div class="rail" role="tablist" aria-label="'+esc(cfg.title)+' media selector"></div>'+
+    '<button class="view-all">View all frames →</button>';
+
+  const stage = $('.stage', root), transport = $('.transport', root), caption = $('.caption', root), rail = $('.rail', root);
+  const playBtn = $('.play', root), timeEl = $('.time', root), seek = $('.seek', root), ccBtn = $('.cc', root), muteBtn = $('.mute', root), vol = $('.vol', root);
+  let media = null, barsCanvas = null;
+
+  items.forEach((it, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('role','tab');
+    b.innerHTML = '<span aria-hidden="true">'+(it.kind==='photo'?'▣':it.kind==='film'?'▶':'♪')+'</span>'+it.label;
+    b.addEventListener('click', () => select(i));
+    rail.appendChild(b);
+  });
+  rail.addEventListener('keydown', (e) => {
+    let i = active;
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') i=(i+1)%items.length;
+    else if (e.key==='ArrowLeft'||e.key==='ArrowUp') i=(i-1+items.length)%items.length;
+    else if (e.key==='Home') i=0; else if (e.key==='End') i=items.length-1; else return;
+    e.preventDefault(); select(i); rail.children[i].focus();
+  });
+
+  function stopMedia(){ if (media && media.pause) media.pause(); playing = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+  function drawBars(activeDraw){
+    if (!barsCanvas) return;
+    const ctx = barsCanvas.getContext('2d'), w = barsCanvas.width, h = barsCanvas.height;
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#2E7D17';
+    ctx.fillStyle = '#0a0a0b'; ctx.fillRect(0,0,w,h);
+    const nb = 46, bw = w/nb, now = performance.now()/1000;
+    for (let i=0;i<nb;i++){
+      const amp = activeDraw ? (.18+.82*Math.abs(Math.sin(now*2.2+i*.5)*Math.cos(now*.7+i*.22))) : (.1+.03*Math.sin(i*.6));
+      const bh = amp*h*.62, x = i*bw+bw*.22;
+      ctx.fillStyle = (i%3===0) ? accent : 'rgba(130,130,140,.45)';
+      ctx.fillRect(x, h/2-bh/2, bw*.56, bh);
+    }
+  }
+  function tick(){
+    if (media){
+      const cur = media.currentTime||0, dur = media.duration||0;
+      timeEl.textContent = fmt(cur)+' / '+fmt(dur);
+      if (document.activeElement !== seek) seek.value = dur>0 ? Math.round(cur/dur*1000) : 0;
+    }
+    if (barsCanvas) drawBars(playing && !matchMedia('(prefers-reduced-motion: reduce)').matches);
+    raf = requestAnimationFrame(tick);
+  }
+  function setPlay(p){ playing = p; playBtn.textContent = p ? '❚❚' : '▶'; playBtn.setAttribute('aria-label', p ? 'Pause' : 'Play'); }
+
+  function select(i){
+    stopMedia(); active = i;
+    [...rail.children].forEach((b,j) => { b.setAttribute('aria-selected', j===i ? 'true':'false'); b.tabIndex = j===i ? 0 : -1; });
+    const it = items[i];
+    stage.innerHTML = ''; media = null; barsCanvas = null;
+    transport.hidden = it.kind === 'photo'; ccBtn.hidden = it.kind !== 'film';
+    setPlay(false); seek.value = 0;
+    if (it.kind === 'photo'){
+      const img = document.createElement('img');
+      img.src = 'https://picsum.photos/seed/'+cfg.seed+'-'+it.n+'/1280/800'+(cfg.gs?'?grayscale':'');
+      img.alt = cfg.title+' — '+it.label+' (placeholder photograph)';
+      stage.appendChild(img);
+      caption.textContent = it.label+' — royalty-free placeholder shown; replace with your own photograph. Arrow keys move through the series.';
+    } else if (it.kind === 'film'){
+      const v = document.createElement('video');
+      v.src = cfg.film; v.preload = 'metadata'; v.playsInline = true; v.crossOrigin = 'anonymous';
+      v.poster = 'https://picsum.photos/seed/'+cfg.seed+'-film/1280/800'+(cfg.gs?'?grayscale':'');
+      v.setAttribute('aria-label','Placeholder film reel for the '+cfg.title+' series');
+      const tr = document.createElement('track');
+      tr.kind = 'captions'; tr.srclang = 'en'; tr.label = 'English'; tr.default = true; tr.src = makeVtt(cfg.title, cfg.filmMeta);
+      v.appendChild(tr);
+      v.addEventListener('ended', () => setPlay(false));
+      stage.appendChild(v);
+      const badge = document.createElement('div'); badge.className = 'badge'; badge.innerHTML = '<span class="dot"></span><span>REEL / '+cfg.idx+'</span>';
+      stage.appendChild(badge);
+      media = v; cc = false; ccBtn.setAttribute('aria-pressed','false');
+      caption.textContent = 'Film reel — '+cfg.filmMeta+'. Royalty-free sample footage. Play, scrub, or use captions.';
+      raf = requestAnimationFrame(tick);
+    } else {
+      barsCanvas = document.createElement('canvas'); barsCanvas.width = 1280; barsCanvas.height = 800; barsCanvas.setAttribute('aria-hidden','true');
+      stage.appendChild(barsCanvas);
+      const lbl = document.createElement('div'); lbl.className = 'sound-label';
+      lbl.innerHTML = '<div class="k">Field recording</div><div class="v">'+esc(cfg.sound)+'</div>';
+      stage.appendChild(lbl);
+      const a = new Audio(); if (!wavUrl) wavUrl = makeWav(cfg.base); a.src = wavUrl; a.preload = 'auto';
+      a.addEventListener('ended', () => setPlay(false));
+      media = a;
+      caption.textContent = cfg.transcript;
+      raf = requestAnimationFrame(tick);
+    }
+    if (media){ media.volume = +vol.value; }
+  }
+
+  playBtn.addEventListener('click', () => { if (!media) return; if (playing){ media.pause(); setPlay(false); } else { const p = media.play(); if (p&&p.catch) p.catch(()=>{}); setPlay(true); } });
+  seek.addEventListener('input', () => { if (media && media.duration) media.currentTime = (+seek.value)/1000*media.duration; });
+  vol.addEventListener('input', () => { if (media){ media.volume = +vol.value; media.muted = +vol.value === 0; } });
+  muteBtn.addEventListener('click', () => { if (!media) return; media.muted = !media.muted; muteBtn.textContent = media.muted ? '✕' : '♪'; muteBtn.setAttribute('aria-label', media.muted ? 'Unmute' : 'Mute'); });
+  ccBtn.addEventListener('click', () => { if (!media || !media.textTracks || !media.textTracks[0]) return; cc = !cc; media.textTracks[0].mode = cc ? 'showing' : 'hidden'; ccBtn.setAttribute('aria-pressed', String(cc)); ccBtn.setAttribute('aria-label', cc ? 'Turn captions off' : 'Turn captions on'); });
+
+  $('.view-all', root).addEventListener('click', () => navigate('series/'+cfg.idx));
+  select(0);
+  return root;
+}
+SERIES.forEach(cfg => $('#galleries').appendChild(buildGallery(cfg)));
+
+/* ---------- Vault ---------- */
+const emailOk = (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+$$('.vtabs [data-vtab]').forEach(b => b.addEventListener('click', () => {
+  $$('.vtabs [data-vtab]').forEach(x => x.setAttribute('aria-selected', String(x===b)));
+  $('#signinForm').hidden = b.dataset.vtab !== 'signin';
+  $('#requestForm').hidden = b.dataset.vtab !== 'request';
+}));
+function setAuthed(a){
+  $('#vaultAuth').hidden = a; $('#vaultDocs').hidden = !a;
+  try { sessionStorage.setItem('nimfah-vault', a ? '1' : ''); } catch(e){}
+}
+$('#signinForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!emailOk($('#siEmail').value)) return toast('error','Authentication rejected','Malformed identity string — check credential format.');
+  if ($('#siPass').value.length < 6) return toast('error','Authentication rejected','Passphrase below minimum entropy — 6+ characters required.');
+  toast('success','Session established','Ephemeral key exchanged · AES-256-GCM · vault unsealed.');
+  setAuthed(true);
+});
+$('#requestForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!$('#rqName').value.trim() || !emailOk($('#rqEmail').value) || !$('#rqNote').value.trim())
+    return toast('error','Request incomplete','All fields required — name, verified email, and a brief.');
+  toast('success','Request transmitted','Encrypted · a curator will respond within 48 hours.');
+  e.target.reset();
+});
+$('#lockBtn').addEventListener('click', () => { setAuthed(false); toast('info','Session sealed','Ephemeral key destroyed · vault re-locked.'); });
+$('#docList').innerHTML = DOCS.map(d =>
+  '<button class="doc"><span class="type">'+d.t+'</span><div style="flex:1;min-width:0;text-align:left">'+
+  '<div class="name">'+esc(d.n)+'</div><div class="m">'+esc(d.m)+'</div></div><span aria-hidden="true">↓</span></button>').join('');
+$$('#docList .doc').forEach(b => b.addEventListener('click', () => toast('success','Decrypting','Fetching document · streaming over ephemeral channel.')));
+try { if (sessionStorage.getItem('nimfah-vault') === '1') setAuthed(true); } catch(e){}
+</script>
+</body>
+</html>

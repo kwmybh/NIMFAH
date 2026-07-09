@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="prototype">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0}
+  ::selection{background:rgba(95,225,44,.30)}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div style="--gold:{{ gold }};--bg:{{ bg }};--fg:{{ fg }};--dim:{{ dim }};--dim2:{{ dim2 }};--dim3:{{ dim3 }};--surface:{{ surface }};--line:{{ line }};--line2:{{ line2 }};--linestrong:{{ lineStrong }};background:var(--bg);min-height:100vh;color:var(--fg);font-family:'Bricolage Grotesque',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased">
+
+  <header style="padding:clamp(22px,3.4vh,38px) clamp(20px,4vw,56px) 0;box-sizing:border-box">
+    <div style="position:relative;display:flex;align-items:center;justify-content:center">
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle light or dark mode" title="Toggle light / dark" style="background:none;border:none;position:absolute;right:0;top:50%;transform:translateY(-50%);cursor:pointer;display:flex;align-items:center;justify-content:center;width:34px;height:34px;font-size:14px;line-height:1;color:var(--dim2)" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">{{ themeGlyph }}</button>
+    </div>
+    <nav style="display:flex;justify-content:space-evenly;align-items:center;margin-top:clamp(20px,3vh,32px);padding-bottom:clamp(16px,2.4vh,24px)">
+      <button onClick="{{ goHome }}" style="background:none;border:none;cursor:pointer;padding:8px 10px;font:{{ navHomeW }} 12px 'Bricolage Grotesque';letter-spacing:.32em;text-transform:uppercase;color:{{ navHome }}" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">Artwork</button>
+      <button onClick="{{ goWork }}" style="background:none;border:none;cursor:pointer;padding:8px 10px;font:{{ navWorkW }} 12px 'Bricolage Grotesque';letter-spacing:.32em;text-transform:uppercase;color:{{ navWork }}" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">Work</button>
+      <button onClick="{{ goVault }}" style="background:none;border:none;cursor:pointer;padding:8px 10px;font:{{ navVaultW }} 12px 'Bricolage Grotesque';letter-spacing:.32em;text-transform:uppercase;color:{{ navVault }}" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">Vault</button>
+      <a href="mailto:studio@nimfah.com" style="padding:8px 10px;font:400 12px 'Bricolage Grotesque';letter-spacing:.32em;text-transform:uppercase;color:{{ navContact }};text-decoration:none" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+
+      <section style="position:relative">
+        <div style="display:grid;grid-template-columns:1fr;padding:0 clamp(20px,8vw,150px);box-sizing:border-box">
+          <div style="position:relative;aspect-ratio:16/9.5;overflow:hidden">
+            <image-slot id="nimfah-v3-hero-a" src="https://picsum.photos/seed/nimfah-a/1800/1070?grayscale" shape="rect" placeholder="Drag your lead artwork here" style="position:absolute;inset:0;width:100%;height:100%;display:block"></image-slot>
+          </div>
+        </div>
+        <h1 aria-label="NIMFAH" style="margin:clamp(-30px,-4vw,-78px) 0 0;font-weight:800;font-size:clamp(62px,15.4vw,238px);line-height:.82;letter-spacing:-.02em;color:var(--fg);text-align:center;white-space:nowrap;position:relative;z-index:2">NIMFAH</h1>
+      </section>
+
+      <section style="max-width:760px;margin:0 auto;padding:clamp(56px,9vh,110px) clamp(20px,4vw,56px);text-align:center;box-sizing:border-box">
+        <div style="font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--dim2)">Accra – Toronto – Washington DC</div>
+      </section>
+
+      <section style="max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(72px,11vh,130px);box-sizing:border-box">
+        <div style="display:flex;flex-direction:column;gap:clamp(40px,7vh,80px)">
+          <dc-import name="SeriesGallery" index="01" title="Mary &amp; Eve" meta="2023 · 18 frames · Silver gelatin" photo-a="nimfah-sm-a" photo-b="nimfah-sm-b" photo-c="nimfah-sm-c" seed="santamaria" grayscale="true" film-src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" poster="https://picsum.photos/seed/santamaria-film/1280/800?grayscale" film-meta="16mm transfer · 00:15" sound-meta="Accra harbour, dawn" sound-base="110" transcript="Transcript — waves against the hull, distant dockworkers, a ship's bell every few seconds. Ambient, no dialogue." hint-size="100%,700px"></dc-import>
+          <dc-import name="SeriesGallery" index="02" title="Adam &amp; Joseph" meta="2024 · 26 frames · Available light" photo-a="nimfah-jc-a" photo-b="nimfah-jc-b" photo-c="nimfah-jc-c" seed="joseph" grayscale="false" film-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" poster="https://picsum.photos/seed/joseph-film/1280/800" film-meta="Super 8 transfer · 00:15" sound-meta="Workshop, mid-morning" sound-base="146" transcript="Transcript — a hand plane over timber, rhythmic; a mallet; birdsong through an open door. Ambient, no dialogue." hint-size="100%,700px"></dc-import>
+          <dc-import name="SeriesGallery" index="03" title="Tatted" meta="2025 · 21 frames · Monochrome" photo-a="nimfah-tt-a" photo-b="nimfah-tt-b" photo-c="nimfah-tt-c" seed="tatted" grayscale="true" film-src="https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4" poster="https://picsum.photos/seed/tatted-film/1280/800?grayscale" film-meta="16mm transfer · 00:15" sound-meta="Studio session, late night" sound-base="92" transcript="Transcript — the hum of a tattoo machine, steady; paper towel; quiet conversation between passes. Ambient, no dialogue." hint-size="100%,700px"></dc-import>
+          <dc-import name="SeriesGallery" index="04" title="Man's Best Friends" meta="2025 · 30 frames · Available light" photo-a="nimfah-bf-a" photo-b="nimfah-bf-b" photo-c="nimfah-bf-c" seed="bestfriends" grayscale="false" film-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" poster="https://picsum.photos/seed/bestfriends-film/1280/800" film-meta="Super 8 transfer · 00:15" sound-meta="Park, early morning" sound-base="130" transcript="Transcript — paws on gravel, a shaken collar, distant fetch calls across the field. Ambient, no dialogue." hint-size="100%,700px"></dc-import>
+        </div>
+      </section>
+
+      <footer style="border-top:1px solid var(--line2)">
+        <div style="max-width:1560px;margin:0 auto;padding:clamp(70px,11vh,120px) clamp(20px,4vw,56px) clamp(28px,4vh,42px);box-sizing:border-box;text-align:center">
+          <div style="font:300 clamp(24px,2.8vw,40px)/1.15 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em;color:var(--dim);margin-bottom:18px">Let's build something enduring</div>
+          <a href="mailto:studio@nimfah.com" style="display:inline-block;font:500 clamp(17px,1.9vw,24px) 'Bricolage Grotesque';color:var(--fg);text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:3px" style-hover="color:var(--dim)">studio@nimfah.com</a>
+          <div style="display:flex;justify-content:center;gap:clamp(20px,3vw,34px);margin-top:clamp(36px,6vh,56px)">
+            <button style="background:none;border:none;font:400 12px 'Bricolage Grotesque';letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);cursor:pointer;padding:8px 10px" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">Instagram</button>
+            <button style="background:none;border:none;font:400 12px 'Bricolage Grotesque';letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);cursor:pointer;padding:8px 10px" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">LinkedIn</button>
+            <button style="background:none;border:none;font:400 12px 'Bricolage Grotesque';letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);cursor:pointer;padding:8px 10px" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">VSCO</button>
+            <button onClick="{{ goVault }}" style="background:none;border:none;font:400 12px 'Bricolage Grotesque';letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);cursor:pointer;padding:8px 10px;border-bottom:1px solid var(--gold)" style-hover="color:var(--fg)" style-focus="outline:2px solid var(--fg);outline-offset:2px">Client Vault</button>
+          </div>
+          <div style="margin-top:clamp(40px,6vh,64px);font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--dim3)">© 2026 NIMFAH · Accra – Toronto – Washington DC</div>
+        </div>
+      </footer>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isWork }}" hint-placeholder-val="{{ true }}">
+    <div style="max-width:1100px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(20px,4vw,56px) clamp(80px,12vh,140px);box-sizing:border-box;min-height:70vh">
+      <h1 style="margin:0 0 18px;font-weight:800;font-size:clamp(36px,6vw,84px);line-height:.92;letter-spacing:-.03em">Work</h1>
+      <p style="max-width:520px;margin:0 0 clamp(38px,6vh,60px);font:400 15px/1.7 'Bricolage Grotesque';color:var(--dim)">Launched production software and live cloud architecture templates. Each is deployed, observed, and maintained — not a concept.</p>
+
+      <div style="display:flex;gap:28px;border-bottom:1px solid var(--line);margin-bottom:clamp(28px,4vh,44px)">
+        <button onClick="{{ setSw }}" style="background:none;border:none;border-bottom:2px solid {{ swBorder }};color:{{ swCol }};padding:0 0 13px;margin-bottom:-1px;font:500 13px 'Bricolage Grotesque';cursor:pointer">Software</button>
+        <button onClick="{{ setInfra }}" style="background:none;border:none;border-bottom:2px solid {{ infraBorder }};color:{{ infraCol }};padding:0 0 13px;margin-bottom:-1px;font:500 13px 'Bricolage Grotesque';cursor:pointer">Infrastructure</button>
+      </div>
+
+      <sc-if value="{{ isSw }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <sc-for list="{{ software }}" as="row" hint-placeholder-count="5">
+        <div onClick="{{ row.open }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:22px 2px;border-bottom:1px solid var(--line2);color:var(--fg);cursor:pointer" style-hover="color:var(--dim)">
+          <span style="flex:none;font:600 clamp(18px,1.8vw,24px) 'Bricolage Grotesque';letter-spacing:-.01em">{{ row.name }}</span>
+          <span style="flex:1;font:400 14px 'Bricolage Grotesque';color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ row.role }} · {{ row.stack }}</span>
+          <span style="flex:none;display:inline-flex;align-items:center;gap:7px;font:400 12px 'Bricolage Grotesque',sans-serif;color:var(--dim2)"><span style="width:5px;height:5px;border-radius:50%;background:{{ row.statusColor }}"></span>{{ row.year }}</span>
+        </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isInfra }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:clamp(16px,2.6vh,24px)">
+        <sc-for list="{{ infra }}" as="t" hint-placeholder-count="3">
+        <div style="border:1px solid var(--line);padding:clamp(22px,2.8vw,32px);display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap">
+            <div style="max-width:540px">
+              <div style="font:600 clamp(19px,1.9vw,26px) 'Bricolage Grotesque';letter-spacing:-.02em;margin-bottom:8px">{{ t.name }}</div>
+              <div style="font:400 14px/1.65 'Bricolage Grotesque';color:var(--dim)">{{ t.desc }}</div>
+            </div>
+            <div onClick="{{ deploy }}" style="flex:none;font:500 12px 'Bricolage Grotesque';color:var(--fg);cursor:pointer;border:1px solid var(--linestrong);padding:9px 14px" style-hover="background:var(--fg);color:var(--bg)">Deploy ↗</div>
+          </div>
+          <div style="font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim3)">{{ t.tag }}</div>
+          <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:6px 0">
+            <div style="position:absolute;left:6%;right:6%;top:50%;height:1px;background:var(--line)"></div>
+            <sc-for list="{{ t.nodes }}" as="n" hint-placeholder-count="4">
+            <div style="position:relative;background:var(--bg);border:1px solid var(--line);padding:8px 12px;font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">{{ n }}</div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isVault }}" hint-placeholder-val="{{ true }}">
+    <div style="min-height:70vh;display:flex;align-items:flex-start;justify-content:center;padding:clamp(36px,6vh,64px) 20px 80px">
+      <div style="width:100%;max-width:440px">
+
+        <div style="text-align:center;margin-bottom:32px">
+          <div style="font:600 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:var(--fg);margin-bottom:9px">Client Vault</div>
+          <div style="font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.06em;color:var(--dim2)">Private creative direction · invite only</div>
+        </div>
+
+        <sc-if value="{{ authed }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1px solid var(--linestrong);background:var(--bg);padding:clamp(22px,3.6vw,32px)">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;margin-bottom:4px;border-bottom:1px solid var(--line)">
+            <span style="display:inline-flex;align-items:center;gap:9px;font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold)"></span>Session ephemeral</span>
+            <span onClick="{{ lock }}" style="cursor:pointer;font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2)" style-hover="color:var(--fg)">Seal ✕</span>
+          </div>
+          <sc-for list="{{ vaultDocs }}" as="d" hint-placeholder-count="4">
+          <div onClick="{{ openDoc }}" style="display:flex;align-items:center;gap:14px;padding:17px 2px;border-bottom:1px solid var(--line2);color:var(--fg);cursor:pointer" style-hover="color:var(--dim)">
+            <span style="flex:none;font:600 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.1em;color:var(--dim);border:1px solid var(--line);padding:4px 6px">{{ d.type }}</span>
+            <div style="flex:1;min-width:0">
+              <div style="font:500 14px 'Bricolage Grotesque';letter-spacing:-.01em;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.name }}</div>
+              <div style="font:400 12px 'Bricolage Grotesque',sans-serif;color:var(--dim3)">{{ d.meta }} · {{ d.when }}</div>
+            </div>
+            <span style="flex:none;font-size:14px;color:var(--dim2)">↓</span>
+          </div>
+          </sc-for>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ notAuthed }}" hint-placeholder-val="{{ true }}">
+        <div style="border:1px solid var(--linestrong);background:var(--bg);padding:clamp(24px,3.8vw,34px)">
+          <div style="display:flex;border-bottom:1px solid var(--line);margin-bottom:28px">
+            <button onClick="{{ setSignin }}" style="flex:1;background:none;border:none;border-bottom:2px solid {{ siBorder }};color:{{ siCol }};padding:0 0 13px;margin-bottom:-1px;font:500 13px 'Bricolage Grotesque';cursor:pointer">Sign In</button>
+            <button onClick="{{ setRequest }}" style="flex:1;background:none;border:none;border-bottom:2px solid {{ raBorder }};color:{{ raCol }};padding:0 0 13px;margin-bottom:-1px;font:500 13px 'Bricolage Grotesque';cursor:pointer">Request Access</button>
+          </div>
+
+          <sc-if value="{{ isSignin }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitSignin }}" style="display:flex;flex-direction:column;gap:24px">
+            <label style="display:block">
+              <span style="display:block;font:400 12px 'Bricolage Grotesque';color:var(--dim2);margin-bottom:8px">Email</span>
+              <input type="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="name@studio.com" style="width:100%;box-sizing:border-box;background:transparent;border:none;border-bottom:1px solid var(--linestrong);padding:8px 2px;color:var(--fg);font:400 15px 'Bricolage Grotesque';outline:none" style-focus="border-bottom-color:var(--fg)">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font:400 12px 'Bricolage Grotesque';color:var(--dim2);margin-bottom:8px">Passphrase</span>
+              <input type="password" value="{{ pass }}" onChange="{{ onPass }}" placeholder="••••••••" style="width:100%;box-sizing:border-box;background:transparent;border:none;border-bottom:1px solid var(--linestrong);padding:8px 2px;color:var(--fg);font:400 15px 'Bricolage Grotesque';outline:none" style-focus="border-bottom-color:var(--fg)">
+            </label>
+            <button type="button" onClick="{{ submitSignin }}" style="width:100%;margin-top:4px;background:var(--fg);color:var(--bg);border:1px solid var(--fg);padding:14px;font:500 13px 'Bricolage Grotesque';letter-spacing:.04em;cursor:pointer" style-hover="opacity:.85">Establish Session →</button>
+          </form>
+          </sc-if>
+
+          <sc-if value="{{ isRequest }}" hint-placeholder-val="{{ false }}">
+          <form onSubmit="{{ submitRequest }}" style="display:flex;flex-direction:column;gap:24px">
+            <label style="display:block">
+              <span style="display:block;font:400 12px 'Bricolage Grotesque';color:var(--dim2);margin-bottom:8px">Full name</span>
+              <input type="text" value="{{ rname }}" onChange="{{ onRName }}" placeholder="Your name" style="width:100%;box-sizing:border-box;background:transparent;border:none;border-bottom:1px solid var(--linestrong);padding:8px 2px;color:var(--fg);font:400 15px 'Bricolage Grotesque';outline:none" style-focus="border-bottom-color:var(--fg)">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font:400 12px 'Bricolage Grotesque';color:var(--dim2);margin-bottom:8px">Work email</span>
+              <input type="email" value="{{ remail }}" onChange="{{ onREmail }}" placeholder="name@company.com" style="width:100%;box-sizing:border-box;background:transparent;border:none;border-bottom:1px solid var(--linestrong);padding:8px 2px;color:var(--fg);font:400 15px 'Bricolage Grotesque';outline:none" style-focus="border-bottom-color:var(--fg)">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font:400 12px 'Bricolage Grotesque';color:var(--dim2);margin-bottom:8px">Brief</span>
+              <textarea value="{{ rnote }}" onChange="{{ onRNote }}" rows="3" placeholder="One line on the engagement" style="width:100%;box-sizing:border-box;background:transparent;border:none;border-bottom:1px solid var(--linestrong);padding:8px 2px;color:var(--fg);font:400 14px 'Bricolage Grotesque';outline:none;resize:none" style-focus="border-bottom-color:var(--fg)"></textarea>
+            </label>
+            <button type="button" onClick="{{ submitRequest }}" style="width:100%;margin-top:4px;background:transparent;color:var(--fg);border:1px solid var(--linestrong);padding:14px;font:500 13px 'Bricolage Grotesque';letter-spacing:.04em;cursor:pointer" style-hover="background:var(--fg);color:var(--bg)">Transmit Request →</button>
+          </form>
+          </sc-if>
+
+          <div style="display:flex;align-items:center;gap:9px;margin-top:26px;font:400 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.08em;color:var(--dim3)">
+            <span style="width:5px;height:5px;border-radius:50%;background:var(--gold)"></span>TLS 1.3 · AES-256-GCM · EPHEMERAL SESSION
+          </div>
+        </div>
+        </sc-if>
+
+      </div>
+    </div>
+    </sc-if>
+
+  </main>
+
+  <div style="position:fixed;bottom:24px;right:24px;z-index:90;display:flex;flex-direction:column;gap:10px;width:330px;max-width:calc(100vw - 48px)">
+    <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="0">
+    <div style="display:flex;gap:12px;background:var(--bg);border:1px solid var(--linestrong);border-left:2px solid {{ t.tint }};padding:13px 15px;box-shadow:0 14px 34px rgba(0,0,0,.18)">
+      <span style="flex:none;font:600 12px 'Bricolage Grotesque',sans-serif;letter-spacing:.06em;color:{{ t.tint }};padding-top:2px">{{ t.code }}</span>
+      <div style="min-width:0">
+        <div style="font:600 12px 'Bricolage Grotesque';letter-spacing:-.01em;color:var(--fg);margin-bottom:3px">{{ t.title }}</div>
+        <div style="font:400 12px/1.5 'Bricolage Grotesque';color:var(--dim)">{{ t.msg }}</div>
+      </div>
+    </div>
+    </sc-for>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#5FE12C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#5FE12C&quot;,&quot;#76FF03&quot;,&quot;#39D353&quot;],&quot;section&quot;:&quot;Accent (dark mode)&quot;},&quot;accentLight&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2E7D17&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#2E7D17&quot;,&quot;#1F6B12&quot;,&quot;#101013&quot;],&quot;section&quot;:&quot;Accent (light mode)&quot;}}">
+class Component extends DCLogic {
+  state = { view:'home', theme:null, workTab:'software', vaultTab:'signin', email:'', pass:'', rname:'', remail:'', rnote:'', authed:false, toasts:[] };
+  _tid = 0;
+
+  systems = [
+    { name:'Aperture', tag:'Edge image delivery pipeline', year:'2025' },
+    { name:'Adinkra', tag:'Cross-platform design system', year:'2024' },
+    { name:'Kestrel', tag:'Realtime infra orchestrator', year:'2023' },
+  ];
+
+  software = [
+    { name:'Aperture CDN', role:'Founding Engineer', stack:'Rust · WASM', year:'2025', statusColor:'#39B54A' },
+    { name:'Sankofa Ledger', role:'Tech Lead', stack:'Elixir · Postgres', year:'2024', statusColor:'#39B54A' },
+    { name:'Nocturne', role:'Solo Developer', stack:'Swift · Metal', year:'2024', statusColor:'#39B54A' },
+    { name:'Kestrel', role:'Systems Architect', stack:'Go · Kubernetes', year:'2023', statusColor:'#39B54A' },
+    { name:'Loom API', role:'Creator', stack:'TypeScript · Deno', year:'2025', statusColor:'#F5A623' },
+  ];
+
+  infra = [
+    { name:'Multi-region edge mesh', desc:'Anycast points of presence with tiered caching and origin shielding for sub-50ms global delivery.', tag:'AWS · Terraform · 40 regions', nodes:['Client','Edge PoP','Shield','Origin'] },
+    { name:'Event-driven media pipeline', desc:'Ingest, transcode and distribute at scale — fully asynchronous, back-pressure aware.', tag:'GCP · Pub/Sub · Cloud Run', nodes:['Ingest','Queue','Transcode','CDN'] },
+    { name:'Zero-trust vault', desc:'Ephemeral credential brokering with a complete, tamper-evident audit trail.', tag:'HashiCorp · mTLS · SPIFFE', nodes:['Gateway','Auth','Vault','Audit'] },
+  ];
+
+  vaultDocs = [
+    { name:'Mary & Eve — Print Edition Pitch', type:'PDF', meta:'24 pp', when:'2 days ago' },
+    { name:'Adinkra × Muji — Concept', type:'KEY', meta:'40 pp', when:'5 days ago' },
+    { name:'Kestrel Series B — Infra Narrative', type:'PDF', meta:'18 pp', when:'1 week ago' },
+    { name:'Adam & Joseph — Exhibition', type:'PDF', meta:'32 pp', when:'3 weeks ago' },
+  ];
+
+  componentDidMount() { try { document.documentElement.lang = 'en'; document.title = 'NIMFAH — Portfolio'; } catch (e) {} }
+  go = (v) => { this.setState({ view:v }); try { window.scrollTo({ top:0, behavior:'auto' }); } catch (e) {} };
+  currentTheme = () => this.state.theme ?? this.props.defaultTheme ?? 'light';
+  toggleTheme = () => { const next = this.currentTheme() === 'light' ? 'dark' : 'light'; this.setState({ theme: next }); };
+
+  toast = (kind, title, msg) => {
+    const id = ++this._tid;
+    const map = { success:{ tint:'#39B54A', code:'200' }, error:{ tint:'#E5484D', code:'422' }, info:{ tint:'#8a8a92', code:'···' } };
+    const m = map[kind] || map.info;
+    this.setState((s) => ({ toasts:[...s.toasts, { id, kind, title, msg, tint:m.tint, code:m.code }] }));
+    setTimeout(() => this.dismiss(id), 4800);
+  };
+  dismiss = (id) => { this.setState((s) => ({ toasts:s.toasts.filter((t) => t.id !== id) })); };
+
+  submitSignin = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const { email, pass } = this.state;
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { this.toast('error','Authentication rejected','Malformed identity string — check credential format.'); return; }
+    if ((pass || '').length < 6) { this.toast('error','Authentication rejected','Passphrase below minimum entropy — 6+ characters required.'); return; }
+    this.toast('success','Session established','Ephemeral key exchanged · AES-256-GCM · vault unsealed.');
+    this.setState({ authed:true });
+  };
+  submitRequest = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const { rname, remail, rnote } = this.state;
+    if (!rname.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(remail) || !rnote.trim()) { this.toast('error','Request incomplete','All fields required — name, verified email, and a brief.'); return; }
+    this.toast('success','Request transmitted','Encrypted · a curator will respond within 48 hours.');
+    this.setState({ rname:'', remail:'', rnote:'' });
+  };
+  lock = () => { this.setState({ authed:false, email:'', pass:'' }); this.toast('info','Session sealed','Ephemeral key destroyed · vault re-locked.'); };
+
+  renderVals() {
+    const dark = this.currentTheme() === 'dark';
+    const gold = dark ? (this.props.accent || '#5FE12C') : (this.props.accentLight || '#2E7D17');
+    const T = dark
+      ? { bg:'#0A0A0B', fg:'#F4F3EE', dim:'#9a9aa2', dim2:'#7a7a82', dim3:'#5a5a62', surface:'#101012', line:'rgba(255,255,255,.12)', line2:'rgba(255,255,255,.07)', lineStrong:'rgba(255,255,255,.24)' }
+      : { bg:'#FFFFFF', fg:'#101013', dim:'#4c4c53', dim2:'#66666e', dim3:'#6e6e75', surface:'#F6F6F4', line:'rgba(0,0,0,.14)', line2:'rgba(0,0,0,.08)', lineStrong:'rgba(0,0,0,.36)' };
+    const v = this.state.view, wt = this.state.workTab, vt = this.state.vaultTab;
+    const dim = T.dim2;
+    const wire = (row) => ({ ...row, open:() => this.toast('info','Fetching case study', row.name + ' — opening detail view.') });
+    return {
+      gold,
+      bg:T.bg, fg:T.fg, dim:T.dim, dim2:T.dim2, dim3:T.dim3, surface:T.surface, line:T.line, line2:T.line2, lineStrong:T.lineStrong,
+      themeGlyph: dark ? '☀' : '☾', toggleTheme:this.toggleTheme,
+      isHome: v === 'home', isWork: v === 'work', isVault: v === 'vault',
+      navHome: v === 'home' ? T.fg : dim, navWork: v === 'work' ? T.fg : dim, navVault: v === 'vault' ? T.fg : dim, navContact: dim,
+      navHomeW: v === 'home' ? '600' : '400', navWorkW: v === 'work' ? '600' : '400', navVaultW: v === 'vault' ? '600' : '400',
+      goHome:() => this.go('home'), goWork:() => this.go('work'), goVault:() => this.go('vault'),
+      systems:this.systems,
+      software:this.software.map(wire),
+      infra:this.infra,
+      deploy:() => this.toast('info','Provisioning','Template queued — review your terraform plan.'),
+      isSw: wt === 'software', isInfra: wt === 'infra',
+      setSw:() => this.setState({ workTab:'software' }), setInfra:() => this.setState({ workTab:'infra' }),
+      swCol: wt === 'software' ? T.fg : dim, swBorder: wt === 'software' ? T.fg : 'transparent',
+      infraCol: wt === 'infra' ? T.fg : dim, infraBorder: wt === 'infra' ? T.fg : 'transparent',
+      isSignin: vt === 'signin', isRequest: vt === 'request',
+      setSignin:() => this.setState({ vaultTab:'signin' }), setRequest:() => this.setState({ vaultTab:'request' }),
+      siCol: vt === 'signin' ? T.fg : dim, siBorder: vt === 'signin' ? T.fg : 'transparent',
+      raCol: vt === 'request' ? T.fg : dim, raBorder: vt === 'request' ? T.fg : 'transparent',
+      authed:this.state.authed, notAuthed: !this.state.authed,
+      email:this.state.email, pass:this.state.pass, rname:this.state.rname, remail:this.state.remail, rnote:this.state.rnote,
+      onEmail:(e) => this.setState({ email:e.target.value }), onPass:(e) => this.setState({ pass:e.target.value }),
+      onRName:(e) => this.setState({ rname:e.target.value }), onREmail:(e) => this.setState({ remail:e.target.value }), onRNote:(e) => this.setState({ rnote:e.target.value }),
+      submitSignin:this.submitSignin, submitRequest:this.submitRequest, lock:this.lock,
+      openDoc:() => this.toast('success','Decrypting','Fetching document · streaming over ephemeral channel.'),
+      vaultDocs:this.vaultDocs, toasts:this.state.toasts, dismiss:this.dismiss,
+    };
+  }
+}
+</script>
+</body>
+</html>
