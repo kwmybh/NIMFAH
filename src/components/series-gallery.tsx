@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { Series } from "@/lib/data";
-import { photoUrl } from "@/lib/data";
+import { seriesMeta } from "@/lib/data";
 import { makeVtt, makeWav } from "@/lib/audio";
 
 type ItemKind = "photo" | "film" | "sound";
@@ -241,15 +241,15 @@ export function SeriesGallery({ cfg }: { cfg: Series }) {
           <span className="idx">Series {cfg.idx}</span>
           <h2>{cfg.title}</h2>
         </div>
-        <span className="meta">{cfg.meta}</span>
+        <span className="meta">{seriesMeta(cfg)}</span>
       </div>
 
       <div className="stage">
         {item.kind === "photo" && (
-          // eslint-disable-next-line @next/next/no-img-element -- royalty-free placeholder, replaced with client work
+          // eslint-disable-next-line @next/next/no-img-element -- images come from data.ts frames[]
           <img
-            src={photoUrl(cfg.seed, item.n as number, 1280, 800, cfg.gs)}
-            alt={`${cfg.title} — ${item.label} (placeholder photograph)`}
+            src={cfg.frames[(item.n ?? 1) - 1] ?? cfg.frames[0]}
+            alt={`${cfg.title} — ${item.label}`}
           />
         )}
         {item.kind === "film" && (
@@ -257,7 +257,7 @@ export function SeriesGallery({ cfg }: { cfg: Series }) {
             <video
               ref={videoRef}
               src={cfg.film}
-              poster={photoUrl(cfg.seed, "film", 1280, 800, cfg.gs)}
+              poster={cfg.poster}
               preload="metadata"
               playsInline
               crossOrigin="anonymous"

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { SERIES, frameCount, getSeries, photoUrl } from "@/lib/data";
+import { SERIES, getSeries, seriesMeta } from "@/lib/data";
 
 type Params = { id: string };
 
@@ -30,8 +30,7 @@ export default async function SeriesDetail({
   const series = getSeries(id);
   if (!series) notFound();
 
-  const count = frameCount(series);
-  const frames = Array.from({ length: count }, (_, i) => i + 1);
+  const count = series.frames.length;
 
   return (
     <div className="detail">
@@ -40,18 +39,18 @@ export default async function SeriesDetail({
       </Link>
       <h1>{series.title}</h1>
       <p className="meta">
-        Series {series.idx} · {series.meta}
+        Series {series.idx} · {seriesMeta(series)}
       </p>
       <div className="frame-grid">
-        {frames.map((f) => {
-          const n = String(f).padStart(2, "0");
+        {series.frames.map((src, i) => {
+          const n = String(i + 1).padStart(2, "0");
           return (
-            <figure key={f}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- royalty-free placeholder, replaced with client work */}
+            <figure key={i}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- images come from data.ts frames[] */}
               <img
                 loading="lazy"
-                src={photoUrl(series.seed, `f${f}`, 720, 900, series.gs)}
-                alt={`${series.title} — frame ${n} (placeholder)`}
+                src={src}
+                alt={`${series.title} — frame ${n}`}
               />
               <figcaption>
                 {n} / {count}

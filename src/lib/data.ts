@@ -1,27 +1,49 @@
 // Static content config for the platform. There is no server data — every surface is
-// driven by these two arrays (mirrors SERIES / DOCS in the canonical design).
-// All media are royalty-free placeholders to be swapped for the client's real work.
+// driven by these arrays. Images are explicit lists of paths per series (swap the
+// placeholder generators below for your own files — see public/artwork/README.md).
 
 export type Series = {
   idx: string; // "01"–"04"
+  slug: string; // url-safe folder name under /public/artwork
   title: string;
-  meta: string; // "2023 · 18 frames · Silver gelatin"
-  seed: string; // picsum.photos seed
-  gs: boolean; // grayscale (monochrome series)
-  film: string; // placeholder video URL
+  year: string; // "2023"
+  medium: string; // "Silver gelatin"
+  frames: string[]; // the series' photos; first three preview on the home galleries,
+  //                    the full list fills the series-detail grid. Count derives from here.
+  poster: string; // film reel poster image
+  film: string; // reel video URL
   filmMeta: string; // "16mm transfer · 00:15"
   sound: string; // field-recording label
   base: number; // base frequency for the synthesized WAV
   transcript: string; // written transcript for the audio (a11y)
 };
 
+// --- Placeholder generators --------------------------------------------------
+// TEMPORARY: royalty-free picsum.photos URLs so the site looks complete before the
+// client's real work is added. To use your own images, drop files in
+// public/artwork/<slug>/ and replace the `placeholderFrames(...)` / `placeholder(...)`
+// calls below with paths, e.g. frames: ["/artwork/mary-eve/01.jpg", ...].
+function placeholder(seed: string, w: number, h: number, mono: boolean): string {
+  return `https://picsum.photos/seed/${seed}/${w}/${h}${mono ? "?grayscale" : ""}`;
+}
+function placeholderFrames(seed: string, count: number, mono: boolean): string[] {
+  return Array.from({ length: count }, (_, i) =>
+    placeholder(`${seed}-f${i + 1}`, 1000, 1250, mono),
+  );
+}
+
+// The lead artwork behind the home wordmark. Replace with e.g. "/artwork/hero.jpg".
+export const HERO_IMAGE = placeholder("nimfah-a", 1800, 1070, true);
+
 export const SERIES: Series[] = [
   {
     idx: "01",
+    slug: "mary-eve",
     title: "Mary & Eve",
-    meta: "2023 · 18 frames · Silver gelatin",
-    seed: "santamaria",
-    gs: true,
+    year: "2023",
+    medium: "Silver gelatin",
+    frames: placeholderFrames("santamaria", 18, true),
+    poster: placeholder("santamaria-film", 1280, 800, true),
     film: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4",
     filmMeta: "16mm transfer · 00:15",
     sound: "Accra harbour, dawn",
@@ -31,10 +53,12 @@ export const SERIES: Series[] = [
   },
   {
     idx: "02",
+    slug: "adam-joseph",
     title: "Adam & Joseph",
-    meta: "2024 · 26 frames · Available light",
-    seed: "joseph",
-    gs: false,
+    year: "2024",
+    medium: "Available light",
+    frames: placeholderFrames("joseph", 26, false),
+    poster: placeholder("joseph-film", 1280, 800, false),
     film: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
     filmMeta: "Super 8 transfer · 00:15",
     sound: "Workshop, mid-morning",
@@ -44,10 +68,12 @@ export const SERIES: Series[] = [
   },
   {
     idx: "03",
+    slug: "tatted",
     title: "Tatted",
-    meta: "2025 · 21 frames · Monochrome",
-    seed: "tatted",
-    gs: true,
+    year: "2025",
+    medium: "Monochrome",
+    frames: placeholderFrames("tatted", 21, true),
+    poster: placeholder("tatted-film", 1280, 800, true),
     film: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4",
     filmMeta: "16mm transfer · 00:15",
     sound: "Studio session, late night",
@@ -57,10 +83,12 @@ export const SERIES: Series[] = [
   },
   {
     idx: "04",
+    slug: "mans-best-friends",
     title: "Man's Best Friends",
-    meta: "2025 · 30 frames · Available light",
-    seed: "bestfriends",
-    gs: false,
+    year: "2025",
+    medium: "Available light",
+    frames: placeholderFrames("bestfriends", 30, false),
+    poster: placeholder("bestfriends-film", 1280, 800, false),
     film: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
     filmMeta: "Super 8 transfer · 00:15",
     sound: "Park, early morning",
@@ -87,19 +115,7 @@ export function getSeries(idx: string): Series | undefined {
   return SERIES.find((s) => s.idx === idx);
 }
 
-// Frame count parsed from the series meta ("… · 18 frames · …") -> 18 / 26 / 21 / 30.
-export function frameCount(series: Series): number {
-  const match = series.meta.match(/(\d+) frames/);
-  return match ? parseInt(match[1], 10) : 0;
-}
-
-// picsum.photos seeded placeholder URL builder.
-export function photoUrl(
-  seed: string,
-  suffix: string | number,
-  w: number,
-  h: number,
-  grayscale: boolean,
-): string {
-  return `https://picsum.photos/seed/${seed}-${suffix}/${w}/${h}${grayscale ? "?grayscale" : ""}`;
+// "2023 · 18 frames · Silver gelatin" — frame count stays in sync with `frames`.
+export function seriesMeta(s: Series): string {
+  return `${s.year} · ${s.frames.length} frames · ${s.medium}`;
 }

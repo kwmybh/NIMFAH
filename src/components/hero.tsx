@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { HERO_IMAGE } from "@/lib/data";
 
 // Subtle parallax: the lead artwork drifts vertically within its clipped frame as the page
 // scrolls, so the wordmark reads as lifting off the image. Transform-only (compositor
@@ -48,10 +49,10 @@ export function Hero() {
     <div className="hero">
       <div className="hero-frame">
         <div className="hero-img" ref={frameRef}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- royalty-free placeholder, replaced with client work */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- swap HERO_IMAGE in data.ts for real work */}
           <img
             ref={imgRef}
-            src="https://picsum.photos/seed/nimfah-a/1800/1070?grayscale"
+            src={HERO_IMAGE}
             alt="Lead artwork — monochrome photograph"
           />
         </div>
