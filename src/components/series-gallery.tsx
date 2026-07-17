@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Series } from "@/lib/data";
 import { seriesMeta } from "@/lib/data";
@@ -246,10 +247,11 @@ export function SeriesGallery({ cfg }: { cfg: Series }) {
 
       <div className="stage">
         {item.kind === "photo" && (
-          // eslint-disable-next-line @next/next/no-img-element -- images come from data.ts frames[]
-          <img
+          <Image
             src={cfg.frames[(item.n ?? 1) - 1] ?? cfg.frames[0]}
             alt={`${cfg.title} — ${item.label}`}
+            fill
+            sizes="(max-width: 1600px) 100vw, 1500px"
           />
         )}
         {item.kind === "film" && (

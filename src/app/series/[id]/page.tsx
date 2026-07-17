@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { SERIES, getSeries, seriesMeta } from "@/lib/data";
 
 type Params = { id: string };
@@ -46,12 +47,14 @@ export default async function SeriesDetail({
           const n = String(i + 1).padStart(2, "0");
           return (
             <figure key={i}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- images come from data.ts frames[] */}
-              <img
-                loading="lazy"
-                src={src}
-                alt={`${series.title} — frame ${n}`}
-              />
+              <div className="frame-thumb">
+                <Image
+                  src={src}
+                  alt={`${series.title} — frame ${n}`}
+                  fill
+                  sizes="(max-width: 640px) 45vw, 300px"
+                />
+              </div>
               <figcaption>
                 {n} / {count}
               </figcaption>

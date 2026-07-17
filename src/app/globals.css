@@ -154,11 +154,12 @@ header {
   overflow: hidden;
   background: var(--surface);
 }
-.hero-img img {
+/* The layer the parallax transform is applied to; holds the fill <Image>. */
+.hero-parallax {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+}
+.hero-img img {
   object-fit: cover;
 }
 .wordmark {
@@ -675,11 +676,13 @@ footer {
 .frame-grid figure {
   margin: 0;
 }
-.frame-grid img {
-  width: 100%;
+.frame-grid .frame-thumb {
+  position: relative;
   aspect-ratio: 4 / 5;
-  object-fit: cover;
   background: var(--surface);
+}
+.frame-grid img {
+  object-fit: cover;
 }
 .frame-grid figcaption {
   font: 400 12px var(--font-bricolage);
