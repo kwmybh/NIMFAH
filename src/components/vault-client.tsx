@@ -59,7 +59,7 @@ export function VaultClient() {
       toast("error", "Authentication rejected", "Passphrase below minimum entropy — 6+ characters required.");
       return;
     }
-    toast("success", "Session established", "Ephemeral key exchanged · AES-256-GCM · vault unsealed.");
+    toast("success", "Session established", "Preview session started · vault unsealed.");
     writeSession(true);
   }
 
@@ -69,7 +69,7 @@ export function VaultClient() {
       toast("error", "Request incomplete", "All fields required — name, verified email, and a brief.");
       return;
     }
-    toast("success", "Request transmitted", "Encrypted · a curator will respond within 48 hours.");
+    toast("success", "Request received", "A curator will respond within 48 hours.");
     setRqName("");
     setRqEmail("");
     setRqNote("");
@@ -77,11 +77,11 @@ export function VaultClient() {
 
   function seal() {
     writeSession(false);
-    toast("info", "Session sealed", "Ephemeral key destroyed · vault re-locked.");
+    toast("info", "Session sealed", "Session ended · vault re-locked.");
   }
 
   function decrypt() {
-    toast("success", "Decrypting", "Fetching document · streaming over ephemeral channel.");
+    toast("info", "Preview only", "This document isn't attached yet — no file to fetch.");
   }
 
   return (
@@ -217,7 +217,7 @@ export function VaultClient() {
 
             <div className="fine">
               <span className="dot" />
-              TLS 1.3 · AES-256-GCM · EPHEMERAL SESSION
+              PREVIEW ACCESS · NOT A SECURED CHANNEL
             </div>
           </div>
         )}
