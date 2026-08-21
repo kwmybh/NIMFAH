@@ -42,7 +42,7 @@ export const SERIES: Series[] = [
     title: "Mary & Eve",
     year: "2023",
     medium: "Silver gelatin",
-    frames: placeholderFrames("santamaria", 18, true),
+    frames: ["/artwork/mary-eve/01.jpg"],
     poster: placeholder("santamaria-film", 1280, 800, true),
     film: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4",
     filmMeta: "16mm transfer · 00:15",
