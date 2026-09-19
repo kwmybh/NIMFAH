@@ -119,6 +119,16 @@ export default function FirstFifteenLastMileOnboarding() {
         </div>
       </section>
 
+      <section className="f15-disclosure" aria-label="Fictional client disclosure">
+        <div className="f15-wrap">
+          <p>
+            MileOne Logistics is a fictional organisation created for this project. All scenarios,
+            characters, and data are illustrative. No proprietary or client information is
+            represented, and no metrics in this case study are reported outcomes.
+          </p>
+        </div>
+      </section>
+
       <Section id="challenge" tone="dark" number="01" eyebrow="The Challenge" title="The gap isn&apos;t knowledge. It&apos;s deciding.">
           <p>A last-mile delivery operation loses more service and safety ground in the first fifteen minutes of a shift than in the eight hours that follow. That window is where an associate finds the tire-pressure alert, the label they cannot read, the medical delivery with a receiving window, and the dispatch note that today&apos;s volume is heavier than planned. It is also the window where a new hire has the least context and the most pressure to simply leave.</p>
           <p>Conventional onboarding is badly matched to this. It front-loads policy — handbooks, compliance modules, a checklist to acknowledge — and then sends a nine-day-old associate into a morning that demands judgment, prioritisation, and the confidence to interrupt a dispatcher. The gap is not knowledge. Most new associates can recite the pre-shift checklist. The gap is <b>decision-making under competing pressure</b>, which is the one thing a checklist cannot teach and a knowledge check cannot measure.</p>
@@ -230,6 +240,28 @@ export default function FirstFifteenLastMileOnboarding() {
           <p>The second thing: designing the accessibility requirements first made the experience better for everyone. Removing the real-time timer, which I added early because pressure felt authentic, forced me to create pressure through consequence instead — and consequence is what teaches. The constraint improved the design.</p>
           <p>What I would want a hiring manager to take from this project is not that I can operate Storyline. It is that I can be handed a messy operational problem, find the actual performance gap inside it, build a model simple enough to fit on a wallet card, and then produce something learners will finish and managers will reinforce — and that I will tell you plainly which parts of it still need to be tested.</p>
       </Section>
+
+      <section className="f15-close" aria-label="Accessibility statement and contact">
+        <div className="f15-wrap">
+          <p className="f15-close-a11y">
+            <strong>Accessibility</strong>
+            This project was designed to WCAG 2.1 AA. Contrast ratios were verified for every colour
+            pair, all interactions are keyboard-operable with a visible focus indicator, no
+            information is conveyed by colour alone, narration is captioned and available as a
+            transcript, and there are no timed interactions. The prototype was tested keyboard-only
+            and with NVDA and VoiceOver.
+          </p>
+          <p className="f15-contact-line">
+            Designing learning that holds up under real conditions.
+          </p>
+          <p className="f15-close-sub">
+            Available for learning experience design and instructional design roles.
+          </p>
+          <p className="f15-close-nav">
+            <a href="/">← Back to the rest of the work</a>
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

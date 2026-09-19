@@ -23,7 +23,7 @@ export function Header() {
         >
           Vault
         </Link>
-        <a href="mailto:studio@nimfah.com">Contact</a>
+        <a href="mailto:kwame.nimfah@gmail.com">Contact</a>
       </nav>
     </header>
   );

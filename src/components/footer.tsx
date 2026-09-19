@@ -6,8 +6,8 @@ export function Footer() {
     <footer>
       <div className="foot">
         <p className="line">Let&apos;s build something enduring</p>
-        <a className="mail" href="mailto:studio@nimfah.com">
-          studio@nimfah.com
+        <a className="mail" href="mailto:kwame.nimfah@gmail.com">
+          kwame.nimfah@gmail.com
         </a>
         <div className="socials">
           <a href="https://instagram.com" target="_blank" rel="noopener">
