@@ -1,0 +1,983 @@
+<title>First 15</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ── First 15 · a deliberately single-theme page ──────────────────────────
+   The project's identity IS the near-black foundation with ivory document
+   surfaces; a light variant would misrepresent the system this page
+   documents. Every colour is painted explicitly from a token.            */
+:root{
+  --ink:#14161A; --slate:#1F232A; --graphite:#2A2F37; --hair-d:#3A4048;
+  --ivory:#F4F1EA; --paper:#FBFAF7; --bone:#E7E2D7; --hair-l:#D8D3C8;
+  --gold:#B8873B; --gold-lt:#D9A84E; --gold-dp:#775418;
+  --indigo:#2F4B8F; --indigo-lt:#8FA9E6;
+  --silver:#A8AEB5; --mid:#5F646A;
+  --teal:#5FB79A; --amber:#E8A951; --crimson:#E58A8A;
+
+  --tx:var(--ivory); --tx2:var(--silver);
+  --disp:"Bodoni Moda",Didot,"Times New Roman",serif;
+  --ui:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --data:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+
+  --wrap:1180px; --prose:66ch;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.25rem; --s5:3.5rem; --s6:5.5rem;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ink); color:var(--tx);
+  font-family:var(--ui); font-size:1.0625rem; line-height:1.65;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{max-width:var(--wrap); margin-inline:auto; padding-inline:clamp(16px,4vw,56px)}
+h1,h2,h3,h4{margin:0; text-wrap:balance}
+p{margin:0}
+a{color:var(--indigo-lt); text-decoration:none; border-bottom:1px solid color-mix(in srgb,var(--indigo-lt) 40%,transparent)}
+a:hover{border-bottom-color:var(--indigo-lt)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ivory); outline-offset:2px; border-radius:1px}
+img{max-width:100%}
+.lbl{font:600 .6875rem/1.2 var(--ui); letter-spacing:.15em; text-transform:uppercase; color:var(--gold-lt)}
+.mono{font-family:var(--data); font-variant-numeric:tabular-nums}
+.stack{display:flex; flex-direction:column}
+
+/* ── skip link ── */
+.skip{position:absolute; left:-9999px; top:0; background:var(--ivory); color:var(--ink);
+  padding:.6rem 1rem; font-weight:600; z-index:99}
+.skip:focus{left:1rem; top:1rem}
+
+/* ── section index ── */
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:50;
+  background:color-mix(in srgb,var(--ink) 92%,transparent); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--hair-d)}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:var(--s2);
+  padding-block:.7rem; min-height:52px}
+.brand{font:500 1rem/1 var(--disp); letter-spacing:.02em; color:var(--paper)}
+.brand span{color:var(--gold); font-family:var(--data); font-size:.75rem; letter-spacing:.1em; margin-left:.6rem}
+.topnav{display:flex; gap:1.25rem; overflow-x:auto; scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{border:0; color:var(--silver); font-size:.8125rem; white-space:nowrap}
+.topnav a:hover{color:var(--gold-lt)}
+
+/* ── hero ── */
+.hero{padding-block:clamp(var(--s5),9vw,var(--s6)) var(--s5); border-bottom:1px solid var(--hair-d)}
+.hero .rule{width:96px; height:1px; background:var(--gold); margin-bottom:1.75rem}
+.hero h1{font-family:var(--disp); font-weight:400;
+  font-size:clamp(2.5rem,7.2vw,5rem); line-height:1.02; letter-spacing:-.015em; color:var(--paper);
+  max-width:20ch}
+.hero .sub{margin-top:1.5rem; font-size:clamp(1.0625rem,1.8vw,1.3125rem); color:var(--tx); max-width:52ch}
+.hero .summary{margin-top:var(--s3); max-width:var(--prose); color:var(--tx2); font-size:1rem}
+.hero .summary b{color:var(--ivory); font-weight:500}
+
+/* ── CTAs ── */
+.ctas{display:flex; flex-wrap:wrap; gap:.875rem; margin-top:var(--s4)}
+.cta{display:flex; flex-direction:column; gap:.2rem; padding:.85rem 1.4rem; border-radius:2px;
+  border:1px solid transparent; font-family:var(--ui); cursor:pointer; text-align:left;
+  background:none; color:inherit; font-size:1rem}
+.cta strong{font-weight:600; letter-spacing:.005em}
+.cta em{font-style:normal; font-size:.75rem; opacity:.8}
+.cta-1{background:var(--indigo); color:var(--paper); border-color:var(--indigo)}
+.cta-1:hover{background:#3E5EAA}
+.cta-2{border-color:var(--hair-d); color:var(--ivory)}
+.cta-2:hover{border-color:var(--gold); color:var(--gold-lt)}
+.cta-3{padding-inline:0; color:var(--indigo-lt)}
+.cta-3:hover{color:var(--ivory)}
+.cta-note{margin-top:.9rem; font-size:.8125rem; color:var(--mid); max-width:54ch}
+
+/* ── facts ── */
+.facts{padding-block:var(--s4); border-bottom:1px solid var(--hair-d)}
+.factgrid{display:grid; gap:1.4rem 2.5rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.fact dt{font:600 .6875rem/1.2 var(--ui); letter-spacing:.15em; text-transform:uppercase; color:var(--gold-lt); margin-bottom:.4rem}
+.fact dd{margin:0; font-size:.9375rem; color:var(--tx)}
+
+/* ── section shell ── */
+section{padding-block:var(--s5)}
+.eyebrow{display:flex; align-items:baseline; gap:.85rem; margin-bottom:.9rem}
+.eyebrow .n{font-family:var(--data); font-size:.8125rem; color:var(--gold)}
+h2{font-family:var(--disp); font-weight:400; font-size:clamp(1.65rem,3.4vw,2.5rem);
+  line-height:1.12; letter-spacing:-.01em; color:var(--paper); max-width:26ch}
+.prose{max-width:var(--prose); margin-top:var(--s3); display:flex; flex-direction:column; gap:1.1rem}
+.prose p{color:var(--tx)}
+.prose b,.prose strong{color:var(--paper); font-weight:600}
+.prose em{color:var(--gold-lt); font-style:italic}
+h3{font:600 1.0625rem/1.4 var(--ui); color:var(--paper); margin-top:.6rem}
+
+/* ── paper bands: the page re-enacts the product's material logic ── */
+.paper{background:var(--ivory); color:var(--ink)}
+.paper h2,.paper h3{color:var(--ink)}
+.paper .prose p{color:var(--ink)}
+.paper .prose b{color:var(--ink)}
+.paper .prose em{color:var(--gold-dp)}
+.paper .eyebrow .n{color:var(--gold-dp)}
+.paper .lbl{color:var(--gold-dp)}
+.paper a{color:var(--indigo); border-bottom-color:color-mix(in srgb,var(--indigo) 40%,transparent)}
+.paper .muted{color:var(--mid)}
+.muted{color:var(--tx2)}
+
+/* ── pull quote ── */
+.pull{margin-top:var(--s4); padding-left:1.5rem; border-left:2px solid var(--gold);
+  font-family:var(--disp); font-size:clamp(1.25rem,2.4vw,1.75rem); line-height:1.35; color:var(--gold-lt);
+  max-width:46ch}
+.paper .pull{color:var(--gold-dp); border-left-color:var(--gold-dp)}
+
+/* ── triad cards ── */
+.triad{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); margin-top:var(--s4)}
+.disp{padding:1.25rem 1.35rem; background:var(--paper); border-left:3px solid var(--gold-dp)}
+.disp.fix{border-left-color:#2F6F5B}
+.disp.flag{border-left-color:#9E2B2B}
+.disp h4{font:600 1.1875rem/1 var(--ui); letter-spacing:.06em; margin-bottom:.55rem}
+.disp.fix h4{color:#2F6F5B} .disp.flag h4{color:#9E2B2B} .disp.note h4{color:var(--gold-dp)}
+.disp p{font-size:.9375rem; color:var(--ink)}
+
+/* ── trigger list ── */
+.trigs{margin-top:var(--s4); display:grid; gap:0}
+.trig{display:grid; grid-template-columns:110px 1fr; gap:1rem; padding:.85rem 0;
+  border-top:1px solid var(--hair-l)}
+.trig:last-child{border-bottom:1px solid var(--hair-l)}
+.trig dt{font:600 .8125rem/1.5 var(--ui); letter-spacing:.1em; color:var(--gold-dp)}
+.trig dd{margin:0; font-size:.9375rem}
+@media(max-width:520px){.trig{grid-template-columns:1fr; gap:.15rem}}
+
+/* ── tables ── */
+.tscroll{margin-top:var(--s4); overflow-x:auto; border:1px solid var(--hair-d)}
+.paper .tscroll{border-color:var(--hair-l)}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:.875rem}
+th{background:var(--graphite); color:var(--gold-lt); font:600 .6875rem/1.3 var(--ui);
+  letter-spacing:.12em; text-transform:uppercase; text-align:left; padding:.7rem .85rem; white-space:nowrap}
+td{padding:.65rem .85rem; border-top:1px solid var(--hair-d); vertical-align:top; color:var(--tx)}
+.paper th{background:var(--ink); color:var(--gold-lt)}
+.paper td{border-top-color:var(--hair-l); color:var(--ink)}
+td.num{font-family:var(--data); font-variant-numeric:tabular-nums; white-space:nowrap}
+tr.pref td{background:color-mix(in srgb,var(--teal) 10%,transparent)}
+tr.crit td{background:color-mix(in srgb,var(--crimson) 12%,transparent)}
+.paper tr.pref td{background:#E6F0EA} .paper tr.crit td{background:#F6E4E4}
+
+/* ── figures ── */
+figure{margin:var(--s4) 0 0}
+figure svg{display:block; width:100%; height:auto; max-width:100%}
+figcaption{margin-top:.9rem; font-size:.8125rem; color:var(--tx2); max-width:60ch}
+.paper figcaption{color:var(--mid)}
+.figframe{background:var(--slate); border:1px solid var(--hair-d); padding:clamp(14px,3vw,28px)}
+.paper .figframe{background:var(--paper); border-color:var(--hair-l)}
+
+/* ── mono block ── */
+.codeblock{margin-top:var(--s4); background:var(--slate); border:1px solid var(--hair-d);
+  overflow-x:auto; padding:clamp(14px,2.5vw,22px)}
+.codeblock pre{margin:0; font-family:var(--data); font-size:.75rem; line-height:1.55; color:var(--ivory)}
+.codeblock b{color:var(--gold-lt); font-weight:400}
+
+/* ── swatches ── */
+.swatches{display:grid; gap:.65rem; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-top:var(--s4)}
+.sw{border:1px solid var(--hair-d); overflow:hidden}
+.paper .sw{border-color:var(--hair-l)}
+.sw .chip{height:56px}
+.sw .meta{padding:.55rem .65rem; background:var(--slate)}
+.paper .sw .meta{background:var(--paper)}
+.sw .nm{font:600 .8125rem/1.3 var(--ui)}
+.sw .hx{font-family:var(--data); font-size:.6875rem; color:var(--tx2)}
+.paper .sw .hx{color:var(--mid)}
+.sw .ratio{font-family:var(--data); font-size:.6875rem; margin-top:.2rem}
+.pass{color:var(--teal)} .fail{color:var(--crimson)}
+.paper .pass{color:#2F6F5B} .paper .fail{color:#9E2B2B}
+
+/* ── callout ── */
+.callout{margin-top:var(--s4); padding:1.25rem 1.4rem; background:var(--graphite);
+  border-left:3px solid var(--gold); max-width:68ch}
+.paper .callout{background:var(--bone); border-left-color:var(--gold-dp)}
+.callout .lbl{display:block; margin-bottom:.5rem}
+.callout p{font-size:.9375rem}
+.callout.warn{border-left-color:var(--crimson)}
+.paper .callout.warn{border-left-color:#9E2B2B}
+
+/* ── asset notes ── */
+.assets{margin-top:var(--s4); display:grid; gap:.1rem}
+.asset{display:grid; grid-template-columns:1fr auto; gap:1rem; padding:.7rem 0; border-top:1px solid var(--hair-l); font-size:.875rem}
+.asset:last-child{border-bottom:1px solid var(--hair-l)}
+.asset .st{font-family:var(--data); font-size:.6875rem; letter-spacing:.06em; color:var(--mid); white-space:nowrap}
+
+/* ── footer ── */
+footer{border-top:1px solid var(--hair-d); padding-block:var(--s5) var(--s4)}
+.fgrid{display:grid; gap:var(--s4); grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.disclose{margin-top:var(--s4); padding-top:var(--s3); border-top:1px solid var(--hair-d);
+  font-size:.8125rem; color:var(--mid); max-width:76ch}
+
+/* ── motion: visible at rest, one load sequence only ── */
+@media (prefers-reduced-motion:no-preference){
+  .rise{animation:rise .7s cubic-bezier(.16,.84,.44,1) both}
+  .rise:nth-child(2){animation-delay:.06s} .rise:nth-child(3){animation-delay:.12s}
+  @keyframes rise{from{opacity:.001;transform:translateY(10px)} to{opacity:1;transform:none}}
+}
+</style>
+
+<a class="skip" href="#story">Skip to the case study</a>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">First 15<span>LXD</span></div>
+    <nav class="topnav" aria-label="Case study sections">
+      <a href="#challenge">Challenge</a>
+      <a href="#model">The model</a>
+      <a href="#build">Storyline</a>
+      <a href="#rise">Rise</a>
+      <a href="#system">Visual system</a>
+      <a href="#access">Accessibility</a>
+      <a href="#measure">Measurement</a>
+      <a href="#storyboard">Storyboard</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="rise"><div class="rule"></div>
+      <p class="lbl">Learning Experience Design &nbsp;·&nbsp; Scenario-based onboarding</p>
+    </div>
+    <h1 class="rise">The first fifteen minutes decide the whole shift.</h1>
+    <p class="sub rise">A scenario-based onboarding experience for last-mile delivery professionals —
+      designed, art-directed, and built end to end.</p>
+    <p class="summary">
+      <b>First 15</b> is a blended onboarding experience designed for newly hired delivery associates and
+      dispatch coordinators at MileOne Logistics, a realistic fictional carrier created for this project.
+      A Rise&nbsp;360 course teaches a three-part decision model; an 8–12 minute Storyline&nbsp;360
+      branching scenario puts it under pressure. Learners triage a tire-pressure alert, a damaged label,
+      a medical delivery window, and an unsafe access note — then see how their choices moved
+      <b>Safety</b>, <b>Service</b>, and <b>Time</b>.
+    </p>
+
+    <div class="ctas">
+      <a class="cta cta-1" href="#build"><strong>View the Prototype →</strong>
+        <em>Play the branching scenario. 8–12 minutes, no login, sound optional.</em></a>
+      <a class="cta cta-2" href="#measure"><strong>Download the Design Document ↓</strong>
+        <em>23-page PDF: brief, objectives, architecture, measurement plan.</em></a>
+      <a class="cta cta-3" href="#storyboard"><strong>Explore the Storyboard →</strong>
+        <em>Ten annotated production screens.</em></a>
+    </div>
+    <p class="cta-note">The prototype and downloads are wired on nimfah.com. On this reference build the
+      buttons jump to the matching section.</p>
+  </div>
+</header>
+
+<div class="facts">
+  <div class="wrap">
+    <dl class="factgrid">
+      <div class="fact"><dt>Role</dt><dd>Sole designer and developer — discovery, objectives, instructional
+        strategy, branching architecture, storyboard, visual direction, Rise&nbsp;360 and
+        Storyline&nbsp;360 development, accessibility, measurement plan.</dd></div>
+      <div class="fact"><dt>Project type</dt><dd>Self-directed portfolio project · scenario-based
+        onboarding · fictional client brief</dd></div>
+      <div class="fact"><dt>Tools</dt><dd>Articulate Storyline 360 · Rise 360 · Review 360 · Figma ·
+        Illustrator · Photoshop · Audition · Claude (content structuring, dialogue drafting, QA
+        scripting)</dd></div>
+      <div class="fact"><dt>Audience</dt><dd>Newly hired last-mile delivery associates, days 1–14, and
+        newly promoted dispatch coordinators</dd></div>
+      <div class="fact"><dt>Duration</dt><dd><span class="mono">37–48</span> minutes across three LMS
+        items · Rise <span class="mono">19–24</span> · Storyline <span class="mono">8–12</span> · Field
+        guide <span class="mono">10–12</span></dd></div>
+      <div class="fact"><dt>Modality</dt><dd>Self-paced blended eLearning — mobile-responsive Rise for
+        concepts and transfer, Storyline for the branching performance assessment, plus a printable job
+        aid and a manager coaching guide</dd></div>
+      <div class="fact"><dt>Standards</dt><dd>WCAG 2.1 AA-aligned · SCORM 1.2 and SCORM 2004 4th Edition ·
+        optional xAPI decision-path statements</dd></div>
+      <div class="fact"><dt>Client</dt><dd>MileOne Logistics — a realistic <b>fictional</b> last-mile
+        carrier created to demonstrate end-to-end learning design</dd></div>
+    </dl>
+  </div>
+</div>
+
+<main id="story">
+
+<section id="challenge">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">01</span><span class="lbl">The challenge</span></div>
+    <h2>The gap isn't knowledge. It's deciding.</h2>
+    <div class="prose">
+      <p>A last-mile delivery operation loses more service and safety ground in the first fifteen minutes
+        of a shift than in the eight hours that follow. That window is where an associate finds the
+        tire-pressure alert, the label they cannot read, the medical delivery with a receiving window, and
+        the dispatch note that today's volume is heavier than planned. It is also the window where a new
+        hire has the least context and the most pressure to simply leave.</p>
+      <p>Conventional onboarding is badly matched to this. It front-loads policy — handbooks, compliance
+        modules, a checklist to acknowledge — and then sends a nine-day-old associate into a morning that
+        demands judgment, prioritisation, and the confidence to interrupt a dispatcher. Most new associates
+        can recite the pre-shift checklist. The gap is <b>decision-making under competing pressure</b>,
+        which is the one thing a checklist cannot teach and a knowledge check cannot measure.</p>
+      <p>So the design problem was not "build a pre-shift course." It was:</p>
+    </div>
+    <p class="pull">How do you let someone practise the first fifteen minutes of a bad morning forty times
+      before it counts?</p>
+  </div>
+</section>
+
+<section id="context" class="paper">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">02</span><span class="lbl">The learner and business context</span></div>
+    <h2>Two people share the same fifteen minutes from opposite sides of a radio.</h2>
+    <div class="prose">
+      <p>MileOne Logistics is a realistic fictional regional carrier: contracted parcel volume plus a
+        growing medical-courier line, operating out of metro stations with a mixed cargo-van fleet. Like
+        the real operations it is modelled on, it runs with high seasonal hiring, a compressed training
+        window, and dispatch coordinators who are often promoted from the driver's seat with no training
+        in how to coordinate.</p>
+      <p>The <b>delivery associate</b> is capable and motivated but overwhelmed — by the handheld, the
+        route sequence, the safety procedure, the customer notes, and the unfamiliar question of when it
+        is acceptable to interrupt someone. The <b>dispatch coordinator</b> is six weeks into a promotion,
+        holding fourteen routes, and has learned that vague escalations cost them their whole morning.</p>
+      <p>Designing for both at once was the decision that shaped the course. The escalation criteria are
+        not a driver policy — they are a <b>shared contract</b>. Associates learn what a complete
+        escalation contains; coordinators learn to ask for the same four fields. When both sides of a
+        radio call are trained on the same model, the model survives contact with the operation.</p>
+    </div>
+    <div class="tscroll">
+      <table>
+        <caption class="lbl" style="text-align:left;padding:.7rem .85rem;background:var(--bone)">The two personas</caption>
+        <thead><tr><th>Persona</th><th>Where they are</th><th>What's actually in the way</th></tr></thead>
+        <tbody>
+          <tr><td><b>Jordan Reyes</b><br><span class="muted">26 · Delivery Associate · day 9</span></td>
+            <td>Second week solo on Route 214. Reads on a phone. Wants to be seen as someone who doesn't
+              need help.</td>
+            <td>No model for the middle ground — every discovery feels like <i>handle it quietly</i> or
+              <i>make a scene</i>, and quietly always feels safer socially. Can't yet tell a degrading
+              condition from a stable one.</td></tr>
+          <tr><td><b>Marcus Boateng</b><br><span class="muted">31 · Dispatch Coordinator · 6 weeks</span></td>
+            <td>Fourteen routes on a shift. Promoted for reliability, not coordination skill. Got a systems
+              walkthrough and a login.</td>
+            <td>Escalation intake is unstructured, so triage happens conversationally and eats the window.
+              Was never taught the model he is now expected to enforce.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="role">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">03</span><span class="lbl">My design role</span></div>
+    <h2>Sole practitioner, end to end.</h2>
+    <div class="prose">
+      <p>I worked this the way a contract LXD is typically hired: given a performance problem and a
+        deadline, and expected to return a working experience.</p>
+      <p>That meant framing the business problem and writing the brief; defining two personas and the
+        performance gap; writing measurable objectives and mapping every one to an interaction and a piece
+        of assessment evidence; choosing the modality split and defending it; architecting the branching
+        scenario with its variables, thresholds, and remediation logic; storyboarding to developer-handoff
+        standard; art-directing the visual system, including a palette validated for contrast rather than
+        chosen by eye; building in Rise 360 and Storyline 360; specifying the accessibility requirements
+        and the test workflow; and writing the measurement plan a client would use to decide whether the
+        thing worked.</p>
+      <p>I also used AI deliberately and narrowly — for first-pass dialogue variants, for structuring the
+        objective-to-evidence matrix, and for scripting a repetitive QA pass across slide states. The
+        design decisions, the instructional model, and the writing voice are mine. It's worth being precise
+        about that, because <em>"AI-enabled workflow" is only a credential if you can say where the
+        judgment lived.</em></p>
+    </div>
+  </div>
+</section>
+
+<section id="model" class="paper">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">04</span><span class="lbl">Learning goals &amp; instructional strategy</span></div>
+    <h2>Three dispositions, never two.</h2>
+    <div class="prose">
+      <p>The experience is designed to target four performance behaviours, not four topics: triage a
+        pre-shift discovery within ninety seconds; apply four escalation triggers to decide whether an
+        issue needs someone else; compose an escalation message complete enough to be acted on without a
+        follow-up question; and sequence a route so time-sensitive and custody-controlled deliveries are
+        protected before volume is absorbed.</p>
+      <p>Every discovery gets one of three dispositions, decided in under ninety seconds:</p>
+    </div>
+
+    <div class="triad">
+      <div class="disp fix"><h4>FIX</h4><p>I can resolve this myself, inside the pre-shift window, safely,
+        and within policy.</p></div>
+      <div class="disp flag"><h4>FLAG</h4><p>Someone else has the authority, information, or resources.
+        Escalate now, with a complete message, and keep working.</p></div>
+      <div class="disp note"><h4>NOTE</h4><p>This doesn't change today's plan, but it goes on the
+        record.</p></div>
+    </div>
+
+    <div class="callout">
+      <span class="lbl">The insight this rests on</span>
+      <p>New hires don't fail because they can't tell a big problem from a small one. They fail because
+        they treat every problem as binary — <i>deal with it alone</i> or <i>stop everything</i> — and so
+        they under-escalate real risk and over-escalate noise. <b>Three dispositions beat two.</b></p>
+    </div>
+
+    <h3 style="margin-top:var(--s5)">And four triggers instead of "when appropriate"</h3>
+    <dl class="trigs">
+      <div class="trig"><dt>Risk</dt><dd>Roadworthiness, load security, or anyone's physical safety —
+        yours, the public's, a customer's.</dd></div>
+      <div class="trig"><dt>Custody</dt><dd>Cold chain, signature required, controlled goods, anything
+        sealed or carrying a temperature indicator. Custody items don't get judgment calls applied to
+        them.</dd></div>
+      <div class="trig"><dt>Promise</dt><dd>A committed window or service level you now can't reliably
+        make. The trigger is the <i>risk</i> to the promise, not the confirmed failure.</dd></div>
+      <div class="trig"><dt>Ambiguity</dt><dd>Information you can't resolve with what you've got, where
+        being wrong has a cost. An address you're 80% sure of is ambiguity.</dd></div>
+    </dl>
+
+    <div class="prose" style="margin-top:var(--s4)">
+      <h3>Four strategy choices</h3>
+      <p><b>Scenario-based practice as the assessment, not the dessert.</b> The branching scenario isn't a
+        reward for finishing the module; it <i>is</i> the assessment. Every decision point is a scored
+        Storyline question with points assigned per choice, so the LMS receives a defensible score while
+        the learner experiences a story.</p>
+      <p><b>Consequence before correction.</b> Choose to top up the tire and go, and the coaching doesn't
+        appear immediately — the pressure warning returns at stop 61, on a bridge approach, and
+        <i>then</i> the station lead talks to you. Adults revise a mental model when the model visibly
+        fails, not when they're told it's wrong.</p>
+      <p><b>Time is a budget, not a score.</b> Safety and Service are 0–100 scores; Time is a
+        fifteen-minute allowance that choices consume. That single modelling decision teaches the
+        precedence order structurally, without a line of narration telling learners what to value.</p>
+      <p><b>Cognitive load managed by tool.</b> Nothing is taught twice, and nothing is assessed where it
+        was taught.</p>
+    </div>
+    <p class="pull">Safety is a gate, not a trade-off. Service is a promise you protect or renegotiate
+      early. Time is the thing you spend to do both.</p>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">05</span><span class="lbl">Storyline 360 build highlights</span></div>
+    <h2>A state machine wearing a story.</h2>
+    <div class="prose">
+      <p>Twenty-five named variables track Safety, Service, and the remaining time budget, plus the
+        learner's choice at each decision point, the count of escalations raised, a remediation flag, and
+        a concatenated path string such as <span class="mono">1B-2A-3C-4A</span>. Thirty-eight slides
+        across seven scenes.</p>
+      <p>A few constructions a developer will recognise as the real work:</p>
+      <ul class="prose" style="margin:0;padding-left:1.2rem">
+        <li><b>A hub-and-spoke shift-start dashboard</b> with four inspectable cards. "Roll out" stays
+          disabled until all four have a Visited state — a complete pre-shift review enforced by the
+          interface rather than by an instruction.</li>
+        <li><b>Points assigned per choice</b> on graded Pick One questions, so a native results slide
+          produces a defensible LMS score while custom Safety, Service, and Time variables drive the
+          coaching.</li>
+        <li><b>A safety floor rather than a wrong-answer trap.</b> A categorical violation interrupts, a
+          two-screen micro-lesson runs, and the learner re-decides with a remediation flag set — so the
+          LMS can distinguish "got it right" from "got there on the second pass."</li>
+        <li><b>A five-layer debrief</b> that replays the path and gives pattern-specific coaching. A
+          learner who was fast and exposed gets different advice from one who was careful and costly,
+          because those two people need opposite advice.</li>
+      </ul>
+    </div>
+
+    <figure>
+      <div class="figframe">
+        <svg viewBox="0 0 900 300" role="img" aria-labelledby="flowt flowd">
+          <title id="flowt">Branching structure of the First 15 scenario</title>
+          <desc id="flowd">A shift-start dashboard leads to four decision points in sequence. Each has four
+            branches. Two categorical violations, at decision points one and four, loop back through a
+            micro-lesson to a forced re-decide. All paths converge on a performance debrief with three
+            dimensions and five conditional feedback layers. The preferred route is traced in gold.</desc>
+          <g font-family="IBM Plex Mono, monospace" font-size="10">
+            <!-- legend -->
+            <text x="30" y="26" fill="#D9A84E" font-size="9" letter-spacing="1.4">PREFERRED PATH</text>
+            <line x1="150" y1="22" x2="210" y2="22" stroke="#B8873B" stroke-width="2"/>
+            <text x="240" y="26" fill="#E58A8A" font-size="9" letter-spacing="1.4">CATEGORICAL VIOLATION</text>
+            <line x1="410" y1="22" x2="470" y2="22" stroke="#E58A8A" stroke-width="1.6" stroke-dasharray="4 3"/>
+            <text x="500" y="26" fill="#A8AEB5" font-size="9" letter-spacing="1.4">OTHER BRANCHES</text>
+            <line x1="640" y1="22" x2="700" y2="22" stroke="#3A4048" stroke-width="1"/>
+
+            <!-- spine: the preferred route -->
+            <line x1="92" y1="150" x2="760" y2="150" stroke="#B8873B" stroke-width="2"/>
+
+            <!-- branch fans -->
+            <g stroke="#3A4048" stroke-width="1" fill="none">
+              <path d="M195 150 C225 150 228 104 252 104"/><path d="M195 150 C225 150 228 127 252 127"/>
+              <path d="M195 150 C225 150 228 173 252 173"/><path d="M195 150 C225 150 228 196 252 196"/>
+              <path d="M355 150 C385 150 388 104 412 104"/><path d="M355 150 C385 150 388 127 412 127"/>
+              <path d="M355 150 C385 150 388 173 412 173"/><path d="M355 150 C385 150 388 196 412 196"/>
+              <path d="M515 150 C545 150 548 104 572 104"/><path d="M515 150 C545 150 548 127 572 127"/>
+              <path d="M515 150 C545 150 548 173 572 173"/><path d="M515 150 C545 150 548 196 572 196"/>
+              <path d="M675 150 C700 150 702 104 724 104"/><path d="M675 150 C700 150 702 127 724 127"/>
+              <path d="M675 150 C700 150 702 173 724 173"/><path d="M675 150 C700 150 702 196 724 196"/>
+            </g>
+
+            <!-- remediation loops -->
+            <g stroke="#E58A8A" stroke-width="1.6" fill="none" stroke-dasharray="4 3">
+              <path d="M195 172 C195 236 150 240 150 208 C150 178 168 164 186 158"/>
+              <path d="M675 172 C675 236 630 240 630 208 C630 178 648 164 666 158"/>
+            </g>
+            <text x="112" y="262" fill="#E58A8A" font-size="8.5">micro-lesson → re-decide</text>
+            <text x="592" y="262" fill="#E58A8A" font-size="8.5">micro-lesson → re-decide</text>
+
+            <!-- nodes -->
+            <rect x="30" y="132" width="62" height="36" fill="#2A2F37" stroke="#B8873B" stroke-width="1"/>
+            <text x="61" y="147" text-anchor="middle" fill="#F4F1EA" font-size="9">HUB</text>
+            <text x="61" y="160" text-anchor="middle" fill="#A8AEB5" font-size="8">4 cards</text>
+
+            <rect x="165" y="132" width="60" height="36" fill="#1F232A" stroke="#3A4048"/>
+            <text x="195" y="147" text-anchor="middle" fill="#F4F1EA" font-size="9">DP1</text>
+            <text x="195" y="160" text-anchor="middle" fill="#A8AEB5" font-size="8">vehicle</text>
+
+            <rect x="325" y="132" width="60" height="36" fill="#1F232A" stroke="#3A4048"/>
+            <text x="355" y="147" text-anchor="middle" fill="#F4F1EA" font-size="9">DP2</text>
+            <text x="355" y="160" text-anchor="middle" fill="#A8AEB5" font-size="8">label</text>
+
+            <rect x="485" y="132" width="60" height="36" fill="#1F232A" stroke="#3A4048"/>
+            <text x="515" y="147" text-anchor="middle" fill="#F4F1EA" font-size="9">DP3</text>
+            <text x="515" y="160" text-anchor="middle" fill="#A8AEB5" font-size="8">priority</text>
+
+            <rect x="645" y="132" width="60" height="36" fill="#1F232A" stroke="#3A4048"/>
+            <text x="675" y="147" text-anchor="middle" fill="#F4F1EA" font-size="9">DP4</text>
+            <text x="675" y="160" text-anchor="middle" fill="#A8AEB5" font-size="8">access</text>
+
+            <rect x="760" y="124" width="110" height="52" fill="#2A2F37" stroke="#B8873B"/>
+            <text x="815" y="142" text-anchor="middle" fill="#F4F1EA" font-size="9">DEBRIEF</text>
+            <text x="815" y="155" text-anchor="middle" fill="#D9A84E" font-size="8">3 dimensions</text>
+            <text x="815" y="168" text-anchor="middle" fill="#A8AEB5" font-size="8">5 feedback layers</text>
+
+            <!-- score floor annotation -->
+            <text x="30" y="292" fill="#A8AEB5" font-size="8.5">Safety is a gate: a categorical violation interrupts immediately. Every other consequence is delayed to where it would really arrive.</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Four decision points, sixteen branches, two categorical violations that interrupt and
+        remediate, and one preferred route traced in gold. The scoring model was verified by enumerating
+        all 256 paths — which is how I found that a learner with a high safety score could enter a
+        dwelling and never trip the safety interrupt.</figcaption>
+    </figure>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>DP</th><th>Option</th><th>Pts</th><th>Safety</th><th>Service</th><th>Time</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr class="pref"><td class="num">DP1</td><td>Air it up, log it, flag the overnight drop</td><td class="num">25</td><td class="num">+15</td><td class="num">0</td><td class="num">−3</td><td>Preferred</td></tr>
+          <tr><td class="num">DP1</td><td>Air it up and roll out</td><td class="num">15</td><td class="num">−10</td><td class="num">−5</td><td class="num">−2</td><td>Delayed coaching, stop 61</td></tr>
+          <tr class="crit"><td class="num">DP1</td><td>Drive it and keep an eye on it</td><td class="num">0</td><td class="num">−20</td><td class="num">0</td><td class="num">0</td><td>Critical → remediation</td></tr>
+          <tr><td class="num">DP1</td><td>Park the van and wait for fleet</td><td class="num">10</td><td class="num">+10</td><td class="num">−15</td><td class="num">−9</td><td>Over-escalation coaching</td></tr>
+          <tr class="pref"><td class="num">DP3</td><td>Resequence, confirm the window, flag a number</td><td class="num">25</td><td class="num">0</td><td class="num">+15</td><td class="num">−3</td><td>Preferred</td></tr>
+          <tr><td class="num">DP3</td><td>Absorb the volume and push to make it</td><td class="num">0</td><td class="num">0</td><td class="num">−20</td><td class="num">−2</td><td>Delayed coaching, 9:41</td></tr>
+          <tr class="pref"><td class="num">DP4</td><td>Plan non-entry now, flag the note for correction</td><td class="num">25</td><td class="num">+5</td><td class="num">+10</td><td class="num">−2</td><td>Preferred</td></tr>
+          <tr class="crit"><td class="num">DP4</td><td>Follow the note — the customer asked in writing</td><td class="num">0</td><td class="num">−25</td><td class="num">0</td><td class="num">0</td><td>Critical → remediation</td></tr>
+          <tr><td class="num">DP4</td><td>I'll see what it looks like when I get there</td><td class="num">5</td><td class="num">−10</td><td class="num">−5</td><td class="num">0</td><td>Coaching — and nothing bad happens</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cta-note" style="margin-top:.9rem">Nine of the sixteen options shown. Pass mark 80%: exactly
+      13 of the 256 possible paths reach it without remediation — 5.1%, the correct by-chance figure for a
+      four-item, four-option assessment at an 80% cut score.</p>
+
+    <div class="callout warn">
+      <span class="lbl">The most important build note in the project</span>
+      <p>At DP4, the "I'll decide at the gate" path must end with <b>nothing bad happening</b>. The dog
+        turns out to be crated; the learner enters and is fine. A designer's instinct is to punish the
+        deferral with a bite — that would teach luck rather than process. The point is that a good outcome
+        from a bad process is the most dangerous feedback there is, and the station lead says so out loud.</p>
+    </div>
+  </div>
+</section>
+
+<section id="rise" class="paper">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">06</span><span class="lbl">Rise 360 companion experience</span></div>
+    <h2>Rise reflows. Storyline scales. That's the whole argument.</h2>
+    <div class="prose">
+      <p>Rise carries two jobs Storyline is genuinely worse at.</p>
+      <p>Before the scenario, <i>Prepare for the Shift</i> teaches the model in five short lessons using
+        blocks chosen for instructional reason: a <b>labelled graphic</b> over a photographed van bay for
+        the pre-shift inspection zones, because spatial knowledge should be learned spatially; a
+        <b>sorting activity</b> that forces learners to place eight real discoveries into Fix, Flag, and
+        Note, because the model is only learned when applied to cases that don't announce their category;
+        <b>flashcards</b> for the four triggers, because that is genuinely recall; and a <b>scenario
+        block</b> for one short escalation conversation, as low-stakes rehearsal before the high-stakes
+        one.</p>
+      <p>After the scenario, <i>Field Guide and Transfer Toolkit</i> is built to be re-opened on a phone in
+        a van at 6:55 a.m. — which is why it's Rise and not a PDF. It holds the one-page decision guide,
+        the escalation template, a reflection prompt, and a manager coaching guide with five questions a
+        supervisor can ask in a four-minute ride-along.</p>
+      <p>The reading a learner does on a phone belongs in Rise. The branching state a learner generates
+        belongs in Storyline.</p>
+    </div>
+
+    <figure>
+      <div class="figframe">
+        <svg viewBox="0 0 900 190" role="img" aria-labelledby="tlt tld">
+          <title id="tlt">Decision Point 3 — the receiving window against the optimiser's sequence</title>
+          <desc id="tld">A timeline from 7 a.m. to 6 p.m. The clinic receiving window runs from 8:00 to
+            9:30 as a gold band. The handheld's default sequence would arrive at 10:20, marked in indigo
+            fifty minutes past the end of the window.</desc>
+          <g font-family="IBM Plex Mono, monospace" font-size="11">
+            <line x1="50" y1="110" x2="860" y2="110" stroke="#D8D3C8" stroke-width="1"/>
+            <g fill="#5F646A" font-size="10">
+              <text x="50" y="132" text-anchor="middle">07</text><text x="124" y="132" text-anchor="middle">08</text>
+              <text x="198" y="132" text-anchor="middle">09</text><text x="272" y="132" text-anchor="middle">10</text>
+              <text x="346" y="132" text-anchor="middle">11</text><text x="420" y="132" text-anchor="middle">12</text>
+              <text x="494" y="132" text-anchor="middle">13</text><text x="568" y="132" text-anchor="middle">14</text>
+              <text x="642" y="132" text-anchor="middle">15</text><text x="716" y="132" text-anchor="middle">16</text>
+              <text x="790" y="132" text-anchor="middle">17</text><text x="860" y="132" text-anchor="middle">18</text>
+            </g>
+            <g stroke="#D8D3C8" stroke-width="1">
+              <line x1="50" y1="110" x2="50" y2="116"/><line x1="124" y1="110" x2="124" y2="116"/>
+              <line x1="198" y1="110" x2="198" y2="116"/><line x1="272" y1="110" x2="272" y2="116"/>
+              <line x1="346" y1="110" x2="346" y2="116"/><line x1="420" y1="110" x2="420" y2="116"/>
+              <line x1="494" y1="110" x2="494" y2="116"/><line x1="568" y1="110" x2="568" y2="116"/>
+              <line x1="642" y1="110" x2="642" y2="116"/><line x1="716" y1="110" x2="716" y2="116"/>
+              <line x1="790" y1="110" x2="790" y2="116"/><line x1="860" y1="110" x2="860" y2="116"/>
+            </g>
+            <rect x="124" y="86" width="111" height="24" fill="#B8873B"/>
+            <text x="124" y="76" fill="#775418" font-size="10">08:00</text>
+            <text x="235" y="76" fill="#775418" font-size="10" text-anchor="end">09:30</text>
+            <text x="180" y="102" fill="#14161A" font-size="10" text-anchor="middle" font-weight="500">WINDOW</text>
+            <line x1="297" y1="60" x2="297" y2="120" stroke="#2F4B8F" stroke-width="3"/>
+            <text x="305" y="66" fill="#2F4B8F" font-size="10">Current sequence arrives 10:20</text>
+            <text x="50" y="40" fill="#14161A" font-family="Inter, sans-serif" font-size="13" font-weight="600">
+              Window closes 09:30. Current sequence arrives 10:20 — 50 minutes late.</text>
+            <text x="50" y="165" fill="#5F646A" font-family="Inter, sans-serif" font-size="11">
+              Resequencing the clinic to first is inside the associate's own authority. It takes one minute at 7:10.</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>The geometry makes the argument no copy could: the marker is visibly outside the band.
+        No red arrows, no exclamation mark. The live-text sentence above it carries the same meaning for
+        screen-reader users — the graphic is enrichment, the sentence is the content.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="assessment">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">07</span><span class="lbl">Assessment &amp; feedback design</span></div>
+    <h2>Name the consequence before naming the rule.</h2>
+    <div class="prose">
+      <p>Assessment is designed to evaluate judgment, which means no item in this experience can be
+        answered by remembering a sentence from a previous screen.</p>
+      <p>A five-item confidence check opens the scenario and repeats at the end, so the debrief can show a
+        confidence shift alongside a performance score. Rise carries five embedded knowledge checks on the
+        criteria themselves. The Storyline scenario carries the performance assessment: four decision
+        points, points assigned by choice, 80% to pass.</p>
+      <p>Feedback follows one rule throughout. Not <i>"Incorrect. Safety issues must be escalated,"</i>
+        but:</p>
+    </div>
+    <div class="callout">
+      <span class="lbl">Feedback, option B at decision point one</span>
+      <p>You made your first sixty stops. On the sixty-first, the pressure warning came back on a bridge
+        approach, and you spent forty minutes on the shoulder waiting for roadside. A seventeen-psi
+        overnight drop is a leak, not the weather. <b>One reading tells you whether the van is safe now.
+        Two readings tell you whether it will be safe at noon. You had two.</b></p>
+    </div>
+    <div class="prose" style="margin-top:var(--s4)">
+      <p>Every distractor is a real mistake a reasonable person makes under pressure, and each one's
+        feedback addresses the specific reasoning behind it rather than restating policy.</p>
+    </div>
+
+    <figure>
+      <div class="figframe">
+        <svg viewBox="0 0 900 220" role="img" aria-labelledby="dbt dbd">
+          <title id="dbt">The three-dimension debrief</title>
+          <desc id="dbd">Safety at 90 of 100 against a threshold of 80. Service at 100 of 100 against a
+            threshold of 70. Time shown as a depleting fifteen-minute budget with 6 minutes remaining.</desc>
+          <g font-family="IBM Plex Mono, monospace">
+            <text x="20" y="26" fill="#D9A84E" font-size="10" letter-spacing="1.6">SAFETY</text>
+            <text x="120" y="28" fill="#FBFAF7" font-size="22">90</text>
+            <text x="164" y="28" fill="#A8AEB5" font-size="10">/ 100</text>
+            <rect x="240" y="14" width="600" height="18" fill="#2A2F37"/>
+            <rect x="240" y="14" width="540" height="18" fill="#5FB79A"/>
+            <rect x="777" y="14" width="3" height="18" fill="#B8873B"/>
+            <line x1="720" y1="8" x2="720" y2="38" stroke="#F4F1EA" stroke-width="2"/>
+            <text x="720" y="50" fill="#A8AEB5" font-size="9" text-anchor="middle">threshold 80</text>
+
+            <text x="20" y="96" fill="#D9A84E" font-size="10" letter-spacing="1.6">SERVICE</text>
+            <text x="120" y="98" fill="#FBFAF7" font-size="22">100</text>
+            <text x="176" y="98" fill="#A8AEB5" font-size="10">/ 100</text>
+            <rect x="240" y="84" width="600" height="18" fill="#2A2F37"/>
+            <rect x="240" y="84" width="600" height="18" fill="#5FB79A"/>
+            <rect x="837" y="84" width="3" height="18" fill="#B8873B"/>
+            <line x1="660" y1="78" x2="660" y2="108" stroke="#F4F1EA" stroke-width="2"/>
+            <text x="660" y="120" fill="#A8AEB5" font-size="9" text-anchor="middle">threshold 70</text>
+
+            <text x="20" y="168" fill="#D9A84E" font-size="10" letter-spacing="1.6">TIME</text>
+            <text x="120" y="170" fill="#FBFAF7" font-size="22">6</text>
+            <text x="144" y="170" fill="#A8AEB5" font-size="10">min left of 15</text>
+            <g>
+              <rect x="240" y="156" width="34" height="18" fill="#3A4048"/><rect x="278" y="156" width="34" height="18" fill="#3A4048"/>
+              <rect x="316" y="156" width="34" height="18" fill="#3A4048"/><rect x="354" y="156" width="34" height="18" fill="#3A4048"/>
+              <rect x="392" y="156" width="34" height="18" fill="#3A4048"/><rect x="430" y="156" width="34" height="18" fill="#3A4048"/>
+              <rect x="468" y="156" width="34" height="18" fill="#3A4048"/><rect x="506" y="156" width="34" height="18" fill="#3A4048"/>
+              <rect x="544" y="156" width="34" height="18" fill="#3A4048"/>
+              <rect x="582" y="156" width="34" height="18" fill="#B8873B"/><rect x="620" y="156" width="34" height="18" fill="#B8873B"/>
+              <rect x="658" y="156" width="34" height="18" fill="#B8873B"/><rect x="696" y="156" width="34" height="18" fill="#B8873B"/>
+              <rect x="734" y="156" width="34" height="18" fill="#B8873B"/><rect x="772" y="156" width="34" height="18" fill="#B8873B"/>
+            </g>
+            <text x="240" y="196" fill="#A8AEB5" font-size="9" font-family="Inter, sans-serif">
+              spent</text>
+            <text x="772" y="196" fill="#D9A84E" font-size="9" font-family="Inter, sans-serif" text-anchor="end">remaining</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Safety and Service are scores you build; Time is a fifteen-minute budget you spend.
+        Drawing them differently is how the precedence model gets taught without a line of narration.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="system" class="paper">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">08</span><span class="lbl">Experience design &amp; visual direction</span></div>
+    <h2>Operational software doesn't have to look like operational software.</h2>
+    <div class="prose">
+      <p>The reference points are architectural photography, Japanese spatial restraint, and editorial
+        fashion layout — a near-black ground, generous negative space, ivory content surfaces that behave
+        like paper, a single burnished gold accent used structurally rather than decoratively, and one
+        restrained indigo reserved exclusively for things the learner can act on.</p>
+      <p>That last rule does most of the work. In this system, <b>indigo means "you can touch this."</b>
+        Gold means "this is a structural or evaluative element" — a rule, a meter, a scene marker. Because
+        the interaction colour is reserved and never used for emphasis, a learner never has to hunt for
+        what is clickable, and a keyboard user never has to guess where focus is.</p>
+      <p>The interface avoids the two clichés of the genre. There is no cartoon office and no stock-photo
+        handshake: imagery is documentary, high-contrast, and cropped tight on the real objects of the
+        work — a tote seal, a pressure gauge, a handheld screen, a route sequence. And there are no
+        gradients, no glassmorphism, and no animation that exists to prove animation is possible.</p>
+      <p>Every colour pair was checked with a contrast calculator rather than an eye.
+        <b>Three of my first-pass tokens failed WCAG AA and were replaced.</b></p>
+    </div>
+
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#14161A"></div><div class="meta">
+        <div class="nm">Ink</div><div class="hx">#14161A</div>
+        <div class="ratio pass">16.06:1 with ivory</div></div></div>
+      <div class="sw"><div class="chip" style="background:#F4F1EA"></div><div class="meta">
+        <div class="nm">Ivory</div><div class="hx">#F4F1EA</div>
+        <div class="ratio pass">16.06:1 with ink</div></div></div>
+      <div class="sw"><div class="chip" style="background:#B8873B"></div><div class="meta">
+        <div class="nm">Gold</div><div class="hx">#B8873B</div>
+        <div class="ratio pass">5.66:1 on ink</div>
+        <div class="ratio fail">2.83:1 on ivory — fails</div></div></div>
+      <div class="sw"><div class="chip" style="background:#775418"></div><div class="meta">
+        <div class="nm">Gold deep</div><div class="hx">#775418</div>
+        <div class="ratio pass">6.07:1 on ivory</div></div></div>
+      <div class="sw"><div class="chip" style="background:#2F4B8F"></div><div class="meta">
+        <div class="nm">Indigo</div><div class="hx">#2F4B8F</div>
+        <div class="ratio pass">7.38:1 on ivory</div></div></div>
+      <div class="sw"><div class="chip" style="background:#5F646A"></div><div class="meta">
+        <div class="nm">Secondary</div><div class="hx">#5F646A</div>
+        <div class="ratio pass">5.29:1 on ivory</div></div></div>
+    </div>
+
+    <div class="callout">
+      <span class="lbl">The finding that only comes from measuring</span>
+      <p>Burnished gold on warm ivory is the most attractive pairing in the system and it is
+        <b>unusable for text at any size</b> — 2.83:1. On charcoal it measures 5.66:1 and is fine. A
+        designer working by eye would have shipped the ivory pairing, because it looks right. The other two
+        replacements were a caution amber at 4.13:1 and a secondary grey at 4.43:1 — a near miss that
+        would have failed an audit.</p>
+    </div>
+
+    <div class="prose" style="margin-top:var(--s4)">
+      <h3>Typography</h3>
+      <p><b>Bodoni Moda</b> carries the editorial register, used for scene titles and never below 28px —
+        high-contrast didone serifs lose their thin strokes at small sizes, which is a legibility problem
+        rather than a taste one. <b>Inter</b> does the work: everything a learner reads to make a decision,
+        18px minimum. <b>IBM Plex Mono</b> exists because this scenario is full of numbers learners compare
+        against each other, and comparison requires tabular alignment.</p>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">09</span><span class="lbl">Accessibility &amp; inclusive design</span></div>
+    <h2>Designed in, then tested. Not retrofitted.</h2>
+    <div class="prose">
+      <p>The concrete consequences: no real-time timers anywhere, so the pressure is narrative and a
+        learner using assistive technology isn't penalised for reading speed; every status communicated by
+        an icon and a word as well as a colour, so the Safety, Service, and Time meters never depend on
+        hue; a focus indicator built as an ivory ring with a dark inner stroke so it's visible on charcoal,
+        ivory, and indigo alike; focus order set explicitly on every slide, with decorative art marked
+        decorative so a screen-reader user hears the decision, not the background; captions and a
+        downloadable transcript for all narration; and a reduced-motion preference the learner sets before
+        the story starts.</p>
+      <p>Inclusive representation was specified, not assumed: the cast spans age, gender, body type,
+        ethnicity, and visible assistive equipment, and no character's competence correlates with their
+        identity. <em>The dispatcher who handles escalations best is the newest coordinator in the
+        building.</em></p>
+    </div>
+    <p class="pull">Removing the countdown forced the design to create pressure through consequence
+      instead — and consequence is what teaches. The constraint improved the design.</p>
+  </div>
+</section>
+
+<section id="measure" class="paper">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">10</span><span class="lbl">Measurement plan</span></div>
+    <h2>The cheapest instrument is the one that improves the course.</h2>
+    <div class="prose">
+      <p>The proposed plan works across four levels, mapped loosely to Kirkpatrick because that's the
+        language most L&amp;D stakeholders share. At the reaction level it would track completion, time in
+        module, drop-off point, and a two-question relevance rating. At the learning level: the pre-and-post
+        confidence shift, the performance score, and — the most useful artefact in the whole plan — the
+        <b>decision-path distribution</b>.</p>
+      <p>Because the scenario records a path string for every learner, the plan would surface which
+        specific distractor the cohort selects most often. That's a curriculum instrument, not a report:
+        if 60% of learners top up the tire and drive, the gap is in how Lesson 3 teaches the difference
+        between a leak and a temperature variance, and <b>the fix is one Rise screen.</b></p>
+      <p>At the behaviour level it would use a manager observation checklist during the first ride-along
+        and sample escalation messages for completeness against the four fields. At the results level it
+        proposes watching pre-shift window duration, avoidable first-attempt failures, and preventable
+        roadside events across the first thirty days on route.</p>
+    </div>
+    <div class="callout warn">
+      <span class="lbl">Stated once, plainly</span>
+      <p>Every measure above is a <b>proposed</b> measure. This is a portfolio prototype with no live
+        learner population — there are no completion rates here, no performance data, and no operational
+        outcomes. In a live implementation I would validate the baseline across at least one full hiring
+        cohort before attributing any change to the training, and I'd expect the escalation-completeness
+        rubric to need revision after the first twenty real messages.</p>
+    </div>
+  </div>
+</section>
+
+<section id="storyboard">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">11</span><span class="lbl">The storyboard</span></div>
+    <h2>Ten screens, to developer-handoff standard.</h2>
+    <div class="prose">
+      <p>Each screen carries purpose, visual layout with coordinates, exact on-screen copy, narration
+        direction, interaction behaviour, developer notes, accessibility and alt-text notes, and design
+        rationale. A separate eLearning developer could build the prototype from it without a
+        conversation.</p>
+    </div>
+    <div class="codeblock">
+<pre><b>SB-06 · S3.4-DP1-CriticalRisk · Scene 3</b>
+
+PURPOSE      Interrupt a decision that would have ended the shift.
+             The only immediate consequence in the build.
+
+LAYOUT       A LAYER, not a slide. Base dims to Ink at 85% over 300ms,
+             no other motion. 2px Crimson #9E2B2B rule at y=180.
+             "STOP." display serif 48px Paper at x=64 y=216.
+             Body 20px Ivory, max width 760px.
+
+COPY         STOP.
+             A tire 19 psi under spec, on the rear axle of a loaded
+             van, carrying 96 stops.
+             Under-inflated tires run hot. A hot tire on a loaded rear
+             axle is how a blowout happens, and a rear blowout in a
+             cargo van is how you lose the vehicle.
+             This isn't a service decision or a time decision.
+             Safety is a gate, not a trade-off.
+
+AUDIO        One low sub-bass note, −26 LUFS, once, no tail. NO VOICE —
+             the absence of a narrator is more serious than a narrator.
+
+DEV NOTES    Set three layer properties EXPLICITLY (defaults are wrong):
+             prevent clicking the base layer; hide other slide layers;
+             pause the base timeline. SET FOCUS TO THE LAYER ON SHOW.
+             Restore varSafetyScore to 60 at the end of the micro-lesson
+             — above the floor of 55, below the 80 threshold. Without it,
+             re-deciding with option B lands at 50 and re-trips forever.
+
+A11Y         The crimson rule is decorative; the word STOP. carries the
+             meaning. Focus order: STOP., body, closing statement,
+             Continue LAST. Dismissible ONLY via Continue; Escape must
+             not close it.
+
+RATIONALE    Every other consequence is delayed on purpose, because
+             delayed causal feedback revises a mental model. This one is
+             immediate, because an interrupt is the correct form for a
+             categorical violation — and delaying it would imply the
+             gate is negotiable.</pre>
+    </div>
+    <figcaption style="margin-top:.9rem">One of ten. The full storyboard ships as a workbook with tabs for
+      the scoring matrix, the variable list, trigger sets in execution order, a gotchas sheet naming six
+      bugs already found in this design, and a 60-item QA checklist.</figcaption>
+  </div>
+</section>
+
+<section id="next" class="paper">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">12</span><span class="lbl">What I'd test, improve, and scale</span></div>
+    <h2>Three honest next steps.</h2>
+    <div class="prose">
+      <p><b>What I'd test first.</b> Whether the ninety-second triage claim survives real use. The
+        framework is built around a time box, and if new associates can't actually reach a disposition in
+        ninety seconds on a cold February morning, it needs a fourth disposition or a simpler trigger set.
+        I'd run five think-aloud sessions with associates inside their first three weeks, at a real
+        station, before the shift.</p>
+      <p><b>What I'd improve.</b> The fourth decision point is the weakest link in the current branch.
+        Customer access notes vary enormously by station and by contract, and one scenario can't carry that
+        variance. In a live build I'd replace the single note with a pool of three swapped in by a random
+        variable, so a second attempt isn't a memory test.</p>
+      <p><b>What I'd scale.</b> The architecture generalises: the dashboard, the three-dimension scoring,
+        the remediation pattern, and the debrief are a reusable shell. Swapping the content layer produces
+        a first-fifteen-minutes experience for a warehouse shift start, a clinic opening, or a
+        field-service morning, at a fraction of the original build cost. <em>That reusability is the thing
+        I'd actually pitch to a director of L&amp;D: not this course, but the pattern and the production
+        system behind it.</em></p>
+    </div>
+    <div class="assets">
+      <div class="asset"><span>Playable Storyline prototype — dashboard, two decision points, debrief</span><span class="st">IN BUILD</span></div>
+      <div class="asset"><span>Learning design document — 23-page PDF</span><span class="st">COMPLETE</span></div>
+      <div class="asset"><span>Production storyboard — 10 screens, scoring, variables, triggers, QA</span><span class="st">COMPLETE</span></div>
+      <div class="asset"><span>First 15 Decision Guide — one-page job aid</span><span class="st">COMPLETE</span></div>
+      <div class="asset"><span>Rise 360 lesson 2 — the model, sorting activity, knowledge check</span><span class="st">IN BUILD</span></div>
+      <div class="asset"><span>Documentary photography — van bay, gauge, label, gate, dispatch desk</span><span class="st">TO SHOOT</span></div>
+      <div class="asset"><span>Silent 22-second walkthrough — gate, choice, consequence, score</span><span class="st">PLANNED</span></div>
+      <div class="asset"><span>Think-aloud test with three delivery drivers, written up honestly</span><span class="st">PLANNED</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="reflection">
+  <div class="wrap">
+    <div class="eyebrow"><span class="n">13</span><span class="lbl">Final reflection</span></div>
+    <h2>The model was the hard part. The tooling wasn't.</h2>
+    <div class="prose">
+      <p>My first version of the decision framework had two dispositions — handle it or escalate it — and
+        it produced a scenario where every correct answer was "escalate," which is both useless as training
+        and untrue to the job. Adding "Note" as a third disposition fixed the instruction, the branching,
+        and the scoring in one move, because it created a middle path where most real pre-shift discoveries
+        actually live.</p>
+      <p>The second thing: designing the accessibility requirements first made the experience better for
+        everyone. Removing the real-time timer — which I'd added early because pressure felt authentic —
+        forced me to create pressure through consequence instead. And consequence is what teaches.</p>
+      <p>What I'd want a hiring manager to take from this project is not that I can operate Storyline. It's
+        that I can be handed a messy operational problem, find the actual performance gap inside it, build
+        a model simple enough to fit on a wallet card, and then produce something learners will finish and
+        managers will reinforce — <b>and that I'll tell you plainly which parts of it still need to be
+        tested.</b></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <p class="lbl">Accessibility</p>
+        <p style="font-size:.875rem;margin-top:.6rem;color:var(--tx2)">Designed to WCAG 2.1 AA, with
+          accessibility decided at the storyboard rather than audited at the end. Contrast ratios were
+          calculated for every colour pair — three first-pass tokens failed and were replaced. Every
+          interaction is keyboard-operable with a visible dual-tone focus indicator. No information is
+          conveyed by colour alone. Narration is captioned and available as a transcript, and the module is
+          complete with the sound off. <b style="color:var(--ivory)">There are no timed interactions
+          anywhere.</b> Tested keyboard-only, with NVDA on Chrome and VoiceOver on iOS Safari, at 200% text
+          zoom, and fully muted.</p>
+      </div>
+      <div>
+        <p class="lbl">The five pieces, in order</p>
+        <ol class="mono" style="font-size:.8125rem;margin:.6rem 0 0;padding-left:1.4rem;color:var(--tx2);line-height:1.9">
+          <li>Playable prototype, two decisions</li>
+          <li>This case study page</li>
+          <li>Design document PDF</li>
+          <li>One Rise lesson</li>
+          <li>Job aid + flow graphic</li>
+        </ol>
+        <p style="font-size:.8125rem;margin-top:.8rem;color:var(--mid)">Roughly seven working days to a
+          credible flagship case study that's live and linkable.</p>
+      </div>
+      <div>
+        <p class="lbl">Contact</p>
+        <p style="font-size:.9375rem;margin-top:.6rem">Designing learning for operational teams.
+          Available for Learning Experience Design and Instructional Design roles.</p>
+        <p style="margin-top:.8rem"><a href="mailto:kwame.nimfah@gmail.com">kwame.nimfah@gmail.com</a></p>
+        <p style="margin-top:.4rem;font-size:.875rem"><a href="https://nimfah.com">nimfah.com</a></p>
+      </div>
+    </div>
+    <p class="disclose"><b style="color:var(--silver)">MileOne Logistics is a fictional organisation
+      created for this project.</b> All scenarios, characters, and figures are illustrative. No proprietary
+      or client information is represented, and no metric on this page is a reported outcome. Where a
+      measure appears, it is a design target or a proposed measurement — never a result.</p>
+  </div>
+</footer>
