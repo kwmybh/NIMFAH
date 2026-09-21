@@ -27,15 +27,14 @@
 }
 .abt-portrait img {
   object-fit: cover;
-  object-position: 62% 18%;
-  filter: grayscale(1) contrast(1.12);
+  object-position: 72% 42%;
 }
 .abt-scrim {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, var(--ink) 0%, var(--scrim-55) 52%, transparent 100%),
-    linear-gradient(to top, var(--ink) 0%, var(--scrim-35) 34%, transparent 62%);
+    linear-gradient(to right, var(--ink) 4%, var(--scrim-55) 38%, transparent 72%),
+    linear-gradient(to top, var(--ink) 0%, transparent 46%);
 }
 .abt-hero-inner {
   position: relative;

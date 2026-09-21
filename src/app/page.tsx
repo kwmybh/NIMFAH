@@ -25,7 +25,7 @@ export default function About() {
       <section className="abt-hero">
         <div className="abt-portrait" aria-hidden="true">
           <Image
-            src="/portrait/kwame-portrait-1600.webp"
+            src="/portrait/kwame-hero-2400.webp"
             alt=""
             fill
             priority
