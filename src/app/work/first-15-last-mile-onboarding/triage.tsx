@@ -240,7 +240,12 @@ export function TriageDemo() {
   }
 
   function clearCritical() {
-    setScore((s) => ({ ...s, safety: 60 }));
+    // The violation carries its own authored safety cost (-20 at DP1, -25 at DP4) and that
+    // cost is applied on the way out of the interrupt. It used to set safety to a flat 60,
+    // which meant a learner who arrived at DP4 already below 60 was *rewarded* for trying
+    // to enter the dwelling. A gate that can raise your score is not a gate.
+    const penalty = critical ? critical.safety : 0;
+    setScore((s) => ({ ...s, safety: Math.max(0, Math.min(100, s.safety + penalty)) }));
     setRemediatedAt((r) => (r.includes(step) ? r : [...r, step]));
     setCritical(null);
   }
@@ -256,6 +261,19 @@ export function TriageDemo() {
   else if (score.safety < 70) pattern = "Fast and exposed. You moved quickly and left risk behind you. The coaching you need is about the gate, not the clock.";
   else if (score.time <= 0) pattern = "Careful and costly. Your judgment was sound and it cost more time than the shift had. The coaching you need is about proportion.";
   else pattern = "Mixed. You got the gate right and left service on the table — the escalations were the gap.";
+  if (remediatedAt.length > 0)
+    pattern = "The gate decides this one. You were stopped, and a stop is not a score you can climb back from inside the same attempt — the rest of the run is coaching.";
+
+  // The flag used to read "Passed with remediation" whenever an interrupt had fired, even on
+  // a failing run — so the debrief could print "Standard not met." and "Passed with
+  // remediation" one line apart. It now reports the interrupt; the verdict reports the score.
+  // With the violation's own cost applied, no tripped run can reach Safety 80, which is the
+  // point: the copy calls safety a gate, and a gate you can trip and still clear is not one.
+  const tripped = remediatedAt.map((i) => i + 1).join(" and ");
+  const flag =
+    remediatedAt.length === 0
+      ? null
+      : `Safety gate tripped at decision ${tripped}. A categorical violation ends the first-pass result for the attempt — you finish it for the coaching, and the record carries the interrupt, not just the final score.`;
 
   return (
     <div className="f15-demo">
@@ -303,14 +321,14 @@ export function TriageDemo() {
           <p className="f15-demo-verdict">{passed ? "Standard met." : "Standard not met."}</p>
           <p>{pattern}</p>
           <dl className="f15-demo-path">
-            <dt>Your path</dt>
+            <dt>Final path</dt>
             <dd><span className="f15-mono">{path.join("-")}</span></dd>
             <dt>Standard</dt>
             <dd>Safety ≥ 80 · Service ≥ 70 · rolled out inside 15 minutes</dd>
-            {remediatedAt.length > 0 ? (
+            {flag ? (
               <>
                 <dt>Flag</dt>
-                <dd>Passed with remediation — the LMS records this separately from a first-pass result.</dd>
+                <dd>{flag}</dd>
               </>
             ) : null}
           </dl>
