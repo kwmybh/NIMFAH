@@ -10,9 +10,9 @@ export function Header() {
   const pathname = usePathname();
   return (
     <header>
-      <div className="header-top">
-        <ThemeToggle />
-      </div>
+      <Link href="/" className="brand" aria-label="NIMFAH — home">
+        Nimfah
+      </Link>
       <nav className="nav" aria-label="Primary">
         <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
           About
@@ -23,6 +23,7 @@ export function Header() {
         >
           Work
         </Link>
+        <ThemeToggle />
       </nav>
     </header>
   );

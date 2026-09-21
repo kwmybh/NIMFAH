@@ -70,7 +70,7 @@ export default async function Image() {
             marginTop: 40,
           }}
         >
-          ACCRA – TORONTO – WASHINGTON DC
+          DESIGNER WHO BUILDS
         </div>
       </div>
     ),

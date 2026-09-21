@@ -11,34 +11,6 @@ export const metadata: Metadata = {
     "Learning experience and product design by Kwame Yeboah. Communication design, design systems, front-end, and scenario-based learning.",
 };
 
-// DRAFT COPY — voice and claims to be reviewed by Kwame.
-const XP = [
-  {
-    n: "01",
-    co: "Blue Umbrella Software",
-    role: "Lead Product Designer · Aug 2022 – present",
-    body: "Sole designer on Traveling Jobs, a travel-healthcare staffing marketplace, working with three backend and two front-end engineers across time zones. Built the design system in Figma and Storybook, every component shipped with written usage guidance. Full-time to Feb 2025, on contract since.",
-  },
-  {
-    n: "02",
-    co: "State Auto Insurance",
-    role: "Software Engineer, then UX Designer · 2021 – 2022",
-    body: "Started in engineering, moved to design. Built and maintained the internal design system across Figma and Storybook — from radio buttons and buttons through to form patterns. Now part of Liberty Mutual.",
-  },
-  {
-    n: "03",
-    co: "RLG Communications",
-    role: "Creative Executive · 2014 – 2017",
-    body: "An umbrella title for the work it actually was: UX/UI, graphic design, motion graphics, photography and videography. Led the visual identity for Radio 360 — every element mine, informed by client meetings and audience surveys.",
-  },
-  {
-    n: "04",
-    co: "Lando Services",
-    role: "UX Designer and Front-End Developer · 2013 – 2014",
-    body: "Responsive interfaces on a Node.js backend — CRUD, API integrations, and the tests that kept them honest. Where design and code stopped being two jobs.",
-  },
-];
-
 const FEATURED: WorkItem = {
   href: "/work/first-15-last-mile-onboarding",
   title: "First 15 — scenario-based onboarding for last-mile delivery",
@@ -55,34 +27,34 @@ export default function About() {
           <Image
             src="/portrait/kwame-portrait-1600.webp"
             alt=""
-            width={1600}
-            height={2000}
+            fill
             priority
-            sizes="(max-width: 720px) 62vw, 42vw"
+            sizes="100vw"
           />
+          <span className="abt-scrim" />
         </div>
-        <div className="abt-wrap">
-          <p className="abt-contact">
+
+        <div className="bleed abt-hero-inner">
+          <p className="abt-contact t-label-sm">
             <a href="mailto:kwame.nimfah@gmail.com">kwame.nimfah@gmail.com</a>
-            <span>Accra — Toronto — Washington DC</span>
           </p>
 
-          <p className="abt-statement">
-            I&apos;m a designer who builds. Communication design at KNUST, a masters in interactive
-            media at Ohio, then ten years between <em>design systems</em> and front-end code. Hand me
-            a messy operational problem and I&apos;ll find the decision hiding inside it.
+          <p className="abt-statement t-body-lg">
+            I&apos;m a designer who builds. Hand me a messy operational problem and I&apos;ll find the{" "}
+            <em>decision</em> hiding inside it — then design, write and ship the thing that helps
+            someone make it under pressure.
           </p>
 
-          <p className="abt-pill">Designer who builds</p>
-          <p className="abt-subs">
-            <span>Kwame Yeboah</span>
-            <span>Learning experience design</span>
-            <span>Product design</span>
-            <span>Front-end</span>
-          </p>
-          <h1 className="abt-name">
-            <span>Nimfah</span>
-          </h1>
+          <div className="abt-id">
+            <p className="abt-pill t-label">Designer who builds</p>
+            <p className="abt-subs t-label-sm">
+              <span>Kwame Yeboah</span>
+              <span>Learning experience design</span>
+              <span>Product design</span>
+              <span>Front-end</span>
+            </p>
+            <h1 className="abt-name t-display-1">Nimfah</h1>
+          </div>
         </div>
       </section>
 
@@ -98,34 +70,6 @@ export default function About() {
         </div>
       </section>
 
-      <section className="abt-sec">
-        <div className="abt-wrap">
-          <div className="abt-sechead">
-            <h2>I&apos;ve worked at</h2>
-            <span className="abt-seclabel">2013 — present</span>
-          </div>
-          <div className="abt-xp">
-            {XP.map((x, i) => (
-              <details key={x.n} open={i === 0}>
-                <summary>
-                  <span className="abt-xp-n">{x.n}</span>
-                  <span>
-                    <span className="abt-xp-co">{x.co}</span>
-                    <span className="abt-xp-role">{x.role}</span>
-                  </span>
-                  <span className="abt-xp-sign" aria-hidden="true">
-                    {i === 0 ? "−" : "+"}
-                  </span>
-                </summary>
-                <div>
-                  <p>{x.body}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="abt-wrap">
         <div className="abt-end">
           <a className="abt-btn" href="mailto:kwame.nimfah@gmail.com">
@@ -134,6 +78,14 @@ export default function About() {
           <Link className="abt-btn abt-btn-ghost" href="/work">
             See the work
           </Link>
+          <a
+            className="abt-btn abt-btn-ghost"
+            href="/cv/Kwame Yeboah - LXD - Resume.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            Résumé ↓
+          </a>
         </div>
       </section>
     </div>

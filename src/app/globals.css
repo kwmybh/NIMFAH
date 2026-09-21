@@ -1,3 +1,5 @@
+@import "./tokens.css";
+
 /* NIMFAH — portfolio platform
    Faithful port of the canonical design (design_handoff_nimfah_portfolio/app/index.html).
    One typeface (Bricolage Grotesque via next/font -> --font-bricolage), one restrained
@@ -16,16 +18,16 @@
   --accent: #2e7d17;
 }
 [data-theme="dark"] {
-  --bg: #0a0a0b;
-  --fg: #f4f3ee;
-  --dim: #9a9aa2;
-  --dim2: #8f8f97;
-  --dim3: #7a7a82;
-  --surface: #101012;
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --dim: var(--muted);
+  --dim2: var(--muted);
+  --dim3: var(--muted);
+  --surface: var(--panel);
   --line: rgba(255, 255, 255, 0.12);
   --line2: rgba(255, 255, 255, 0.07);
   --linestrong: rgba(255, 255, 255, 0.24);
-  --accent: #5fe12c;
+  --accent: var(--acid);
 }
 
 * {
@@ -39,12 +41,12 @@ body {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-family: var(--body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 ::selection {
-  background: rgba(95, 225, 44, 0.3);
+  background: rgba(157, 241, 51, 0.3);
 }
 button {
   font-family: inherit;
@@ -89,20 +91,31 @@ video {
 
 /* Header */
 header {
-  padding: clamp(22px, 3.4vh, 38px) clamp(20px, 4vw, 56px) 0;
-}
-.header-top {
-  position: relative;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 34px;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(14px, 2.2vh, 24px) var(--gutter);
+  background: transparent;
+  pointer-events: none;
+}
+header > * {
+  pointer-events: auto;
+}
+.brand {
+  font: 700 var(--fs-label) / 1 var(--display);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+}
+.brand:hover {
+  color: var(--acid);
 }
 .theme-toggle {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   width: 34px;
   height: 34px;
   display: flex;
@@ -116,17 +129,14 @@ header {
 }
 .nav {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
-  margin-top: clamp(8px, 1.6vh, 18px);
-  padding-bottom: clamp(16px, 2.4vh, 24px);
-  flex-wrap: wrap;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
 }
 .nav button,
 .nav a {
-  padding: 8px 10px;
-  font: 400 12px/1 var(--font-bricolage);
-  letter-spacing: 0.32em;
+  padding: 8px 2px;
+  font: 600 var(--fs-label-sm) / 1 var(--display);
+  letter-spacing: var(--tr-label);
   text-transform: uppercase;
   color: var(--dim2);
   text-decoration: none;

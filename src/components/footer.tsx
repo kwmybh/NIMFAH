@@ -17,7 +17,7 @@ export function Footer() {
             Client Vault
           </Link>
         </div>
-        <div className="copy">© 2026 NIMFAH · Accra – Toronto – Washington DC</div>
+        <div className="copy">© 2026 NIMFAH</div>
       </div>
     </footer>
   );

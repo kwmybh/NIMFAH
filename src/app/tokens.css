@@ -1,0 +1,104 @@
+/* NIMFAH design tokens. Values measured from the reference and documented in
+   docs/design-system.md. Imported by globals.css so every surface reads from here. */
+
+:root {
+  /* ── colour ─────────────────────────────────────────── */
+  --ink: #070210;        /* ground — near-black with a violet cast, not neutral */
+  --black: #000000;
+  --paper: #f5f0eb;      /* primary text — warm off-white, never pure white */
+  --white: #ffffff;      /* peak emphasis only */
+  --acid: #9df133;       /* the accent: structural and interactive, never decorative */
+  --muted: #747785;      /* secondary text — grey with a violet lean */
+  --coral: #f75049;      /* single warm counter-accent, used once or twice per page */
+  --panel: #131418;
+  --edge: #25272f;
+  --scrim-35: rgba(0, 0, 0, 0.35);
+  --scrim-55: rgba(0, 0, 0, 0.55);
+
+  /* ── type ───────────────────────────────────────────── */
+  --display: var(--font-rajdhani, "Rajdhani", system-ui, sans-serif);
+  --body: var(--font-dm-sans, "DM Sans", system-ui, sans-serif);
+
+  /* display steps — line-height 0.8, negative tracking ≈ −3% of size */
+  --fs-d1: clamp(3.5rem, 13.9vw, 12.5rem);   /* 200px @1440 */
+  --fs-d2: clamp(2.75rem, 8.3vw, 7.5rem);    /* 120px */
+  --fs-d3: clamp(2rem, 5.6vw, 5rem);         /* 80px  */
+  --fs-d4: clamp(1.75rem, 3.9vw, 3.5rem);    /* 56px  */
+  --fs-num: clamp(2.5rem, 6.9vw, 6.25rem);   /* 100px */
+  --fs-title: clamp(1.5rem, 2.8vw, 2.5rem);  /* 40px  */
+  --fs-item: 1.25rem;                        /* 20px  */
+  --fs-label: 1rem;                          /* 16px  */
+  --fs-label-sm: 0.875rem;                   /* 14px  */
+
+  --lh-display: 0.8;
+  --lh-tight: 0.86;
+  --lh-body: 1.6;
+
+  --tr-display: -0.03em;   /* negative on display */
+  --tr-label: 0.13em;      /* positive on tracked labels */
+
+  /* ── geometry ───────────────────────────────────────── */
+  --radius: 0;             /* zero, everywhere, deliberately */
+  --hair: 0.5px;
+  --rule: 1px;
+  --gutter: clamp(16px, 2.2vw, 32px);
+
+  /* ── motion ─────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);     /* the workhorse */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1); /* large positional moves */
+  --dur-fast: 0.15s;
+  --dur: 0.3s;
+  --dur-slow: 0.6s;
+}
+
+/* Type roles. Apply as classes rather than restating values per component. */
+.t-display-1,
+.t-display-2,
+.t-display-3,
+.t-display-4 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  margin: 0;
+}
+.t-display-1 { font-size: var(--fs-d1); font-weight: 500; }
+.t-display-2 { font-size: var(--fs-d2); font-weight: 400; }
+.t-display-3 { font-size: var(--fs-d3); font-weight: 500; }
+.t-display-4 { font-size: var(--fs-d4); font-weight: 500; letter-spacing: normal; line-height: var(--lh-tight); }
+
+.t-label {
+  font: 700 var(--fs-label) / 1 var(--display);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+}
+.t-label-sm {
+  font: 600 var(--fs-label-sm) / 1.43 var(--display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.t-item {
+  font: 500 var(--fs-item) / 1 var(--display);
+  text-transform: uppercase;
+}
+.t-body {
+  font: 400 1rem / var(--lh-body) var(--body);
+}
+.t-body-lg {
+  font: 500 1.25rem / 1.5 var(--body);
+  letter-spacing: -0.03em;
+}
+
+/* Full-bleed section: the gutter is the only inset. No centred wrap. */
+.bleed {
+  width: 100%;
+  padding-inline: var(--gutter);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0.01ms;
+    --dur: 0.01ms;
+    --dur-slow: 0.01ms;
+  }
+}
