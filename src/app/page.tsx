@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SHOW_HERO_PORTRAIT } from "@/lib/data";
 import { WorkCard, type WorkItem } from "@/components/work-card";
 import "./about.css";
 import "./work.css";
@@ -23,15 +24,21 @@ export default function About() {
   return (
     <div className="abt">
       <section className="abt-hero">
-        <div className="abt-portrait" aria-hidden="true">
-          <Image
-            src="/portrait/kwame-hero-2400.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-          />
-          <span className="abt-scrim" />
+        {SHOW_HERO_PORTRAIT ? (
+          <div className="abt-portrait" aria-hidden="true">
+            <Image src="/portrait/kwame-hero-2400.webp" alt="" fill priority sizes="100vw" />
+            <span className="abt-scrim" />
+          </div>
+        ) : null}
+
+        <div className="abt-hud" aria-hidden="true">
+          <span className="abt-col" style={{ left: "25%" }} />
+          <span className="abt-col" style={{ left: "50%" }} />
+          <span className="abt-col" style={{ left: "75%" }} />
+          <span className="abt-tick abt-tick-tl" />
+          <span className="abt-tick abt-tick-tr" />
+          <span className="abt-tick abt-tick-bl" />
+          <span className="abt-tick abt-tick-br" />
         </div>
 
         <div className="bleed abt-hero-inner">

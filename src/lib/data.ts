@@ -38,6 +38,11 @@ function placeholderFrames(seed: string, count: number, mono: boolean): string[]
 // /series/[id] routes both key off it. Nothing has been deleted.
 export const SHOW_PHOTOGRAPHY = false;
 
+// ARCHIVED, 21 Sept 2026. The placeholder portrait wasn't serving the hero — the type
+// carries it better alone for now. Files stay in public/portrait/; flip this to true to
+// bring the image back, or point it at a proper self-portrait when one exists.
+export const SHOW_HERO_PORTRAIT = false;
+
 // The lead artwork behind the home wordmark. Replace with e.g. "/artwork/hero.jpg".
 export const HERO_IMAGE = "/artwork/mary-eve/05.jpg";
 
