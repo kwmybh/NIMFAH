@@ -143,3 +143,44 @@ Implement with rAF lerp toward the pointer, not a direct assignment — the lag 
 - The First 15 case study keeps its own art direction — ink/gold/Bodoni — as a
   self-contained world. Per-project art direction is in the reference too.
 - No Awwwards badge, no borrowed copy, no logo.
+
+---
+
+## 9. Motion layer as built (`src/app/motion.css`, `src/components/cursor.tsx`, `scroll.tsx`)
+
+Three things shipped, and three measured items deliberately did not. Both lists matter —
+an unrecorded omission looks like an oversight later.
+
+**Shipped**
+
+- **Cursor.** 60×60, radius 0, `z-index: 60`, `mix-blend-mode: difference`, native cursor
+  left visible. Position written to the node from a rAF lerp (factor `0.18`), never through
+  React state. Verified against the live page: over the wordmark the border inverts on the
+  glyph and stays light on the ground; over a nav link the square fills and inverts the
+  whole label.
+- **Scroll reveals.** One `IntersectionObserver` over `[data-reveal]`, `rootMargin`
+  `0 0 -12% 0`, unobserved once revealed. Pages opt in with an attribute and stay server
+  components. Anything above 88% of the viewport at mount reveals without waiting.
+- **Scroll progress.** 1px acid hairline, `transform: scaleX()` from a rAF-throttled
+  scroll listener.
+
+**Deviations, marked in the CSS**
+
+- Reveal opacity runs `0.6s` expo-out, not the measured `0.15s ease`. The measured pairing
+  is tuned for hover feedback; under a 0.6s positional move a 0.15s fade finishes first and
+  reads as unfinished.
+- The reference's cursor class name suggests it doubles as a scroll-progress ring. That was
+  inferred from a name, not measured, so progress is a separate hairline rather than an
+  invented arc.
+
+**Not built, with reasons**
+
+- **Vertical stacked scroll cue** — no room. At 1280 the wordmark occupies x 28→1252,
+  y 440→768 of an 800px hero. A cue could only overlap the type.
+- **Overlay menu** — the nav is two links. An overlay for two links is machinery, not motion.
+- **Odometer counters** — there is no number on the site for them to count. The case study's
+  meters already animate and belong to the scenario, not to the chrome.
+
+**Failure mode guarded.** The hidden state is gated on `[data-motion="on"]`, set by a one-line
+inline script in `<head>`. With scripting off or that script blocked, nothing is ever hidden —
+the page renders complete rather than blank.

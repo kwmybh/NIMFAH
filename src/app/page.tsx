@@ -42,30 +42,34 @@ export default function About() {
         </div>
 
         <div className="bleed abt-hero-inner">
-          <p className="abt-contact t-label-sm">
+          <p className="abt-contact t-label-sm" data-reveal="fade" style={{ "--reveal-delay": "0.05s" } as React.CSSProperties}>
             <a href="mailto:kwame.nimfah@gmail.com">kwame.nimfah@gmail.com</a>
           </p>
 
-          <p className="abt-statement t-body-lg">
+          <p className="abt-statement t-body-lg" data-reveal="up" style={{ "--reveal-delay": "0.12s" } as React.CSSProperties}>
             I&apos;m a designer who builds. Hand me a messy operational problem and I&apos;ll find the{" "}
             <em>decision</em> hiding inside it — then design, write and ship the thing that helps
             someone make it under pressure.
           </p>
 
           <div className="abt-id">
-            <p className="abt-pill t-label">Designer who builds</p>
-            <p className="abt-subs t-label-sm">
+            <p className="abt-pill t-label" data-reveal="up" style={{ "--reveal-delay": "0.20s" } as React.CSSProperties}>
+              Designer who builds
+            </p>
+            <p className="abt-subs t-label-sm" data-reveal="up" style={{ "--reveal-delay": "0.26s" } as React.CSSProperties}>
               <span>Kwame Yeboah</span>
               <span>Learning experience design</span>
               <span>Product design</span>
               <span>Front-end</span>
             </p>
-            <h1 className="abt-name t-display-1">Nimfah</h1>
+            <h1 className="abt-name t-display-1" data-reveal="mask" style={{ "--reveal-delay": "0.32s" } as React.CSSProperties}>
+              Nimfah
+            </h1>
           </div>
         </div>
       </section>
 
-      <section className="abt-sec">
+      <section className="abt-sec" data-reveal="up">
         <div className="abt-wrap">
           <div className="abt-sechead">
             <h2>Selected work</h2>
@@ -77,7 +81,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="abt-wrap">
+      <section className="abt-wrap" data-reveal="up">
         <div className="abt-end">
           <a className="abt-btn" href="mailto:kwame.nimfah@gmail.com">
             Shoot a message

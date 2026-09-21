@@ -50,6 +50,10 @@ export default function RootLayout({
       <head>
         {/* Apply the persisted / preferred theme before first paint (no flash). */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Arm the reveal layer before first paint. Everything [data-reveal] stays
+            visible unless this runs, so no-JS and broken-JS both render a complete
+            page rather than an empty one. */}
+        <script dangerouslySetInnerHTML={{ __html: 'document.documentElement.dataset.motion="on"' }} />
       </head>
       <body>
         <Providers>{children}</Providers>

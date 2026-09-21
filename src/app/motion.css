@@ -1,0 +1,144 @@
+/* NIMFAH — motion layer
+   Every duration and easing below is one of the four pairings measured off the reference
+   site (see docs/design-system.md §5). Where this file deviates, the deviation is marked
+   and justified in a comment — an unmarked invented curve is how a system drifts. */
+
+/* ---------------------------------------------------------------- custom cursor
+   60x60, radius 0, z-index 60, mix-blend-mode: difference. The native cursor stays
+   visible; this accompanies it. Mounted as a direct child of <body> so nothing
+   isolates the blend. */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--paper);
+  border-radius: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0;
+  /* Transform is driven at 60fps from JS and must not be transitioned — only the
+     hover/press states animate, on the measured workhorse pairing. */
+  transition:
+    opacity 0.15s ease,
+    width 0.3s var(--ease-out),
+    height 0.3s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+.cursor[data-on="true"] { opacity: 1; }
+
+/* Over anything clickable the square fills, which under difference blend inverts a
+   60px patch of whatever is beneath it. That inversion is the reference's signature —
+   scaling alone would read as a generic dot-follower. */
+.cursor[data-hot="true"] {
+  background: var(--paper);
+  border-color: var(--paper);
+}
+.cursor[data-down="true"] {
+  width: 44px;
+  height: 44px;
+  /* Held so the square shrinks about its own centre rather than its top-left. */
+  margin: 8px 0 0 8px;
+}
+
+/* No pointer, no square. Touch devices and reduced motion never mount it (the
+   component returns early), but this keeps it invisible if it ever renders. */
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+}
+
+/* ------------------------------------------------------------- scroll progress
+   A 1px acid hairline across the top edge. The system uses acid structurally and
+   allows itself hairlines; a thick bar would be a foreign object. */
+.progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: 1px;
+  background: var(--acid);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------- scroll reveals
+   DEVIATION, deliberate: the measured opacity pairing is 0.15s ease, which is tuned
+   for hover feedback. Used on a section entering the viewport it reads as a pop. The
+   transform here runs on the measured 0.6s expo-out and opacity is matched to it so
+   the two finish together — a mismatched fade under a 0.6s move looks unfinished. */
+[data-reveal] {
+  transition:
+    opacity 0.6s var(--ease-expo) var(--reveal-delay, 0s),
+    transform 0.6s var(--ease-expo) var(--reveal-delay, 0s),
+    clip-path 0.6s var(--ease-expo) var(--reveal-delay, 0s);
+}
+/* The hidden state is gated on [data-motion="on"], which a one-line inline script in
+   <head> sets before first paint. If scripting is off or that script never runs, nothing
+   is ever hidden and the page renders complete — a portfolio that depends on JS to become
+   visible is a portfolio that is sometimes blank. Gating in <head> rather than in the
+   observer's effect also means no flash of visible-then-hidden content. */
+[data-motion="on"] [data-reveal="up"] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+[data-motion="on"] [data-reveal="fade"] {
+  opacity: 0;
+}
+[data-motion="on"] [data-reveal="mask"] {
+  opacity: 0;
+  /* Wipes up from the baseline — the right entrance for a line of display type,
+     which should arrive as type rather than slide in as a box. */
+  clip-path: inset(0 0 100% 0);
+}
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Stagger helper: set --reveal-delay per child where a group should cascade. */
+[data-reveal-group] > * { --reveal-delay: calc(var(--i, 0) * 0.07s); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* --------------------------------------------------------- link micro-interaction
+   Colour on the measured 0.3s ease-out; the rule wipes in from the left on the
+   measured 0.3s decelerate. Scoped to the nav and the footer so it cannot leak into
+   the case study's prose links, which carry their own treatment. */
+.nav a,
+.nav button {
+  position: relative;
+  transition: color 0.3s ease-out;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  height: 1px;
+  background: var(--acid);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.3s var(--ease-out);
+}
+.nav a:hover::after,
+.nav a:focus-visible::after,
+.nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* The reference's vertical stacked-letter scroll cue is deliberately absent. Measured at
+   1280: the wordmark runs x=28 to x=1252 and y=440 to y=768 inside an 800px hero, which
+   leaves 32px under it and nothing at either gutter. A cue could only sit on top of the
+   type. The wordmark filling the measure is the composition; a cue competing with it is
+   decoration, so the cue loses. */

@@ -31,16 +31,16 @@ export default function WorkIndex() {
   return (
     <section className="workidx">
       <div className="workidx-head">
-        <h1>Work</h1>
-        <p className="workidx-lede">
+        <h1 data-reveal="mask">Work</h1>
+        <p className="workidx-lede" data-reveal="up" style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}>
           Learning and product design, documented end to end — the problem, the decisions, and the
           artefacts a team could actually build from.
         </p>
       </div>
 
       <ul className="wc-grid">
-        {CASE_STUDIES.map((i) => (
-          <WorkCard item={i} key={i.href} />
+        {CASE_STUDIES.map((i, n) => (
+          <WorkCard item={i} key={i.href} index={n} />
         ))}
       </ul>
 
@@ -52,8 +52,8 @@ export default function WorkIndex() {
           </div>
 
           <ul className="wc-grid">
-            {photography.map((i) => (
-              <WorkCard item={i} key={i.href} />
+            {photography.map((i, n) => (
+              <WorkCard item={i} key={i.href} index={n} />
             ))}
           </ul>
         </>

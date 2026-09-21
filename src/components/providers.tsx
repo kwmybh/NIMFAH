@@ -5,9 +5,13 @@ import { ThemeProvider } from "./theme-provider";
 import { ToastProvider } from "./toast-provider";
 import { Header } from "./header";
 import { Footer } from "./footer";
+import { Cursor } from "./cursor";
+import { ScrollProgress, ScrollReveal } from "./scroll";
 
-// Client boundary that owns the shared chrome (skip link, header, footer) and the theme +
-// toast contexts. Server-rendered page content is passed through as `children`.
+// Client boundary that owns the shared chrome (skip link, header, footer), the theme +
+// toast contexts, and the motion layer. Server-rendered page content is passed through
+// as `children` — the reveal observer reads [data-reveal] off the DOM precisely so that
+// pages can opt in with an attribute instead of becoming client components.
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider>
@@ -15,9 +19,12 @@ export function Providers({ children }: { children: ReactNode }) {
         <a className="skip" href="#main">
           Skip to content
         </a>
+        <ScrollProgress />
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <ScrollReveal />
+        <Cursor />
       </ToastProvider>
     </ThemeProvider>
   );

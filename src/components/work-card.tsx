@@ -42,9 +42,13 @@ function Plate() {
   );
 }
 
-export function WorkCard({ item }: { item: WorkItem }) {
+export function WorkCard({ item, index = 0 }: { item: WorkItem; index?: number }) {
   return (
-    <li className="wc">
+    <li
+      className="wc"
+      data-reveal="up"
+      style={{ "--reveal-delay": `${0.06 * index}s` } as React.CSSProperties}
+    >
       <Link href={item.href} className="wc-link">
         <div className="wc-thumb">
           {item.thumb.kind === "image" ? (
