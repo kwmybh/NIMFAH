@@ -10,14 +10,8 @@ export function Footer() {
           kwame.nimfah@gmail.com
         </a>
         <div className="socials">
-          <a href="https://instagram.com" target="_blank" rel="noopener">
-            Instagram
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener">
+          <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener">
             LinkedIn
-          </a>
-          <a href="https://vsco.co" target="_blank" rel="noopener">
-            VSCO
           </a>
           <Link className="vault-link" href="/vault">
             Client Vault
