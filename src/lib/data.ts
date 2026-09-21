@@ -32,8 +32,14 @@ function placeholderFrames(seed: string, count: number, mono: boolean): string[]
   );
 }
 
+// ARCHIVED, 21 Sept 2026. The photography is not finished — three of the four series
+// are still picsum placeholders — and nimfah.com's job right now is the learning-design
+// work. Flip this to true to bring the series back: the /work section and the
+// /series/[id] routes both key off it. Nothing has been deleted.
+export const SHOW_PHOTOGRAPHY = false;
+
 // The lead artwork behind the home wordmark. Replace with e.g. "/artwork/hero.jpg".
-export const HERO_IMAGE = placeholder("nimfah-a", 1800, 1070, true);
+export const HERO_IMAGE = "/artwork/mary-eve/05.jpg";
 
 export const SERIES: Series[] = [
   {
@@ -42,7 +48,11 @@ export const SERIES: Series[] = [
     title: "Mary & Eve",
     year: "2023",
     medium: "Silver gelatin",
-    frames: ["/artwork/mary-eve/01.jpg"],
+    frames: [
+      "/artwork/mary-eve/01.jpg",
+      "/artwork/mary-eve/02.jpg",
+      "/artwork/mary-eve/03.jpg",
+    ],
     poster: placeholder("santamaria-film", 1280, 800, true),
     film: "https://test-videos.co.uk/vids/jellyfish/mp4/h264/720/Jellyfish_720_10s_1MB.mp4",
     filmMeta: "16mm transfer · 00:15",

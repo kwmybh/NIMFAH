@@ -13,9 +13,10 @@ export type Theme = "light" | "dark";
 export const THEME_KEY = "nimfah-theme";
 
 // Inline script injected into <head> so the theme is applied before first paint (no flash).
-// Honors a persisted choice, then the OS preference on first visit. Kept in sync with the
-// provider's lazy initializer below — both read the same source, so they always agree.
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();`;
+// Dark is the brand default, not a preference: the site's art direction is a near-black
+// ground with the acid accent, and a visitor arriving on a light-mode laptop should still
+// see the site as designed. A persisted choice from the toggle still wins.
+export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();`;
 
 type ThemeContextValue = {
   theme: Theme;
@@ -34,7 +35,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       const attr = document.documentElement.getAttribute("data-theme");
       if (attr === "dark" || attr === "light") return attr;
     }
-    return "light";
+    return "dark";
   });
 
   const toggle = useCallback(() => {

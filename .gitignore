@@ -42,3 +42,7 @@ next-env.d.ts
 
 # iCloud/Finder conflict-copy duplicates (this project lives under ~/Documents)
 * [0-9].*
+
+# local scratch
+_to_delete/
+.claude/

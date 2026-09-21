@@ -1,0 +1,247 @@
+/* Home = About. Structural language borrowed from the reference: monospaced
+   letter-spaced labels, an accent pill, oversized display caps, hairline rules.
+   Ground stays the site's own --bg/--fg/--accent so it themes light and dark.
+   Scoped under .abt. */
+
+.abt {
+  --abt-wrap: 1180px;
+  --abt-mono: var(--font-plex-mono, ui-monospace, SFMono-Regular, Consolas, monospace);
+  --abt-ui: var(--font-bricolage, system-ui, sans-serif);
+}
+.abt-wrap {
+  max-width: var(--abt-wrap);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 56px);
+}
+
+/* ── hero ─────────────────────────────────────────────────── */
+.abt-hero {
+  position: relative;
+  padding-block: clamp(2rem, 6vw, 4rem) clamp(2.5rem, 7vw, 5rem);
+  overflow: hidden;
+}
+.abt-portrait {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(240px, 42vw, 620px);
+  height: 100%;
+  z-index: 0;
+  opacity: 0.5;
+  filter: grayscale(1) contrast(1.05);
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 35%, transparent 100%);
+  pointer-events: none;
+}
+.abt-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+}
+[data-theme="dark"] .abt-portrait {
+  opacity: 0.38;
+}
+.abt-hero > .abt-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.abt-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 2.5rem;
+  margin: 0 0 clamp(2.5rem, 8vw, 5rem);
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--accent);
+  font: 400 0.75rem/1.9 var(--abt-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.abt-contact a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.abt-contact a:hover {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+
+.abt-statement {
+  max-width: 46ch;
+  margin: 0 0 clamp(3rem, 9vw, 6rem);
+  font-size: clamp(1rem, 2vw, 1.1875rem);
+  line-height: 1.75;
+  color: var(--fg);
+}
+.abt-statement em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.abt-pill {
+  display: inline-block;
+  margin: 0 0 1.1rem;
+  padding: 0.4rem 0.9rem 0.35rem;
+  font: 600 0.6875rem/1.4 var(--abt-ui);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #101013;
+  background: var(--accent);
+}
+.abt-subs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 2.5rem;
+  margin: 0 0 0.6rem;
+  font: 400 0.6875rem/1.9 var(--abt-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dim3);
+}
+.abt-name {
+  margin: 0;
+  font: 500 clamp(3rem, 14vw, 10rem)/0.9 var(--abt-ui);
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.abt-name span {
+  display: block;
+}
+
+/* ── shared section head ──────────────────────────────────── */
+.abt-sec {
+  padding-block: clamp(3rem, 8vw, 5.5rem);
+  border-top: 1px solid var(--line);
+}
+.abt-sechead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+.abt-sechead h2 {
+  margin: 0;
+  font: 500 clamp(1.5rem, 5vw, 2.75rem)/1 var(--abt-ui);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.abt-sechead a,
+.abt-seclabel {
+  font: 400 0.6875rem/1.9 var(--abt-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dim3);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.abt-sechead a:hover {
+  color: var(--accent);
+}
+
+/* ── experience accordion ─────────────────────────────────── */
+.abt-xp {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.abt-xp details {
+  border-bottom: 1px solid var(--line);
+}
+.abt-xp summary {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  gap: 0 clamp(1rem, 3vw, 2rem);
+  align-items: baseline;
+  padding: 1.15rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+.abt-xp summary::-webkit-details-marker {
+  display: none;
+}
+.abt-xp summary:hover .abt-xp-co {
+  color: var(--accent);
+}
+.abt-xp-n {
+  font: 400 0.75rem/1.9 var(--abt-mono);
+  letter-spacing: 0.1em;
+  color: var(--dim3);
+}
+.abt-xp-co {
+  font: 500 clamp(1rem, 2.4vw, 1.375rem)/1.3 var(--abt-ui);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.abt-xp-role {
+  display: block;
+  margin-top: 0.2rem;
+  font: 400 0.6875rem/1.7 var(--abt-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim2);
+}
+.abt-xp-sign {
+  font: 400 1.125rem/1 var(--abt-mono);
+  color: var(--dim3);
+}
+.abt-xp details[open] .abt-xp-sign {
+  color: var(--accent);
+}
+.abt-xp details > div {
+  padding: 0 0 1.4rem;
+  margin-left: clamp(0px, 3rem, 4rem);
+}
+.abt-xp details p {
+  max-width: 62ch;
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--dim);
+}
+
+/* ── closing contact ──────────────────────────────────────── */
+.abt-end {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1rem;
+  padding-block: clamp(3rem, 8vw, 5rem);
+  border-top: 1px solid var(--line);
+}
+.abt-btn {
+  padding: 0.85rem 1.35rem;
+  font: 600 0.75rem/1 var(--abt-ui);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #101013;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+}
+.abt-btn-ghost {
+  color: var(--fg);
+  background: transparent;
+  border-color: var(--linestrong);
+}
+.abt-btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .abt-portrait {
+    width: 62vw;
+    opacity: 0.28;
+  }
+  .abt-xp summary {
+    grid-template-columns: 2.25rem 1fr auto;
+  }
+  .abt-xp details > div {
+    margin-left: 2.25rem;
+  }
+}

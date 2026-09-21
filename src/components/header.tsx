@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 
-// No logo — identity is carried by the hero wordmark. Theme toggle sits absolute-right;
-// below it, the primary nav is spaced evenly. The active item is bold (aria-current).
+// Two links, after the reference site: About (home) and Work. Contact lives on the
+// About page and in the footer; the Vault is footer-only.
 export function Header() {
   const pathname = usePathname();
   return (
@@ -15,15 +15,14 @@ export function Header() {
       </div>
       <nav className="nav" aria-label="Primary">
         <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
-          Artwork
+          About
         </Link>
         <Link
-          href="/vault"
-          aria-current={pathname === "/vault" ? "page" : undefined}
+          href="/work"
+          aria-current={pathname.startsWith("/work") || pathname.startsWith("/series") ? "page" : undefined}
         >
-          Vault
+          Work
         </Link>
-        <a href="mailto:kwame.nimfah@gmail.com">Contact</a>
       </nav>
     </header>
   );

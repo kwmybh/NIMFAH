@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { SERIES, getSeries, seriesMeta } from "@/lib/data";
+import { SERIES, SHOW_PHOTOGRAPHY, getSeries, seriesMeta } from "@/lib/data";
 
 type Params = { id: string };
 
 // Pre-render the four known series (01–04); any other id 404s.
 export function generateStaticParams(): Params[] {
-  return SERIES.map((s) => ({ id: s.idx }));
+  // Archived: nothing is prerendered and every id 404s until SHOW_PHOTOGRAPHY is true.
+  return SHOW_PHOTOGRAPHY ? SERIES.map((s) => ({ id: s.idx })) : [];
 }
 export const dynamicParams = false;
 
@@ -28,15 +29,15 @@ export default async function SeriesDetail({
   params: Promise<Params>;
 }) {
   const { id } = await params;
-  const series = getSeries(id);
+  const series = SHOW_PHOTOGRAPHY ? getSeries(id) : undefined;
   if (!series) notFound();
 
   const count = series.frames.length;
 
   return (
     <div className="detail">
-      <Link href="/" className="back">
-        ← All artwork
+      <Link href="/work" className="back">
+        ← All work
       </Link>
       <h1>{series.title}</h1>
       <p className="meta">

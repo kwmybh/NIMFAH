@@ -476,3 +476,274 @@
 .f15 .f15-section-paper :focus-visible {
   outline-color: var(--f15-ink);
 }
+
+/* ── pull quote ─────────────────────────────────────────────── */
+.f15 .f15-pull {
+  max-width: 34ch;
+  margin: 2rem 0 0;
+  font: 400 clamp(1.25rem, 2.6vw, 1.75rem)/1.35 var(--f15-display);
+  color: var(--f15-paper);
+  text-wrap: balance;
+}
+.f15 .f15-section-paper .f15-pull {
+  color: var(--f15-ink);
+}
+
+/* ── Fix / Flag / Note model cards ──────────────────────────── */
+.f15 .f15-model {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.f15 .f15-model-card {
+  padding: 1.35rem;
+  border: 1px solid var(--f15-hairline-dark);
+  border-top: 2px solid var(--f15-gold);
+  background: rgba(255, 255, 255, 0.025);
+}
+.f15 .f15-model-n {
+  display: block;
+  margin-bottom: 0.55rem;
+  font: 600 0.6875rem/1.5 var(--f15-ui);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--f15-gold);
+}
+.f15 .f15-model-card p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--f15-ivory);
+}
+.f15 .f15-model-note {
+  max-width: var(--f15-prose);
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--f15-silver);
+}
+
+/* ── spec rows (replaces long prose) ────────────────────────── */
+.f15 .f15-spec {
+  margin: 2rem 0 0;
+  max-width: 940px;
+}
+.f15 .f15-spec-row {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--f15-hairline-dark);
+}
+.f15 .f15-spec-row:last-child {
+  border-bottom: 1px solid var(--f15-hairline-dark);
+}
+.f15 .f15-spec dt {
+  font: 600 0.6875rem/1.7 var(--f15-ui);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--f15-gold);
+}
+.f15 .f15-spec dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--f15-ivory);
+}
+.f15 .f15-section-paper .f15-spec-row {
+  border-color: var(--f15-hairline-light);
+}
+.f15 .f15-section-paper .f15-spec dt {
+  color: var(--f15-gold-deep);
+}
+.f15 .f15-section-paper .f15-spec dd {
+  color: var(--f15-ink);
+}
+@media (max-width: 640px) {
+  .f15 .f15-spec-row {
+    grid-template-columns: 1fr;
+    gap: 0.4rem 0;
+  }
+}
+
+/* ── the playable scenario ──────────────────────────────────── */
+.f15 .f15-demo {
+  margin-top: 2.5rem;
+  max-width: 860px;
+  background: var(--f15-ink);
+  border: 1px solid var(--f15-graphite);
+  border-top: 2px solid var(--f15-gold);
+  color: var(--f15-ivory);
+}
+.f15 .f15-demo p {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--f15-ivory);
+}
+
+.f15 .f15-demo-meters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 1.5rem;
+  padding: 1.1rem clamp(1.1rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--f15-graphite);
+  background: rgba(255, 255, 255, 0.02);
+}
+.f15 .f15-meter-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+  font: 600 0.625rem/1.4 var(--f15-ui);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--f15-silver);
+}
+.f15 .f15-meter-head b {
+  font: 500 0.9375rem/1 var(--f15-data);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--f15-gold-light);
+}
+.f15 .f15-meter-head b.under {
+  color: var(--f15-crimson);
+}
+.f15 .f15-meter-track {
+  height: 3px;
+  background: var(--f15-graphite);
+  overflow: hidden;
+}
+.f15 .f15-meter-track span {
+  display: block;
+  height: 100%;
+  background: var(--f15-teal);
+  transition: width 320ms ease;
+}
+.f15 .f15-meter-track span.under {
+  background: var(--f15-crimson);
+}
+
+.f15 .f15-demo-scene,
+.f15 .f15-demo-feedback,
+.f15 .f15-demo-critical,
+.f15 .f15-demo-debrief {
+  padding: clamp(1.25rem, 3.5vw, 2rem);
+}
+.f15 .f15-demo-eyebrow {
+  margin: 0 0 1rem !important;
+  font: 600 0.625rem/1.5 var(--f15-ui) !important;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--f15-gold) !important;
+}
+.f15 .f15-demo-scene p,
+.f15 .f15-demo-feedback p,
+.f15 .f15-demo-critical p,
+.f15 .f15-demo-debrief p {
+  margin: 0 0 0.9rem;
+  max-width: 60ch;
+}
+.f15 .f15-demo-q {
+  margin-top: 1.25rem !important;
+  font-weight: 600;
+  color: var(--f15-paper);
+}
+.f15 .f15-demo-verdict {
+  font: 400 clamp(1.125rem, 2.4vw, 1.5rem)/1.3 var(--f15-display) !important;
+  color: var(--f15-paper) !important;
+  text-wrap: balance;
+}
+
+.f15 .f15-demo-options {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.f15 .f15-demo-options button {
+  display: flex;
+  gap: 0.9rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font: 400 0.9375rem/1.55 var(--f15-ui);
+  color: var(--f15-ivory);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--f15-graphite);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.f15 .f15-demo-options button:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-left-color: var(--f15-indigo-light);
+}
+.f15 .f15-demo-key {
+  flex: 0 0 auto;
+  font: 500 0.8125rem/1.7 var(--f15-data);
+  color: var(--f15-gold-light);
+}
+
+.f15 .f15-demo-btn {
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  font: 600 0.875rem/1 var(--f15-ui);
+  color: var(--f15-paper);
+  background: var(--f15-indigo);
+  border: 1px solid var(--f15-indigo);
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+.f15 .f15-demo-btn:hover {
+  background: var(--f15-indigo-hover);
+}
+
+.f15 .f15-demo-critical {
+  background: rgba(158, 43, 43, 0.06);
+  border-top: 2px solid var(--f15-crimson);
+}
+.f15 .f15-stop {
+  margin: 0 0 1rem !important;
+  font: 400 clamp(2rem, 6vw, 3rem)/1 var(--f15-display) !important;
+  color: var(--f15-paper) !important;
+}
+.f15 .f15-demo-note {
+  font-size: 0.8125rem !important;
+  color: var(--f15-silver) !important;
+}
+
+.f15 .f15-demo-path {
+  margin: 1.5rem 0 1.25rem;
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.6rem 1.5rem;
+}
+.f15 .f15-demo-path dt {
+  font: 600 0.625rem/1.8 var(--f15-ui);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--f15-gold);
+}
+.f15 .f15-demo-path dd {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--f15-ivory);
+}
+@media (max-width: 560px) {
+  .f15 .f15-demo-meters {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  .f15 .f15-demo-path {
+    grid-template-columns: 1fr;
+    gap: 0.2rem 0;
+  }
+  .f15 .f15-demo-path dd {
+    margin-bottom: 0.7rem;
+  }
+}
