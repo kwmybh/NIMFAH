@@ -91,7 +91,12 @@
   margin: 0 0 0.5rem;
   color: var(--muted);
 }
+/* The system's display-1 step (200px) is sized for a long name. "NIMFAH" is six
+   characters in a condensed face, so at that step it fills only 42% of the measure.
+   Measured: the glyph run is 2.92x the font size, so ~32vw fills the gutter-to-gutter
+   width at every viewport. Local to the wordmark — the shared token is unchanged. */
 .abt-name {
+  font-size: clamp(4.5rem, 32vw, 34rem);
   color: var(--paper);
 }
 
