@@ -1,0 +1,60 @@
+/* NIMFAH — footer dock
+   After the reference's footer-dock: full-bleed, left-aligned, a large call to action over
+   letter-spaced link columns. Replaces the centred 1560px Bricolage footer, which was the
+   last surface still on the pre-system styling. */
+
+.fd {
+  border-top: 1px solid var(--edge);
+  background: var(--ink);
+  padding-block: clamp(56px, 10vh, 108px) clamp(20px, 4vh, 34px);
+}
+
+.fd-top { padding-bottom: clamp(36px, 7vh, 72px); }
+.fd-eyebrow { margin: 0 0 clamp(12px, 2.4vh, 22px); color: var(--muted); }
+.fd-shout {
+  display: inline-block;
+  margin: 0;
+  font: 700 clamp(2.25rem, 7.4vw, 6.5rem) / 0.9 var(--display);
+  letter-spacing: var(--tr-display);
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  transition: color 0.3s ease-out;
+}
+.fd-shout:hover { color: var(--acid); }
+
+.fd-cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(28px, 6vw, 96px);
+  padding-bottom: clamp(36px, 7vh, 72px);
+  border-bottom: 1px solid var(--edge);
+}
+.fd-col { display: flex; flex-direction: column; gap: 9px; min-width: 190px; }
+.fd-h { margin: 0 0 6px; color: var(--muted); }
+
+/* Letter-spacing rather than literal spaces between glyphs: the reference's spaced-out
+   labels read the same, and this keeps the text selectable and intelligible to a screen
+   reader instead of announcing it one letter at a time. */
+.fd-col a {
+  font: 600 var(--fs-label-sm) / 1.5 var(--display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  transition: color 0.3s ease-out;
+}
+.fd-col a:hover { color: var(--acid); }
+.fd-col a i { font-style: normal; display: inline-block; transition: transform 0.3s var(--ease-out); }
+.fd-col a:hover i { transform: translate(2px, -2px); }
+
+.fd-base {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: clamp(16px, 3vh, 26px);
+  font: 500 var(--fs-label-sm) / 1 var(--display);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--muted);
+}

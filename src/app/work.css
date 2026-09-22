@@ -38,8 +38,10 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
-  gap: clamp(1.75rem, 4vw, 2.75rem);
+  /* auto-fit, not auto-fill: a single project spans the full measure instead of
+     occupying one column of an otherwise empty two-column grid. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 680px), 1fr));
+  gap: clamp(2.5rem, 6vw, 5rem);
 }
 
 .wc {
@@ -58,6 +60,9 @@
 .wc-thumb {
   position: relative;
   aspect-ratio: 16 / 9;
+  /* Floors the project at roughly two thirds of the viewport so it reads as a stop on
+     the page rather than a thumbnail. */
+  min-height: min(62svh, 560px);
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--edge);
@@ -90,7 +95,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.95rem 0 0.7rem;
+  padding: 1.4rem 0 1rem;
   border-bottom: 1px solid var(--line);
   transition: border-color 200ms ease;
 }
@@ -99,7 +104,7 @@
 }
 .wc-title {
   margin: 0;
-  font: 500 var(--fs-title) / 1.05 var(--display);
+  font: 600 clamp(1.5rem, 3.4vw, 3rem) / 0.95 var(--display);
   letter-spacing: var(--tr-display);
   text-transform: uppercase;
   color: var(--fg);
@@ -108,7 +113,7 @@
 .wc-visit {
   flex: 0 0 auto;
   font: 600 0.75rem/1.6 var(--display);
-  letter-spacing: var(--tr-label);
+  letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--dim3);
   white-space: nowrap;
