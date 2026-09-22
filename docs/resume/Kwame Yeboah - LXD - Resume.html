@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kwame Yeboah — LXD — Resume</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap">
+<style>
+  /* Rajdhani comes from the Google Fonts CDN via the <link> above, so this file is
+     self-contained: open it in Chrome, edit the text, then Cmd+P -> Save as PDF with
+     margins set to Default and "Headers and footers" unchecked. Carlito is a Calibri
+     metric-clone; on a Mac without it, Calibri or Helvetica substitute cleanly. */
+
+  @page { size: Letter; margin: 0.5in 0.58in; }
+
+  :root {
+    --ink:   #12131a;
+    --body:  #2a2c35;
+    --muted: #5d616e;
+    --rule:  #c3c6cf;
+    --display: "Rajdhani", "DejaVu Sans Condensed", "Liberation Sans Narrow", sans-serif;
+    /* Body is Carlito, not the site's DM Sans. DM Sans ships as a variable font, and
+       Chromium embeds a variable instance as a Type 3 font with a custom encoding —
+       which some applicant tracking systems parse badly. Carlito is static, embeds as
+       TrueType, has a real bold (no synthesized weights), and carries Calibri metrics,
+       so it is the safe choice for the one document that has to survive a parser.
+       Rajdhani is static and keeps the tie to the site where it shows most. */
+    --text:    "Carlito", "Calibri", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font: 400 9.6pt/1.32 var(--text);
+    color: var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------------------------------------------------------------- header */
+  .name {
+    margin: 0;
+    font: 700 30pt/0.92 var(--display);
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .contact {
+    margin: 5pt 0 0;
+    font: 400 9pt/1.3 var(--text);
+    color: var(--body);
+  }
+  .contact a { color: inherit; text-decoration: none; }
+  .target {
+    margin: 7pt 0 0;
+    padding-top: 6pt;
+    border-top: 0.75pt solid var(--rule);
+    font: 600 8.6pt/1.3 var(--display);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* -------------------------------------------------------------- sections */
+  h2 {
+    margin: 13pt 0 5pt;
+    padding-bottom: 2.5pt;
+    border-bottom: 0.75pt solid var(--rule);
+    font: 700 9.6pt/1 var(--display);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    break-after: avoid;
+  }
+  p { margin: 0 0 5pt; }
+  .summary { margin-bottom: 0; text-align: left; }
+
+  /* Competency and tool rows: a tracked label, then the run of items. Plain text
+     in a single column — no tables, no columns, no boxes, so an applicant tracking
+     system reads it in the order a person does. */
+  .row { margin: 0 0 3.6pt; }
+  .row:last-child { margin-bottom: 0; }
+  .lbl {
+    font: 700 8.6pt/1.3 var(--display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  /* ------------------------------------------------------------ experience */
+  .job { margin-top: 8pt; break-inside: avoid-page; }
+  .job:first-of-type { margin-top: 2pt; }
+  .role {
+    margin: 0 0 3pt;
+    /* 9.5pt, not 9.8: the longest role line (State Auto, carrying "(now Liberty
+       Mutual)") ran 130 characters and broke its date range across two lines at
+       9.8pt. Still bold and inked, so the hierarchy step holds against 9.6pt body. */
+    font: 700 9.5pt/1.3 var(--text);
+    color: var(--ink);
+  }
+  .role .org { font-weight: 700; }
+  .role .where { font-weight: 400; color: var(--muted); }
+  .role .dates { white-space: nowrap; }
+  ul { margin: 0; padding: 0 0 0 11pt; list-style: none; }
+  li {
+    position: relative;
+    margin: 0 0 2.6pt;
+    padding-left: 0;
+  }
+  li::before {
+    content: "";
+    position: absolute;
+    left: -8.5pt;
+    top: 4.6pt;
+    width: 2.6pt;
+    height: 2.6pt;
+    background: var(--muted);
+  }
+  li:last-child { margin-bottom: 0; }
+
+  /* ------------------------------------------------------------- education */
+  .ed { margin: 0 0 3pt; }
+  .ed:last-child { margin-bottom: 0; }
+  .ed b { color: var(--ink); font-weight: 700; }
+  .ed span { color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <h1 class="name">Kwame Yeboah</h1>
+  <p class="contact">(240) 854-2425 &nbsp;|&nbsp; kwame.nimfah@gmail.com &nbsp;|&nbsp; nimfah.com</p>
+  <p class="target">Learning Experience Designer &nbsp;·&nbsp; Instructional Designer &nbsp;·&nbsp; E-Learning Developer</p>
+
+  <h2>Professional Summary</h2>
+  <p class="summary">Learning Experience Designer with an M.A. in Infographics and Interactive Media Design and more than a decade designing instructional and communication materials for technical, regulated, and multicultural audiences. Specializes in the documentation, standards, and performance-support content that distributed teams learn from independently: component and pattern libraries, process guides, job aids, contributor guidelines, and scenario-based walkthroughs, grounded in audience analysis, accessibility practice, and multimedia production. Combines instructional design with hands-on front-end development, so learning content can be built and shipped, not only specified.</p>
+
+  <h2>Core Competencies</h2>
+  <p class="row"><span class="lbl">Analysis and Strategy</span> &nbsp;Audience and learner analysis | Needs assessment | Content analysis | Task analysis | Learning objectives | Adult learning principles | SME collaboration | Research synthesis</p>
+  <p class="row"><span class="lbl">Design and Development</span> &nbsp;Instructional content development | Course and curriculum structure | Storyboarding | Scripting | Scenario-based learning | Micro-learning | Job aids and performance support | Technical documentation | Visual and multimedia learning design</p>
+  <p class="row"><span class="lbl">Assessment and Iteration</span> &nbsp;Knowledge checks | Formative assessment | Rubric and criteria design | Learner feedback | Usability testing | Pilot review and revision | Iterative design</p>
+  <p class="row"><span class="lbl">Accessibility and Delivery</span> &nbsp;WCAG-informed accessibility | Plain-language writing | Information hierarchy | Cognitive load reduction | Facilitation and critique | Train-the-contributor guidance</p>
+
+  <h2>Tools and Technology</h2>
+  <p class="row"><span class="lbl">Design and Prototyping</span> &nbsp;Figma, FigJam, Adobe Illustrator, Adobe Photoshop, Storybook</p>
+  <p class="row"><span class="lbl">Multimedia and Video</span> &nbsp;Camtasia (intermediate: screen capture, editing), Adobe Premiere Pro, Adobe After Effects, motion graphics, 2D animation, photography</p>
+  <p class="row"><span class="lbl">Content and Delivery</span> &nbsp;Microsoft PowerPoint, Word, Excel, Confluence, Jira, Slack</p>
+  <p class="row"><span class="lbl">Research</span> &nbsp;UserZoom (Advanced and Core certified), interview and survey synthesis, journey maps, personas</p>
+  <p class="row"><span class="lbl">Web and Technical</span> &nbsp;HTML, CSS, JavaScript, React, responsive front-end development, AWS fundamentals</p>
+
+  <h2>Professional Experience</h2>
+
+  <div class="job">
+    <p class="role">Lead Learning and Product Designer<span class="where"> | Blue Umbrella | Remote | <span class="dates">Aug 2022 – Present</span></span></p>
+    <ul>
+      <li>Sole designer supporting a distributed team of five engineers plus contract copywriters and junior designers across multiple time zones, owning both the product experience and the internal learning materials behind it.</li>
+      <li>Develop structured documentation, build guides, process guidance, and decision records that translate complex product and operational information into clear, reusable learning and performance-support materials.</li>
+      <li>Author component and pattern documentation covering purpose, appropriate use, interaction behavior, edge cases, and implementation guidance, enabling distributed teams to apply established standards independently without direct instruction.</li>
+      <li>Direct and review contract copywriters and junior designers, providing structured feedback against documented criteria to improve clarity, consistency, and audience comprehension.</li>
+      <li>Conduct user research and synthesize findings into journey maps, personas, and organized content that clarify learner and user needs, barriers, workflows, and opportunities before content is built.</li>
+      <li>Apply accessibility principles and clear information hierarchy across digital content and documentation to reduce cognitive and usability barriers.</li>
+      <li>Designed Traveling Jobs (travelingjobs.com), a travel-healthcare staffing marketplace, from concept through public launch, including the guidance and onboarding content that helped new users navigate the platform.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="role">Learning Experience Designer / Software Engineer<span class="where"> | State Auto Insurance (now Liberty Mutual) | Columbus, OH | <span class="dates">Nov 2021 – Aug 2022</span></span></p>
+    <ul>
+      <li>Created and maintained structured design-system documentation across Figma and Storybook, explaining foundational components, form patterns, usage guidance, states, and implementation considerations for internal teams.</li>
+      <li>Translated complex stakeholder requirements and regulated business processes into clear workflows, guidance, and structured digital experiences that supported user understanding and adoption.</li>
+      <li>Built reference material that served as a shared source of truth for business, design, and engineering partners, reducing ambiguity in how standards were interpreted and applied.</li>
+      <li>Worked in a highly regulated insurance environment where content clarity, accessibility, consistency, and documented requirements were essential to successful implementation and audit readiness.</li>
+      <li>Applied WCAG-informed accessibility practices to make information and interactions clearer and more inclusive.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="role">Software Engineering Fellow<span class="where"> | Springboard, in partnership with Microsoft | Remote | <span class="dates">Jan 2021 – Nov 2021</span></span></p>
+    <ul>
+      <li>Authored the data-labeling guidelines and instructional materials that contributor teams followed, defining standards, worked examples, and explicit completion criteria for consistent task performance at scale.</li>
+      <li>Reviewed submitted work against established criteria and revised the instructional guidance wherever ambiguity or inconsistent interpretation surfaced, running a continuous develop, test, and revise loop on the materials themselves.</li>
+      <li>Prepared and quality-checked datasets to written specification, applying in practice the same standards documented for others to follow.</li>
+      <li>Completed a 700-hour mentor-reviewed program built on iterative project work, structured feedback, documentation, and applied learning.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="role">Graduate Research and Teaching Assistant<span class="where"> | Ohio University | Athens, OH | <span class="dates">Aug 2018 – May 2019</span></span></p>
+    <ul>
+      <li>Delivered instruction and one-to-one learning support to students in a media and design program, adapting explanations, demonstrations, and feedback to varied levels of prior knowledge.</li>
+      <li>Facilitated critiques and learning discussions that broke down complex visual communication and interactive media concepts into specific, actionable guidance.</li>
+      <li>Assessed student work against assignment requirements and stated learning criteria, identifying gaps and coaching learners toward stronger outcomes.</li>
+      <li>Supported faculty research and instructional activities in visual communication, interactive media, information design, and digital production.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="role">Creative Executive<span class="where"> | RLG Communications | Accra, Ghana | <span class="dates">Nov 2014 – May 2017</span></span></p>
+    <ul>
+      <li>Translated client requirements and complex service information into clear visual messages and audience-appropriate communication materials across digital, broadcast, print, and environmental formats.</li>
+      <li>Worked directly with clients and internal teams to gather requirements, explain design decisions, resolve open questions, and refine deliverables through structured feedback cycles.</li>
+      <li>Adapted communication approaches to different audiences, literacy levels, and delivery contexts during on-site client engagements.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="role">UX Designer / Front-End Developer<span class="where"> | Lando Services Ltd. | Accra, Ghana | <span class="dates">Nov 2013 – Nov 2014</span></span></p>
+    <ul>
+      <li>Produced multimedia and graphic content, including video editing and digital visual assets, while developing responsive web interfaces.</li>
+      <li>Combined visual communication, content organization, and front-end implementation to turn requirements into coherent, usable digital experiences.</li>
+    </ul>
+  </div>
+
+  <h2>Education and Certifications</h2>
+  <p class="ed"><b>M.A., Infographics and Interactive Media Design</b> <span>| Ohio University | Athens, OH</span></p>
+  <p class="ed"><b>B.A., Communication Design</b> <span>| Kwame Nkrumah University of Science and Technology | Kumasi, Ghana</span></p>
+  <p class="ed"><b>Software Engineering Career Track</b> <span>| Springboard, in partnership with Microsoft | 2021</span></p>
+  <p class="ed"><b>UserZoom Advanced and Core Certification, User Research and Usability Testing</b> <span>| UserZoom | 2022</span></p>
+  <p class="ed"><b>AWS Certified Cloud Practitioner</b> <span>| Amazon Web Services</span></p>
+
+</body>
+</html>
