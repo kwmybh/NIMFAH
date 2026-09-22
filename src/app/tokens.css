@@ -2,16 +2,19 @@
    docs/design-system.md. Imported by globals.css so every surface reads from here. */
 
 :root {
-  /* ── colour ─────────────────────────────────────────── */
-  --ink: #070210;        /* ground — near-black with a violet cast, not neutral */
+  /* ── palette ────────────────────────────────────────────────────────────────
+     Fixed values. These never flip with the theme — they are the colours the
+     system owns. Anything that must change between light and dark is a ROLE,
+     declared in globals.css against [data-theme]. Reading a palette value
+     directly in a component is what broke light mode the first time: the hero
+     and footer stayed dark on a white page because they asked for --ink rather
+     than for "the ground". */
+  --ink: #070210;        /* near-black with a violet cast, not neutral */
   --black: #000000;
-  --paper: #f5f0eb;      /* primary text — warm off-white, never pure white */
+  --paper: #f5f0eb;      /* warm off-white — the system never uses pure white for type */
   --white: #ffffff;      /* peak emphasis only */
-  --acid: #9df133;       /* the accent: structural and interactive, never decorative */
-  --muted: #747785;      /* secondary text — grey with a violet lean */
+  --acid: #9df133;       /* the FILL. Dark text always sits on it: 14.69:1 either way. */
   --coral: #f75049;      /* single warm counter-accent, used once or twice per page */
-  --panel: #131418;
-  --edge: #25272f;
   --scrim-35: rgba(0, 0, 0, 0.35);
   --scrim-55: rgba(0, 0, 0, 0.55);
 

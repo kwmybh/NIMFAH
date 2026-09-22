@@ -43,6 +43,25 @@ export function DotTrail() {
     };
     size();
 
+    // The trail colour is read from --acid-fg rather than hard-coded, because bright
+    // acid on the light ground is 1.23:1 — a trail nobody can see. Re-read when the
+    // theme attribute changes so a toggle takes effect on the next frame.
+    let rgb = "157, 241, 51";
+    const readAccent = () => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue("--acid-fg").trim();
+      const m = /^#?([0-9a-f]{6})$/i.exec(v);
+      if (m) {
+        const n = parseInt(m[1], 16);
+        rgb = `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
+        return;
+      }
+      const p = /rgba?\(([^)]+)\)/.exec(v);
+      if (p) rgb = p[1].split(",").slice(0, 3).map((x) => x.trim()).join(", ");
+    };
+    readAccent();
+    const themeWatch = new MutationObserver(readAccent);
+    themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
     const dots: Dot[] = [];
     let head = 0;
     let lastX = -999;
@@ -76,7 +95,7 @@ export function DotTrail() {
         const k = 1 - age;
         const a = k * k * 0.85;
         const s = d.size * k;
-        ctx.fillStyle = `rgba(157, 241, 51, ${a.toFixed(3)})`;
+        ctx.fillStyle = `rgba(${rgb}, ${a.toFixed(3)})`;
         ctx.fillRect(d.x - s / 2, d.y - s / 2, s, s);
       }
       // Stop burning frames once the trail has fully decayed and the pointer is still.
@@ -91,6 +110,7 @@ export function DotTrail() {
     window.addEventListener("resize", size, { passive: true });
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      themeWatch.disconnect();
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", size);
     };

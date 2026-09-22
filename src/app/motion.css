@@ -35,7 +35,7 @@
    scaling alone would read as a generic dot-follower. */
 .cursor[data-hot="true"] {
   background: var(--paper);
-  border-color: var(--paper);
+  border-color: var(--fg);
 }
 .cursor[data-down="true"] {
   width: 44px;
@@ -58,7 +58,7 @@
   inset: 0 0 auto;
   z-index: 50;
   height: 1px;
-  background: var(--acid);
+  background: var(--acid-fg);
   transform: scaleX(0);
   transform-origin: 0 50%;
   pointer-events: none;
@@ -126,7 +126,7 @@
   right: 2px;
   bottom: 2px;
   height: 1px;
-  background: var(--acid);
+  background: var(--acid-fg);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform 0.3s var(--ease-out);
@@ -177,7 +177,7 @@
   pointer-events: none;
 }
 .pre-br { position: absolute; width: 18px; height: 18px; pointer-events: none; }
-.pre-br::before, .pre-br::after { content: ""; position: absolute; background: var(--ink); }
+.pre-br::before, .pre-br::after { content: ""; position: absolute; background: var(--bg); }
 .pre-br::before { width: 18px; height: 1px; }
 .pre-br::after { width: 1px; height: 18px; }
 .pre-tl { top: clamp(10px, 1.1vw, 16px); left: clamp(10px, 1.1vw, 16px); }

@@ -8,7 +8,7 @@
   /* Without the motion layer armed this is an ordinary one-screen section and the
      layers stack in normal flow — readable with scripting off, just not choreographed. */
   min-height: 100svh;
-  background: var(--ink);
+  background: var(--bg);
 }
 [data-motion="on"] .hs { height: 500svh; }
 /* Reduced motion collapses the travel back to one screen. */
@@ -47,9 +47,9 @@
 
 /* ------------------------------------------------------------------- type */
 .hs-contact { margin: 0 0 clamp(18px, 4vh, 40px); color: var(--muted); }
-.hs-contact a { color: inherit; text-decoration: none; border-left: 1px solid var(--acid); padding-left: 10px; }
-.hs-statement { max-width: 46ch; margin: 0; color: var(--paper); }
-.hs-statement em { font-style: normal; color: var(--acid); }
+.hs-contact a { color: inherit; text-decoration: none; border-left: 1px solid var(--acid-fg); padding-left: 10px; }
+.hs-statement { max-width: 46ch; margin: 0; color: var(--fg); }
+.hs-statement em { font-style: normal; color: var(--acid-fg); }
 
 /* The reference sets its name at 162px in a 1456px viewport — 11.1vw. Same step here;
    "Kwame" and "Yeboah" are six characters in a condensed face, as "CURTIS" is. */
@@ -58,7 +58,7 @@
   font: 700 clamp(3rem, 11vw, 13rem) / 0.86 var(--display);
   letter-spacing: var(--tr-display);
   text-transform: uppercase;
-  color: var(--paper);
+  color: var(--fg);
 }
 
 .hs-inner-resolve { justify-content: flex-end; }
@@ -83,16 +83,16 @@
   font-size: clamp(4.5rem, 32vw, 34rem);
   line-height: var(--lh-display);
   letter-spacing: var(--tr-display);
-  color: var(--paper);
+  color: var(--fg);
 }
 .hs-jump { margin: clamp(8px, 2vh, 20px) 0 0; color: var(--muted); text-decoration: none; }
-.hs-jump:hover { color: var(--acid); }
+.hs-jump:hover { color: var(--acid-fg); }
 
 /* -------------------------------------------------------------------- HUD */
 .hs-hud { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .hs-col { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--edge); opacity: 0.55; }
 .hs-tick { position: absolute; width: 14px; height: 14px; }
-.hs-tick::before, .hs-tick::after { content: ""; position: absolute; background: var(--acid); }
+.hs-tick::before, .hs-tick::after { content: ""; position: absolute; background: var(--acid-fg); }
 .hs-tick::before { width: 14px; height: 1px; }
 .hs-tick::after { width: 1px; height: 14px; }
 .hs-tl { top: var(--gutter); left: var(--gutter); }

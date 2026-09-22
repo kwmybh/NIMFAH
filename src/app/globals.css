@@ -7,25 +7,51 @@
    One typeface (Bricolage Grotesque via next/font -> --font-bricolage), one restrained
    green accent, full light/dark theming driven by [data-theme] on <html>. */
 
+/* ── roles ────────────────────────────────────────────────────────────────────
+   Everything that changes between light and dark lives here. Components read
+   these, never the palette in tokens.css.
+
+   Every pairing below was computed, not estimated:
+     light ground #f5f0eb  ·  #070210 text        18.09:1
+     light ground #f5f0eb  ·  #5d616e secondary    5.45:1
+     light ground #f5f0eb  ·  #44730d accent       5.01:1
+     dark  ground #070210  ·  #f5f0eb text        18.09:1
+     dark  ground #070210  ·  #747785 secondary    4.60:1
+     dark  ground #070210  ·  #9df133 accent      14.69:1
+
+   The acid is the reason this needed care. #9df133 on the light ground is
+   1.23:1 — invisible. So acid splits in two: --acid stays the fill (dark text
+   on it reads 14.69:1 in either theme, so pills and the preloader are safe
+   unchanged), while --acid-fg is acid used AS a mark against the ground and
+   darkens to #44730d in light. */
 :root {
-  --bg: #ffffff;
-  --fg: #101013;
-  --dim: #4c4c53;
-  --dim2: #66666e;
-  --dim3: #6e6e75;
-  --surface: #f6f6f4;
+  --bg: #f5f0eb;         /* warm paper, not #fff — the system's own rule, and a white
+                            page beside a warm section reads as a bug */
+  --fg: #070210;
+  --dim: #5d616e;
+  --dim2: #5d616e;
+  --dim3: #6b6f79;
+  --muted: #5d616e;
+  --surface: #ffffff;
+  --panel: #ffffff;
+  --edge: #cbc5bd;
+  --acid-fg: #44730d;
   --line: rgba(0, 0, 0, 0.14);
   --line2: rgba(0, 0, 0, 0.08);
   --linestrong: rgba(0, 0, 0, 0.36);
-  --accent: #2e7d17;
+  --accent: #44730d;
 }
 [data-theme="dark"] {
   --bg: var(--ink);
   --fg: var(--paper);
-  --dim: var(--muted);
-  --dim2: var(--muted);
-  --dim3: var(--muted);
-  --surface: var(--panel);
+  --dim: #747785;
+  --dim2: #747785;
+  --dim3: #747785;
+  --muted: #747785;
+  --surface: #131418;
+  --panel: #131418;
+  --edge: #25272f;
+  --acid-fg: var(--acid);
   --line: rgba(255, 255, 255, 0.12);
   --line2: rgba(255, 255, 255, 0.07);
   --linestrong: rgba(255, 255, 255, 0.24);
@@ -115,7 +141,7 @@ header > * {
   text-decoration: none;
 }
 .brand:hover {
-  color: var(--acid);
+  color: var(--acid-fg);
 }
 .theme-toggle {
   width: 34px;
