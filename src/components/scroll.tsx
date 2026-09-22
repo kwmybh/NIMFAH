@@ -43,18 +43,47 @@ export function ScrollReveal() {
       { rootMargin: "0px 0px -12% 0px", threshold: 0 },
     );
 
-    nodes.forEach((n) => {
-      // Anything already on screen at mount (the hero) reveals without waiting for a
-      // scroll that may never come.
-      const r = n.getBoundingClientRect();
-      if (r.top < window.innerHeight * 0.88) {
-        n.dataset.revealed = "true";
-        return;
+    // Anything already on screen reveals without waiting for a scroll that may never
+    // come. Guarded on a real viewport: in a background tab or a hidden panel
+    // innerHeight is 0, every rect measures against zero, nothing passes, and
+    // IntersectionObserver does not fire there either — which would leave the page
+    // blank until the tab was scrolled.
+    const pass = () => {
+      const h = window.innerHeight;
+      if (h === 0) return false;
+      for (const n of nodes) {
+        if (n.dataset.revealed === "true") continue;
+        if (n.getBoundingClientRect().top < h * 0.88) {
+          n.dataset.revealed = "true";
+          io.unobserve(n);
+        } else {
+          io.observe(n);
+        }
       }
-      io.observe(n);
-    });
+      return true;
+    };
 
-    return () => io.disconnect();
+    const measured = pass();
+
+    // If there was no viewport to measure, run the pass again as soon as there is one.
+    const onVisible = () => { if (pass()) document.removeEventListener("visibilitychange", onVisible); };
+    if (!measured) document.addEventListener("visibilitychange", onVisible);
+
+    // Last resort. If nothing at all has revealed after five seconds, the observer is
+    // not doing its job for a reason worth not guessing at — so show everything. A
+    // portfolio that skips an animation is fine; a portfolio that is blank is not.
+    // Scoped to "nothing revealed" rather than a blanket timer, so a section the
+    // visitor simply has not scrolled to yet still gets its entrance.
+    const failsafe = window.setTimeout(() => {
+      if (nodes.some((n) => n.dataset.revealed === "true")) return;
+      nodes.forEach((n) => { n.dataset.revealed = "true"; });
+    }, 5000);
+
+    return () => {
+      io.disconnect();
+      window.clearTimeout(failsafe);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, [pathname]);
 
   return null;
