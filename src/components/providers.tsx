@@ -6,6 +6,8 @@ import { ToastProvider } from "./toast-provider";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { Cursor } from "./cursor";
+import { Preloader } from "./preloader";
+import { DotTrail } from "./dot-trail";
 import { ScrollProgress, ScrollReveal } from "./scroll";
 
 // Client boundary that owns the shared chrome (skip link, header, footer), the theme +
@@ -19,11 +21,13 @@ export function Providers({ children }: { children: ReactNode }) {
         <a className="skip" href="#main">
           Skip to content
         </a>
+        <Preloader />
         <ScrollProgress />
         <Header />
         <main id="main">{children}</main>
         <Footer />
         <ScrollReveal />
+        <DotTrail />
         <Cursor />
       </ToastProvider>
     </ThemeProvider>

@@ -142,3 +142,65 @@
    leaves 32px under it and nothing at either gutter. A cue could only sit on top of the
    type. The wordmark filling the measure is the composition; a cue competing with it is
    decoration, so the cue loses. */
+
+/* ------------------------------------------------------------------ preloader
+   Ground and counter colour are measured, not chosen: the reference serves
+   rgb(157,241,51) behind rgb(7,2,16) Rajdhani 500 at ~24px, which are this
+   system's --acid and --ink unchanged. */
+.pre {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: var(--acid);
+  /* Wipes upward off the top edge, on the measured expo-out. The page is already
+     painted underneath, so this uncovers rather than reveals. */
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 0.62s var(--ease-expo);
+}
+.pre[data-leaving="true"] { clip-path: inset(0 0 100% 0); }
+
+.pre-pct {
+  margin: 0;
+  font: 500 clamp(18px, 1.7vw, 25px) / 1 var(--display);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hairline frame and corner brackets, inset from the edge — the HUD language of the
+   rest of the site, inverted onto the acid. */
+.pre-frame {
+  position: absolute;
+  inset: clamp(10px, 1.1vw, 16px);
+  border: 1px solid rgba(7, 2, 16, 0.35);
+  pointer-events: none;
+}
+.pre-br { position: absolute; width: 18px; height: 18px; pointer-events: none; }
+.pre-br::before, .pre-br::after { content: ""; position: absolute; background: var(--ink); }
+.pre-br::before { width: 18px; height: 1px; }
+.pre-br::after { width: 1px; height: 18px; }
+.pre-tl { top: clamp(10px, 1.1vw, 16px); left: clamp(10px, 1.1vw, 16px); }
+.pre-tr { top: clamp(10px, 1.1vw, 16px); right: clamp(10px, 1.1vw, 16px); }
+.pre-tr::before, .pre-tr::after { right: 0; }
+.pre-bl { bottom: clamp(10px, 1.1vw, 16px); left: clamp(10px, 1.1vw, 16px); }
+.pre-bl::before, .pre-bl::after { bottom: 0; }
+.pre-brr { bottom: clamp(10px, 1.1vw, 16px); right: clamp(10px, 1.1vw, 16px); }
+.pre-brr::before, .pre-brr::after { bottom: 0; right: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pre { display: none; }
+}
+
+/* ------------------------------------------------------------------ dot trail
+   Sits under the cursor square (z 60) and above the page. Squares in acid, decaying
+   over ~620ms — the reference's dot-trail-canvas, in this system's geometry. */
+.dot-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .dot-trail { display: none; }
+}
