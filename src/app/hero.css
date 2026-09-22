@@ -1,0 +1,114 @@
+/* NIMFAH — pinned hero sequence
+   Measured against the reference: its hero occupies 4,449px of scroll in an 823px
+   viewport (5.4 screens) with the stage pinned throughout and the name assembling
+   across it. Five screens here, same mechanic. */
+
+.hs {
+  position: relative;
+  /* Without the motion layer armed this is an ordinary one-screen section and the
+     layers stack in normal flow — readable with scripting off, just not choreographed. */
+  min-height: 100svh;
+  background: var(--ink);
+}
+[data-motion="on"] .hs { height: 500svh; }
+/* Reduced motion collapses the travel back to one screen. */
+[data-motion="on"] .hs[data-seq="static"] { height: auto; min-height: 100svh; }
+
+.hs-stage {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  overflow: hidden;
+}
+[data-motion="on"] .hs[data-seq="live"] .hs-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+/* Layers stack in flow by default so a no-JS page reads top to bottom; only the live
+   sequence stacks them on top of one another. */
+.hs-layer { position: relative; width: 100%; display: flex; }
+[data-motion="on"] .hs[data-seq="live"] .hs-layer {
+  position: absolute;
+  inset: 0;
+  will-change: opacity, transform;
+}
+.hs-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  padding-block: clamp(72px, 12vh, 132px) clamp(20px, 5vh, 48px);
+}
+.hs-layer-name .hs-inner { justify-content: center; }
+
+/* ------------------------------------------------------------------- type */
+.hs-contact { margin: 0 0 clamp(18px, 4vh, 40px); color: var(--muted); }
+.hs-contact a { color: inherit; text-decoration: none; border-left: 1px solid var(--acid); padding-left: 10px; }
+.hs-statement { max-width: 46ch; margin: 0; color: var(--paper); }
+.hs-statement em { font-style: normal; color: var(--acid); }
+
+/* The reference sets its name at 162px in a 1456px viewport — 11.1vw. Same step here;
+   "Kwame" and "Yeboah" are six characters in a condensed face, as "CURTIS" is. */
+.hs-word {
+  margin: 0;
+  font: 700 clamp(3rem, 11vw, 13rem) / 0.86 var(--display);
+  letter-spacing: var(--tr-display);
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.hs-inner-resolve { justify-content: flex-end; }
+.hs-pill {
+  align-self: flex-start;
+  margin: 0 0 clamp(10px, 2vh, 18px);
+  padding: 7px 14px;
+  background: var(--acid);
+  color: var(--black);
+}
+.hs-subs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2.4vw, 34px);
+  margin: 0 0 clamp(8px, 1.6vh, 18px);
+  color: var(--muted);
+}
+/* The wordmark still fills the measure: six characters in Rajdhani run 2.92x the font
+   size, so 32vw lands at ~97% of the gutter-to-gutter width. */
+.hs-mark {
+  margin: 0;
+  font-size: clamp(4.5rem, 32vw, 34rem);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  color: var(--paper);
+}
+.hs-jump { margin: clamp(8px, 2vh, 20px) 0 0; color: var(--muted); text-decoration: none; }
+.hs-jump:hover { color: var(--acid); }
+
+/* -------------------------------------------------------------------- HUD */
+.hs-hud { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hs-col { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--edge); opacity: 0.55; }
+.hs-tick { position: absolute; width: 14px; height: 14px; }
+.hs-tick::before, .hs-tick::after { content: ""; position: absolute; background: var(--acid); }
+.hs-tick::before { width: 14px; height: 1px; }
+.hs-tick::after { width: 1px; height: 14px; }
+.hs-tl { top: var(--gutter); left: var(--gutter); }
+.hs-tr { top: var(--gutter); right: var(--gutter); }
+.hs-tr::before { right: 0; } .hs-tr::after { right: 0; }
+.hs-bl { bottom: var(--gutter); left: var(--gutter); }
+.hs-bl::before { bottom: 0; } .hs-bl::after { bottom: 0; }
+.hs-br { bottom: var(--gutter); right: var(--gutter); }
+.hs-br::before { bottom: 0; right: 0; } .hs-br::after { bottom: 0; right: 0; }
+
+/* Heading for assistive tech and search; the visual word-layers are decorative. */
+.hs-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
