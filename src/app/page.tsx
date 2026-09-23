@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { WorkCard, type WorkItem } from "@/components/work-card";
-import { HeroSequence } from "@/components/hero-sequence";
+import { HeroCarousel } from "@/components/hero-carousel";
 import "./about.css";
-import "./hero.css";
+import "./carousel.css";
 import "./work.css";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ const FEATURED: WorkItem = {
 export default function About() {
   return (
     <div className="abt">
-      <HeroSequence />
+      <HeroCarousel />
 
       <section className="abt-sec" data-reveal="up">
         <div className="abt-wrap">

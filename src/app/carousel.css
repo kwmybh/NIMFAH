@@ -1,0 +1,143 @@
+/* NIMFAH — carousel hero
+   One centred screen with a rotating discipline word, after the current reference.
+   Replaces the five-screen pinned sequence: a carousel and a pinned scroll are two
+   answers to the same question, so both would have been noise. */
+
+.cx {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.cx-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding-block: clamp(96px, 14vh, 150px) clamp(84px, 12vh, 120px);
+}
+
+.cx-name { margin: 0 0 clamp(10px, 1.8vh, 18px); letter-spacing: var(--tr-label); color: var(--fg); }
+.cx-tag {
+  max-width: 48ch;
+  margin: 0 auto clamp(14px, 3vh, 34px);
+  font: 500 1.125rem / 1.5 var(--body);
+  letter-spacing: -0.02em;
+  color: var(--dim);
+}
+.cx-tag em { font-style: normal; color: var(--acid-fg); }
+
+/* ── the rotating word ────────────────────────────────────────────────────────
+   Absolutely stacked so the words crossfade in place rather than reflowing the
+   column. The stage is floored to the tallest word's height so nothing below it
+   moves when the word changes — a jumping supporting line is what makes a
+   carousel feel cheap. */
+.cx-stage {
+  position: relative;
+  width: 100%;
+  min-height: clamp(4.5rem, 13vw, 13rem);
+  display: grid;
+  place-items: center;
+}
+.cx-word {
+  grid-area: 1 / 1;
+  margin: 0;
+  font: 700 clamp(3.25rem, 12.5vw, 13rem) / 0.88 var(--display);
+  letter-spacing: var(--tr-display);
+  color: var(--fg);
+  white-space: nowrap;
+}
+/* Before the component mounts, the first word is simply visible: no scripting must
+   never mean no hero. Only an armed carousel hides the inactive slides. */
+.cx[data-armed="true"] .cx-word {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-expo);
+}
+.cx[data-armed="true"] .cx-word[data-on="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.cx-meta { min-height: clamp(5rem, 9vh, 7rem); margin-top: clamp(10px, 2vh, 22px); }
+.cx-label { margin: 0 0 8px; letter-spacing: var(--tr-label); color: var(--acid-fg); }
+.cx-line {
+  max-width: 52ch;
+  margin: 0 auto;
+  font: 400 0.9375rem / 1.65 var(--body);
+  color: var(--dim);
+}
+
+.cx-jump {
+  margin-top: clamp(16px, 3vh, 32px);
+  padding: 11px 22px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--edge);
+  font: 500 var(--fs-label-sm) / 1 var(--body);
+  color: var(--fg);
+  text-decoration: none;
+  transition: border-color 0.3s ease-out, color 0.3s ease-out;
+}
+.cx-jump:hover { border-color: var(--acid-fg); color: var(--acid-fg); }
+
+/* ── controls ─────────────────────────────────────────────────────────────────
+   Bottom right, matching the reference's placement. Round, to sit with the
+   monogram and the nav. */
+.cx-controls {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(20px, 4vh, 40px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cx-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--edge);
+  background: var(--surface);
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--fg);
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+.cx-btn:hover { background: var(--acid); color: var(--ink); }
+.cx-btn:focus-visible { outline: 2px solid var(--acid-fg); outline-offset: 2px; }
+
+.cx-rail {
+  position: relative;
+  width: clamp(48px, 7vw, 96px);
+  height: 1px;
+  background: var(--edge);
+  overflow: hidden;
+}
+.cx-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: var(--acid-fg);
+}
+/* Keyed on the slide index in the component, so the animation restarts per slide.
+   Paused state simply never runs it. */
+.cx-fill[data-running="true"] { animation: cx-sweep linear forwards; }
+@keyframes cx-sweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.cx-count { margin: 0 0 0 4px; color: var(--dim); letter-spacing: var(--tr-label); }
+
+@media (max-width: 760px) {
+  .cx-controls { left: var(--gutter); right: var(--gutter); justify-content: center; }
+  .cx-word { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cx[data-armed="true"] .cx-word { transition: none; }
+  .cx-fill[data-running="true"] { animation: none; }
+}
