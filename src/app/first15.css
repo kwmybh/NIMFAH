@@ -43,7 +43,11 @@
   --f15-amber: #e8a951;
   --f15-crimson: #e58a8a;
 
-  /* type roles — wired in src/lib/fonts.ts */
+  /* type roles — wired in src/lib/fonts.ts.
+     This page is exempt from the site-wide Press Start 2P H1: its own hero rule sets
+     font-family at higher specificity and must keep doing so. The H1 here is a
+     48-character sentence, and at 1em per character that face would set it 48em wide
+     — six lines on a desktop, fifteen on a phone. */
   --f15-display: var(--font-bodoni, Didot, "Times New Roman", serif);
   --f15-ui: var(--font-bricolage, system-ui, sans-serif);
   --f15-data: var(--font-plex-mono, ui-monospace, Consolas, monospace);

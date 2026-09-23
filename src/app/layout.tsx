@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { bodoni, bricolage, dmSans, plexMono, rajdhani } from "@/lib/fonts";
+import { bodoni, bricolage, dmSans, montserrat, plexMono, pressStart, rajdhani } from "@/lib/fonts";
 import { Providers } from "@/components/providers";
 import { themeInitScript } from "@/components/theme-provider";
 import { siteUrl } from "@/lib/site";
@@ -40,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark" className={`${bricolage.variable} ${bodoni.variable} ${plexMono.variable} ${rajdhani.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${bricolage.variable} ${bodoni.variable} ${plexMono.variable} ${rajdhani.variable} ${dmSans.variable} ${pressStart.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <head>
         {/* Apply the persisted / preferred theme before first paint (no flash). */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

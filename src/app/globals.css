@@ -103,6 +103,31 @@ a:hover {
   outline: 2px solid var(--fg);
   outline-offset: 2px;
 }
+
+/* ── H1 ───────────────────────────────────────────────────────────────────────
+   Press Start 2P, site-wide. The First 15 case study is exempt and stays on Bodoni:
+   .f15 .f15-hero h1 sets its own font-family at higher specificity, so it already
+   wins — that exemption is load-bearing, not incidental. Do not raise this selector
+   to beat it.
+
+   Three properties of the face drive everything below, all measured:
+     · 1.000em advance per character. A heading's width is exactly chars x font-size,
+       so every size here is chosen against the longest string that uses it. There is
+       no wrapping to fall back on — an H1 longer than about fifteen characters cannot
+       be set in this face at display scale, at any viewport.
+     · cap-height 1.000em, against ~0.72em for Rajdhani. 40px here reads like 56px of
+       the display face; the numbers look small because the caps fill the whole em.
+     · ascent 1000 / descent 0 / lineGap 0. The line box is flush to the baseline, so
+       anything under ~1.4 collides. */
+h1 {
+  font-family: var(--pixel);
+  font-weight: 400;
+  /* One weight exists. Without this a heavier declaration anywhere would smear the
+     pixel grid with a synthesised bold. */
+  font-synthesis: none;
+  letter-spacing: 0;  /* the advances already carry the spacing */
+  line-height: 1.45;
+}
 img,
 video {
   display: block;
@@ -401,8 +426,14 @@ video {
 .detail .back:hover {
   color: var(--fg);
 }
+/* Exempt, for the same reason as the case study: this heading is series.title, whose
+   length is unknown at author time, and a face that costs 1em per character cannot be
+   given a string nobody has measured. It also carried font-weight 800 and a negative
+   letter-spacing, both of which are meaningless-to-harmful on a one-weight pixel face.
+   (The /series route currently 404s; this keeps it correct if it returns.) */
 .detail h1 {
   margin: 10px 0 6px;
+  font-family: var(--display);
   font-weight: 800;
   font-size: clamp(34px, 5.4vw, 76px);
   line-height: 0.94;

@@ -21,7 +21,18 @@
   padding-block: clamp(96px, 14vh, 150px) clamp(84px, 12vh, 120px);
 }
 
-.cx-name { margin: 0 0 clamp(10px, 1.8vh, 18px); letter-spacing: var(--tr-label); color: var(--fg); }
+.cx-name {
+  margin: 0 0 clamp(10px, 1.8vh, 18px);
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+@media (min-width: 640px) {
+  .cx-name { font-size: 24px; }
+}
+@media (min-width: 1024px) {
+  .cx-name { font-size: 32px; }
+}
 .cx-tag {
   max-width: 48ch;
   margin: 0 auto clamp(14px, 3vh, 34px);

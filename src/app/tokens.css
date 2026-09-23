@@ -21,6 +21,11 @@
   /* ── type ───────────────────────────────────────────── */
   --display: var(--font-rajdhani, "Rajdhani", system-ui, sans-serif);
   --body: var(--font-dm-sans, "DM Sans", system-ui, sans-serif);
+  /* H1 only. See lib/fonts.ts for the metrics that govern how it may be sized:
+     1em per character, cap-height 1em, and an 8-per-em pixel grid. */
+  --pixel: var(--font-press-start, ui-monospace, monospace);
+  /* Loaded, unwired. Nothing reads this yet — see lib/fonts.ts. */
+  --sans-alt: var(--font-montserrat, system-ui, sans-serif);
 
   /* display steps — line-height 0.8, negative tracking ≈ −3% of size */
   --fs-d1: clamp(3.5rem, 13.9vw, 12.5rem);   /* 200px @1440 */

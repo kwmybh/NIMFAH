@@ -3,6 +3,8 @@ import {
   Bricolage_Grotesque,
   DM_Sans,
   IBM_Plex_Mono,
+  Montserrat,
+  Press_Start_2P,
   Rajdhani,
 } from "next/font/google";
 
@@ -43,6 +45,41 @@ export const rajdhani = Rajdhani({
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-rajdhani",
+  fallback: ["system-ui", "sans-serif"],
+});
+
+// H1, site-wide, everything outside the .f15 case study.
+//
+// Measured rather than assumed, because this face behaves unlike any other here:
+//   · every glyph advances exactly 1.000em — it is monospaced, so a heading is
+//     precisely (characters x font-size) wide, and a long H1 has no way to fit
+//   · cap-height is 1.000em, against ~0.72em for Rajdhani, so it reads far larger
+//     than its px value suggests: size it at roughly 0.7x what a normal sans wants
+//   · ascent 1000, descent 0, lineGap 0 — the line box is flush to the baseline
+//     and lines collide at line-height 1. Nothing here should sit below ~1.4
+//   · the outlines sit on an 8-cell-per-em grid (every path coordinate is a
+//     multiple of 125 units), so sizes that are multiples of 8px land on whole
+//     source pixels and anything else softens the stems. Hence stepped sizes at
+//     breakpoints rather than a fluid clamp()
+// One weight only, so font-synthesis is disabled wherever it is used.
+export const pressStart = Press_Start_2P({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-press-start",
+  fallback: ["ui-monospace", "Consolas", "monospace"],
+});
+
+// Available as --sans-alt, and deliberately not wired to anything yet: it replaces
+// none of the five faces above. preload is off for exactly that reason — a preloaded
+// font that no rule references is bytes on the critical path buying nothing. Turn
+// preload on in the same commit that gives it a job.
+export const montserrat = Montserrat({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-montserrat",
+  preload: false,
   fallback: ["system-ui", "sans-serif"],
 });
 
