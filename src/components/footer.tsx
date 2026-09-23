@@ -28,7 +28,6 @@ export function Footer() {
             LinkedIn <i aria-hidden="true">↗</i>
           </a>
           <Link href="/work">Work</Link>
-          <Link href="/vault">Client Vault</Link>
         </div>
       </div>
 
