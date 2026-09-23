@@ -3,33 +3,16 @@
 import type { ReactNode } from "react";
 import { ThemeProvider } from "./theme-provider";
 import { ToastProvider } from "./toast-provider";
-import { Header } from "./header";
-import { Footer } from "./footer";
-import { Cursor } from "./cursor";
-import { Preloader } from "./preloader";
-import { DotTrail } from "./dot-trail";
-import { ScrollProgress, ScrollReveal } from "./scroll";
 
-// Client boundary that owns the shared chrome (skip link, header, footer), the theme +
-// toast contexts, and the motion layer. Server-rendered page content is passed through
-// as `children` — the reveal observer reads [data-reveal] off the DOM precisely so that
-// pages can opt in with an attribute instead of becoming client components.
+// Contexts only. The shared chrome — header, footer, preloader, motion layer — lives in
+// SiteChrome, which app/(site)/layout.tsx mounts. Routes outside that group (currently
+// /terminal, which brings its own nav, progress bar and frame) get the contexts and
+// nothing else, so the theme toggle is still the site's toggle and a visitor's choice
+// survives moving between them.
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider>
-      <ToastProvider>
-        <a className="skip" href="#main">
-          Skip to content
-        </a>
-        <Preloader />
-        <ScrollProgress />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <ScrollReveal />
-        <DotTrail />
-        <Cursor />
-      </ToastProvider>
+      <ToastProvider>{children}</ToastProvider>
     </ThemeProvider>
   );
 }

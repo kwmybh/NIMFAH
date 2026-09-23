@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../../first15.css";
+import "../../../first15.css";
 import { TriageDemo } from "./triage";
 import { FlowMap } from "./flow-map";
 

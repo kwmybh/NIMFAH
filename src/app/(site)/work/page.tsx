@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SERIES, SHOW_PHOTOGRAPHY } from "@/lib/data";
 import { WorkCard, type WorkItem } from "@/components/work-card";
-import "../work.css";
+import "../../work.css";
 
 export const metadata: Metadata = {
   title: "Work",

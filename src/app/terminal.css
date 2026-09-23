@@ -1,0 +1,117 @@
+/* TERMINAL — the HUD variant, as its own route.
+   ─────────────────────────────────────────────────────────────────────────────
+   Tailwind, as asked, but WITHOUT preflight. The rest of this site is hand-written
+   CSS by decision (see the note at the top of first15.css), and Tailwind's base layer
+   is a global element reset: once this route's stylesheet is loaded, the App Router
+   keeps it loaded across client navigations, so preflight would silently restyle the
+   five pages that were never built for it. Importing theme and utilities on their own
+   is the documented way to take Tailwind's utility layer and leave its reset behind.
+
+   The PostCSS plugin was already in the repo and emitting nothing, because no
+   stylesheet imported Tailwind. This is the first one that does. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "./terminal";
+
+/* ── palette ──────────────────────────────────────────────────────────────────
+   Driven by [data-theme] on <html>, the same switch the rest of the site uses, so
+   the toggle in the site header and the toggle here move together and a visitor's
+   choice survives navigating between them. The original used a `body.light` class
+   of its own, which would have given this page a second, conflicting theme state.
+
+   Both accents are replaced on the light ground. #5c8a0e measured 3.40:1 and
+   #d94f00 3.42:1 there — both used as text, both failing AA, which on this site is
+   the one claim the case study cannot afford to contradict. */
+.tm {
+  --tm-bg: #101012;
+  --tm-fg: #f5f0eb;
+  --tm-accent: #9df133;        /* 13.63:1 */
+  --tm-warning: #ff5c00;       /*  6.14:1 */
+  --tm-edge: #2b2b31;          /* decorative hairline, carries no meaning */
+  --tm-panel: #17171a;
+  --tm-glass: rgba(245, 240, 235, 0.04);
+}
+:root:not([data-theme="dark"]) .tm {
+  --tm-bg: #f5f0eb;
+  --tm-fg: #070210;
+  --tm-accent: #44730d;        /* 5.01:1 — was #5c8a0e at 3.40 */
+  --tm-warning: #b23f00;       /* 5.15:1 — was #d94f00 at 3.42 */
+  --tm-edge: #cbc5bd;
+  --tm-panel: #ffffff;
+  --tm-glass: rgba(7, 2, 16, 0.03);
+}
+
+/* ── the reset preflight would have done, scoped ─────────────────────────────
+   Dropping Tailwind's base layer keeps it from restyling the rest of the site, and the
+   bill for that is the handful of user-agent defaults this page actually meets: list
+   markers beside the artefact cards, the 40px indent the UA gives every <dd>, and the
+   margins on headings and paragraphs. Scoped to .tm, so it stops at this route's edge.
+   Anything added here later that uses a new element needs its default checked. */
+@layer base {
+  .tm :where(h1, h2, h3, p, dl, dd, figure) { margin: 0; }
+  .tm :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+  .tm :where(button) { background: none; border: 0; font: inherit; color: inherit; }
+  .tm :where(a) { color: inherit; text-decoration: none; }
+}
+
+.tm {
+  background: var(--tm-bg);
+  color: var(--tm-fg);
+  font-family: var(--font-plex-mono, ui-monospace, monospace);
+  /* The original set 10px body, 9px labels and 8px telemetry, all uppercase with
+     letter-spacing — the hardest combination to read at the smallest size anyone
+     would choose. Nothing here goes below 12px. */
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* ── grain ────────────────────────────────────────────────────────────────────
+   The original ran a full-screen WebGL noise shader on an uncapped rAF loop, which
+   cost 600KB of Three.js and a permanently busy GPU for a texture that never moves
+   perceptibly. One SVG turbulence filter, tiled, is the same image for no bytes and
+   no frame loop. */
+.tm-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.09;
+}
+:root:not([data-theme="dark"]) .tm-grain { opacity: 0.05; }
+
+/* ── the track ────────────────────────────────────────────────────────────────
+   A real scroller, not a transform driven by a wheel listener. This is what buys
+   arrow keys, Home/End, PageUp/PageDown, touch, trackpad, a draggable scrollbar and
+   screen-reader scrolling — all of which the lerp version had thrown away in order
+   to own one input device. */
+.tm-track {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.tm-track::-webkit-scrollbar { display: none; }
+.tm-panel { scroll-snap-align: start; scroll-snap-stop: always; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tm-track { scroll-behavior: auto; }
+  .tm-blink { animation: none !important; }
+}
+
+.tm-blink { animation: tm-blink 1.2s steps(1) infinite; }
+@keyframes tm-blink { 50% { opacity: 0; } }
+
+.tm a:focus-visible,
+.tm button:focus-visible,
+.tm [tabindex]:focus-visible {
+  outline: 2px solid var(--tm-accent);
+  outline-offset: 3px;
+}
+
+/* The ghost numeral behind each panel. Inter 900 is not loaded here and does not need
+   to be — at 3% opacity the face is a shape, so it rides on the display face already
+   in the build. */
+.tm-ghost {
+  font-family: var(--display);
+  font-weight: 700;
+  opacity: 0.045;
+  line-height: 0.8;
+}
