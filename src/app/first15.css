@@ -764,6 +764,17 @@
 .f15 .f15-flow {
   margin: 2.75rem 0 0;
 }
+/* The diagram needs about 1100px before its 10px labels stop being labels. The prose
+   wrap yields 1068 at a 1440 viewport, so it scrolled 58px at the commonest laptop
+   width — a scrollbar that short reads as breakage rather than as an affordance. Above
+   1240 the panel steps out through the wrap's own padding and gains it back; the
+   caption stays on the prose measure, which is the ordinary treatment for a figure
+   wider than its column. Narrower than that, it scrolls, and it should. */
+@media (min-width: 1240px) {
+  .f15 .f15-flow-scroll {
+    margin-inline: calc(-1 * clamp(16px, 4vw, 56px));
+  }
+}
 .f15 .f15-flow-scroll {
   overflow-x: auto;
   overscroll-behavior-x: contain;
