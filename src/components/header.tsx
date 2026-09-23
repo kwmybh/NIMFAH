@@ -4,27 +4,43 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 
-// Two links, after the reference site: About (home) and Work. Contact lives on the
-// About page and in the footer; the Vault is footer-only.
+// Chrome after the current reference: a circular monogram hard left, a floating
+// capsule of links in the centre, and pill actions right. The previous header was
+// edge-pinned text on a transparent bar, which belonged to the zero-radius system.
 export function Header() {
   const pathname = usePathname();
+  const on = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
-    <header>
-      <Link href="/" className="brand" aria-label="NIMFAH — home">
-        Nimfah
+    <header className="nv">
+      <Link href="/" className="nv-mark" aria-label="Nimfah — home">
+        <span aria-hidden="true">KY</span>
       </Link>
-      <nav className="nav" aria-label="Primary">
-        <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
+
+      <nav className="nv-pod" aria-label="Primary">
+        <Link href="/" aria-current={on("/") ? "page" : undefined}>
           About
         </Link>
-        <Link
-          href="/work"
-          aria-current={pathname.startsWith("/work") || pathname.startsWith("/series") ? "page" : undefined}
-        >
+        <Link href="/work" aria-current={on("/work") || on("/series") ? "page" : undefined}>
           Work
         </Link>
-        <ThemeToggle />
       </nav>
+
+      <div className="nv-actions">
+        <ThemeToggle />
+        <a
+          className="nv-btn"
+          href="/cv/Kwame Yeboah - LXD - Resume.pdf"
+          target="_blank"
+          rel="noopener"
+        >
+          Résumé
+        </a>
+        <a className="nv-btn nv-btn-solid" href="mailto:kwame.nimfah@gmail.com">
+          Get in touch
+        </a>
+      </div>
     </header>
   );
 }

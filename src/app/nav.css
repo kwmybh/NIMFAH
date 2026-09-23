@@ -1,0 +1,100 @@
+/* NIMFAH — capsule chrome
+   Monogram / centred capsule / pill actions. Every rounded value comes from the
+   radius scale in tokens.css so the geometry stays in one place. */
+
+.nv {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(12px, 1.6vh, 20px) var(--gutter);
+  background: transparent;
+  pointer-events: none;
+}
+.nv > * { pointer-events: auto; }
+
+/* ── monogram ─────────────────────────────────────────────────────────────── */
+.nv-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--edge);
+  background: var(--surface);
+  font: 700 0.8125rem / 1 var(--display);
+  letter-spacing: 0.12em;
+  color: var(--fg);
+  text-decoration: none;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+.nv-mark:hover { background: var(--acid); color: var(--ink); }
+
+/* ── the capsule ──────────────────────────────────────────────────────────── */
+.nv-pod {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 5px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--edge);
+  background: var(--surface);
+}
+.nv-pod a {
+  padding: 9px 18px;
+  border-radius: var(--r-pill);
+  font: 500 var(--fs-label-sm) / 1 var(--body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+.nv-pod a:hover { color: var(--fg); }
+/* The current page is marked by a filled pill rather than an underline — an
+   underline is a hard-edged device and reads as foreign against capsules. */
+.nv-pod a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--acid);
+}
+
+/* ── actions ──────────────────────────────────────────────────────────────── */
+.nv-actions { display: flex; align-items: center; gap: 0.5rem; }
+.nv-btn {
+  padding: 11px 20px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--edge);
+  background: transparent;
+  font: 500 var(--fs-label-sm) / 1 var(--body);
+  color: var(--fg);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out, border-color 0.3s ease-out;
+}
+.nv-btn:hover { border-color: var(--fg); }
+.nv-btn-solid {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+}
+.nv-btn-solid:hover { background: var(--acid); border-color: var(--acid); color: var(--ink); }
+
+/* The theme control joins the action row as a circle, matching the monogram. */
+.nv-actions .theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--edge);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 860px) {
+  .nv-btn { display: none; }
+  .nv-pod a { padding: 9px 14px; }
+}

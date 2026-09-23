@@ -110,38 +110,9 @@
   }
 }
 
-/* --------------------------------------------------------- link micro-interaction
-   Colour on the measured 0.3s ease-out; the rule wipes in from the left on the
-   measured 0.3s decelerate. Scoped to the nav and the footer so it cannot leak into
-   the case study's prose links, which carry their own treatment. */
-.nav a,
-.nav button {
-  position: relative;
-  transition: color 0.3s ease-out;
-}
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  height: 1px;
-  background: var(--acid-fg);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 0.3s var(--ease-out);
-}
-.nav a:hover::after,
-.nav a:focus-visible::after,
-.nav a[aria-current="page"]::after {
-  transform: scaleX(1);
-}
-
-/* The reference's vertical stacked-letter scroll cue is deliberately absent. Measured at
-   1280: the wordmark runs x=28 to x=1252 and y=440 to y=768 inside an 800px hero, which
-   leaves 32px under it and nothing at either gutter. A cue could only sit on top of the
-   type. The wordmark filling the measure is the composition; a cue competing with it is
-   decoration, so the cue loses. */
+/* The nav link micro-interaction moved to nav.css with the capsule chrome. The
+   wiping acid underline is gone: an underline is a hard-edged device and read
+   as foreign once the nav became a pill. The current page is a filled pill. */
 
 /* ------------------------------------------------------------------ preloader
    Ground and counter colour are measured, not chosen: the reference serves

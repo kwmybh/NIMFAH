@@ -40,8 +40,19 @@
   --tr-display: -0.03em;   /* negative on display */
   --tr-label: 0.13em;      /* positive on tracked labels */
 
-  /* ── geometry ───────────────────────────────────────── */
-  --radius: 0;             /* zero, everywhere, deliberately */
+  /* ── geometry ───────────────────────────────────────────────────────────────
+     Radius is no longer zero. The zero-radius rule came from the first reference;
+     the current one builds its chrome from capsules, pill buttons and a circular
+     monogram, so radius is now a scale rather than an absence.
+
+     Read from screenshots, not from computed styles: the JS bridge to that page
+     kept timing out, so these are eyeballed proportions (a capsule is fully
+     rounded; the loader card sat around 18px) rather than measured values. Worth
+     re-measuring if the tool cooperates later. */
+  --r-pill: 999px;         /* nav capsule, buttons, badges — fully rounded */
+  --r-card: 18px;          /* panels, cards, the loader */
+  --r-sm: 10px;            /* inputs and small controls */
+  --radius: 0;             /* retained: plates and hairline marks stay hard-edged */
   --hair: 0.5px;
   --rule: 1px;
   --gutter: clamp(16px, 2.2vw, 32px);
