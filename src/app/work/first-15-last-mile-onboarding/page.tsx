@@ -76,13 +76,22 @@ export default function FirstFifteenLastMileOnboarding() {
               <em>23-page PDF: brief, objectives, architecture, measurement.</em>
             </a>
             <a
+              className="f15-cta f15-cta-2"
+              href="/first-15/decision-guide-job-aid.pdf"
+              target="_blank"
+              rel="noopener"
+            >
+              <strong>Take the job aid ↓</strong>
+              <em>One page: the triage, the four triggers, the escalation template.</em>
+            </a>
+            <a
               className="f15-cta f15-cta-3"
               href="/first-15/production-storyboard.xlsx"
               target="_blank"
               rel="noopener"
             >
               <strong>Open the storyboard →</strong>
-              <em>Ten annotated screens, developer-handoff standard.</em>
+              <em>Ten annotated screens, developer-handoff standard. Excel download.</em>
             </a>
           </div>
         </div>
