@@ -117,49 +117,88 @@
    as foreign once the nav became a pill. The current page is a filled pill. */
 
 /* ------------------------------------------------------------------ preloader
-   Ground and counter colour are measured, not chosen: the reference serves
-   rgb(157,241,51) behind rgb(7,2,16) Rajdhani 500 at ~24px, which are this
-   system's --acid and --ink unchanged. */
+   Restyled to the current reference: a centred rounded card on the page ground,
+   with a tracked label, a large percentage, a 0–100 scale and a bar chart that
+   fills as it loads. The previous version was a full-bleed acid wipe, which was
+   the other reference's move.
+
+   The acid moves from the ground to the number. On a full acid field the
+   percentage had to be ink; on the card the ground is --bg and the number can be
+   the accent, which is 13.63:1 against it. */
 .pre {
   position: fixed;
   inset: 0;
   z-index: 10000;
   display: grid;
   place-items: center;
-  background: var(--acid);
-  /* Wipes upward off the top edge, on the measured expo-out. The page is already
-     painted underneath, so this uncovers rather than reveals. */
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 0.62s var(--ease-expo);
+  background: var(--bg);
+  opacity: 1;
+  transition: opacity 0.5s var(--ease-out);
 }
-.pre[data-leaving="true"] { clip-path: inset(0 0 100% 0); }
+.pre[data-leaving="true"] { opacity: 0; }
 
+.pre-card {
+  width: min(92vw, 460px);
+  padding: clamp(18px, 2.4vw, 26px);
+  border-radius: var(--r-card);
+  border: 1px solid var(--edge);
+  background: var(--surface);
+  transition: transform 0.5s var(--ease-expo);
+}
+.pre[data-leaving="true"] .pre-card { transform: translateY(-8px); }
+
+.pre-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(16px, 2.4vh, 24px);
+}
+.pre-label {
+  margin: 0;
+  font: 600 var(--fs-label-sm) / 1 var(--display);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--dim);
+}
 .pre-pct {
   margin: 0;
-  font: 500 clamp(18px, 1.7vw, 25px) / 1 var(--display);
-  color: var(--ink);
+  font: 500 clamp(30px, 3.4vw, 46px) / 1 var(--display);
+  color: var(--acid-fg);
   font-variant-numeric: tabular-nums;
 }
 
-/* Hairline frame and corner brackets, inset from the edge — the HUD language of the
-   rest of the site, inverted onto the acid. */
-.pre-frame {
-  position: absolute;
-  inset: clamp(10px, 1.1vw, 16px);
-  border: 1px solid rgba(7, 2, 16, 0.35);
-  pointer-events: none;
+.pre-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
+  font: 500 0.625rem / 1 var(--display);
+  letter-spacing: 0.08em;
+  color: var(--dim);
 }
-.pre-br { position: absolute; width: 18px; height: 18px; pointer-events: none; }
-.pre-br::before, .pre-br::after { content: ""; position: absolute; background: var(--bg); }
-.pre-br::before { width: 18px; height: 1px; }
-.pre-br::after { width: 1px; height: 18px; }
-.pre-tl { top: clamp(10px, 1.1vw, 16px); left: clamp(10px, 1.1vw, 16px); }
-.pre-tr { top: clamp(10px, 1.1vw, 16px); right: clamp(10px, 1.1vw, 16px); }
-.pre-tr::before, .pre-tr::after { right: 0; }
-.pre-bl { bottom: clamp(10px, 1.1vw, 16px); left: clamp(10px, 1.1vw, 16px); }
-.pre-bl::before, .pre-bl::after { bottom: 0; }
-.pre-brr { bottom: clamp(10px, 1.1vw, 16px); right: clamp(10px, 1.1vw, 16px); }
-.pre-brr::before, .pre-brr::after { bottom: 0; right: 0; }
+/* Unlit ticks were --edge, which on --surface is invisible: the scale drew only the
+   part already passed, so 75 and 100 simply were not there. A scale you cannot see
+   the end of is not a scale. Dimmed rather than recoloured, so the lit state is a
+   change in weight rather than a different element appearing. */
+.pre-scale span { opacity: 0.35; transition: opacity 0.3s ease-out; }
+.pre-scale span[data-on="true"] { opacity: 1; }
+
+/* Bars sit on a shared baseline and vary in height, so the chart reads as a
+   silhouette rather than a progress bar wearing a costume. */
+.pre-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: clamp(44px, 6vh, 62px);
+}
+.pre-bars i {
+  flex: 1;
+  min-width: 0;
+  border-radius: 1px;
+  background: var(--edge);
+  transition: background-color 0.25s ease-out;
+}
+.pre-bars i[data-on="true"] { background: var(--acid-fg); }
 
 @media (prefers-reduced-motion: reduce) {
   .pre { display: none; }

@@ -5,17 +5,9 @@ import "./globals.css";
 import { bodoni, bricolage, dmSans, plexMono, rajdhani } from "@/lib/fonts";
 import { Providers } from "@/components/providers";
 import { themeInitScript } from "@/components/theme-provider";
+import { siteUrl } from "@/lib/site";
 
-// Canonical origin for absolute metadata/OG URLs. Prefers an explicit NEXT_PUBLIC_SITE_URL
-// (set this to a custom domain), then Vercel's stable production URL, then the per-deploy
-// URL, then localhost.
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000");
+// Canonical origin lives in src/lib/site.ts so robots and sitemap agree with metadata.
 
 const description =
   "NIMFAH — multidisciplinary practice at the intersection of engineering and fine-art photography.";

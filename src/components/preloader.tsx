@@ -17,6 +17,12 @@ const CAP_MS = 2200;
 const MIN_MS = 650; // below this it flashes rather than reads as an entrance
 const KEY = "nimfah-preloaded";
 
+// A fixed silhouette, not a random one — see the comment where it is used.
+const BARS = [
+  38, 52, 44, 61, 49, 73, 58, 66, 47, 80, 63, 71,
+  55, 86, 68, 77, 59, 91, 72, 83, 64, 95, 76, 100,
+];
+
 export function Preloader() {
   // Not rendered during SSR: no scripting means no overlay, rather than an overlay that
   // can never dismiss itself.
@@ -76,14 +82,31 @@ export function Preloader() {
 
   if (!mounted || done) return null;
 
+  // Bars are a fixed, uneven set rather than random: a loader that draws a different
+  // silhouette on every visit reads as noise, and re-randomising per render would make
+  // it flicker. 24 bars, filled left to right as the percentage advances.
+  const bars = BARS.map((h, n) => ({ h, on: (n + 1) / BARS.length <= pct / 100 }));
+
   return (
     <div className="pre" data-leaving={leaving ? "true" : "false"} aria-hidden="true">
-      <span className="pre-frame" />
-      <span className="pre-br pre-tl" />
-      <span className="pre-br pre-tr" />
-      <span className="pre-br pre-bl" />
-      <span className="pre-br pre-brr" />
-      <p className="pre-pct">{pct}%</p>
+      <div className="pre-card">
+        <div className="pre-head">
+          <p className="pre-label">Loading</p>
+          <p className="pre-pct">{pct}%</p>
+        </div>
+
+        <div className="pre-scale">
+          {[0, 25, 50, 75, 100].map((t) => (
+            <span key={t} data-on={pct >= t ? "true" : "false"}>{t}%</span>
+          ))}
+        </div>
+
+        <div className="pre-bars">
+          {bars.map((b, n) => (
+            <i key={n} data-on={b.on ? "true" : "false"} style={{ height: `${b.h}%` }} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
