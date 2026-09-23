@@ -98,3 +98,18 @@
   .nv-btn { display: none; }
   .nv-pod a { padding: 9px 14px; }
 }
+
+/* Light mode: the capsule is white on a warm paper ground, which measures 1.13:1 —
+   technically fine (it carries no text of its own) but it stops reading as a floating
+   object, and floating is the whole point of the shape. More contrast would make it a
+   grey slab; a shadow is the right instrument, and shadows belong to this language now
+   in a way they never did to the hard-edged one. Dark mode needs none: there the
+   surface is lighter than the ground, so it lifts on its own. */
+:root:not([data-theme="dark"]) .nv-pod,
+:root:not([data-theme="dark"]) .nv-mark,
+:root:not([data-theme="dark"]) .nv-actions .theme-toggle {
+  box-shadow: 0 1px 2px rgba(7, 2, 16, 0.06), 0 6px 18px rgba(7, 2, 16, 0.08);
+}
+:root:not([data-theme="dark"]) .nv-btn {
+  box-shadow: 0 1px 2px rgba(7, 2, 16, 0.05);
+}

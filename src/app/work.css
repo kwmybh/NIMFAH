@@ -61,8 +61,15 @@
   position: relative;
   aspect-ratio: 16 / 9;
   /* Floors the project at roughly two thirds of the viewport so it reads as a stop on
-     the page rather than a thumbnail. */
+     the page rather than a thumbnail.
+
+     max-width is load-bearing, not decoration. aspect-ratio plus min-height derives
+     WIDTH from height: at 62svh on a 717px-tall phone that is 444 x 16/9 = 790px,
+     which blew past a 500px viewport and gave the whole site a horizontal scrollbar.
+     Capping the width makes the box yield to the column and go taller than 16:9
+     instead, and the floor is dropped entirely on small screens below. */
   min-height: min(62svh, 560px);
+  max-width: 100%;
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--edge);
@@ -215,4 +222,11 @@
   .wc-link:hover .wc-plate {
     transform: none;
   }
+}
+
+/* Phones: no height floor. The floor exists to stop the project reading as a
+   thumbnail on a wide screen; on a narrow one the card is already the full measure,
+   and keeping it would only re-create the overflow the max-width now absorbs. */
+@media (max-width: 760px) {
+  .wc-thumb { min-height: 0; }
 }
