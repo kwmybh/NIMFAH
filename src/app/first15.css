@@ -747,3 +747,122 @@
     margin-bottom: 0.7rem;
   }
 }
+
+/* ── scenario flow map ──────────────────────────────────────────────
+   Asset 9 from the media plan, built as inline SVG rather than a Figma export, so the
+   labels stay real text: selectable, scalable, and in reading order for a screen reader
+   instead of one paragraph of alt text standing in for a whole structure.
+
+   The diagram has a floor below which its labels stop being labels, so on a narrow
+   screen it scrolls rather than shrinking. A scroll container that only answers to a
+   mouse fails SC 2.1.1, so it is focusable and carries a group label; a browser scrolls
+   a focused region with the arrow keys once it can hold focus. */
+.f15 .f15-flow {
+  margin: 2.75rem 0 0;
+}
+.f15 .f15-flow-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--f15-hairline-dark);
+  border-radius: 3px;
+  background: #101216;
+  padding: 0.75rem;
+}
+.f15 .f15-flow-scroll:focus-visible {
+  outline: 3px solid var(--f15-ivory);
+  outline-offset: 2px;
+}
+.f15 .f15-flow-svg {
+  display: block;
+  width: 100%;
+  min-width: 1100px;  /* 0.93 scale — below this the 10px labels stop being labels */
+  height: auto;
+}
+.f15 .f15-flow figcaption {
+  margin-top: 0.9rem;
+  max-width: var(--f15-prose);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--f15-silver);
+}
+
+/* stations and chips */
+.f15 .f15-flow-box {
+  fill: var(--f15-slate);
+  stroke: var(--f15-hairline-dark);
+  stroke-width: 1;
+}
+.f15 .f15-flow-chip {
+  fill: var(--f15-graphite);
+  stroke: var(--f15-hairline-dark);
+  stroke-width: 1;
+}
+.f15 .f15-flow-chip-pref { stroke: var(--f15-gold-light); }
+.f15 .f15-flow-chip-crit { stroke: var(--f15-crimson); }
+.f15 .f15-flow-rule {
+  stroke: var(--f15-hairline-dark);
+  stroke-width: 1;
+}
+/* Each column's entry edge. Sixteen branches converge on one point per decision — that
+   is the honest shape, you arrive at the decision and then choose — but without a rail
+   the arrowheads terminate in empty ground and the convergence reads as an accident. */
+.f15 .f15-flow-rail {
+  stroke: #616872;
+  stroke-width: 1;
+}
+
+/* edges */
+.f15 .f15-flow-edge {
+  fill: none;
+  /* 3.33:1 on this ground. A line that carries meaning is a non-text component and owes
+     SC 1.4.11 its 3:1 — the obvious #5a616b measured 2.99 and would have missed. */
+  stroke: #616872;
+  stroke-width: 1;
+}
+.f15 .f15-flow-gold {
+  fill: none;
+  stroke: var(--f15-gold-light);
+  stroke-width: 2;
+}
+.f15 .f15-flow-crit {
+  fill: none;
+  stroke: var(--f15-crimson);
+  stroke-width: 1.5;
+}
+.f15 .f15-flow-crit-return { stroke-dasharray: 4 3; }
+.f15 .f15-flow-critbox {
+  fill: #2a1c1e;
+  stroke: var(--f15-crimson);
+  stroke-width: 1;
+}
+.f15 .f15-flow-arrowhead { fill: #616872; }
+.f15 .f15-flow-arrowhead-gold { fill: var(--f15-gold-light); }
+.f15 .f15-flow-arrowhead-crimson { fill: var(--f15-crimson); }
+
+/* type — every value measured on #101216, the diagram's own ground */
+.f15 .f15-flow-station-t { font: 600 12px var(--f15-ui); fill: var(--f15-ivory); }
+.f15 .f15-flow-dp-n {
+  font: 600 11px var(--f15-data);
+  letter-spacing: 0.08em;
+  fill: var(--f15-gold-light);      /* 8.6:1 */
+}
+.f15 .f15-flow-dp-l {
+  font: 500 11px var(--f15-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--f15-ivory);
+}
+.f15 .f15-flow-stamp { font: 400 10px var(--f15-data); fill: var(--f15-silver); }
+.f15 .f15-flow-opt { font: 400 10px var(--f15-ui); fill: var(--f15-ivory); }
+.f15 .f15-flow-key { font-family: var(--f15-data); font-weight: 600; fill: var(--f15-silver); }
+.f15 .f15-flow-sub { font: 400 10px var(--f15-ui); fill: var(--f15-silver); }   /* 8.4:1 */
+.f15 .f15-flow-critt {
+  font: 600 10px var(--f15-data);
+  letter-spacing: 0.06em;
+  fill: var(--f15-crimson);         /* 7.4:1 */
+}
+.f15 .f15-flow-legend { font: 400 10px var(--f15-ui); fill: var(--f15-silver); }
+
+@media (max-width: 760px) {
+  .f15 .f15-flow-scroll { padding: 0.5rem; }
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../../first15.css";
 import { TriageDemo } from "./triage";
+import { FlowMap } from "./flow-map";
 
 export const metadata: Metadata = {
   title: "First 15: Scenario-Based Delivery Onboarding | Kwame Yeboah, LXD",
@@ -180,6 +181,8 @@ export default function FirstFifteenLastMileOnboarding() {
       </Section>
 
       <Section id="build" tone="dark" number="03" eyebrow="How It&apos;s Built" title="A state machine wearing a story.">
+        <FlowMap />
+
         <dl className="f15-spec">
           {SPEC.map(([k, v]) => (
             <div className="f15-spec-row" key={k}>
