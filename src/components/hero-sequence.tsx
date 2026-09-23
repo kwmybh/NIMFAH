@@ -97,6 +97,7 @@ export function HeroSequence() {
 
         <div className="hs-layer" data-layer="intro">
           <div className="bleed hs-inner">
+            <p className="hs-eyebrow t-label-sm">Kwame Yeboah</p>
             <p className="hs-contact t-label-sm">
               <a href="mailto:kwame.nimfah@gmail.com">kwame.nimfah@gmail.com</a>
             </p>

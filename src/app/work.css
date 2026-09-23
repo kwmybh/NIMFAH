@@ -66,6 +66,9 @@
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--edge);
+  /* Rounded with the chrome. --r-card, not --r-pill: a 600px-tall panel with a
+     fully-rounded edge reads as a lozenge, not a card. */
+  border-radius: var(--r-card);
 }
 .wc-img {
   object-fit: cover;
@@ -78,6 +81,7 @@
 }
 
 .wc-pill {
+  border-radius: var(--r-pill);
   position: absolute;
   left: 0.9rem;
   bottom: 0.9rem;

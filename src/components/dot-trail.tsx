@@ -6,9 +6,9 @@ import { useEffect, useRef } from "react";
 // `dot-trail-canvas`. This is that: a fixed, pointer-events-none canvas under the
 // blend-mode cursor square, emitting a decaying trail as the pointer moves.
 //
-// Squares, not circles. The system's border-radius is 0 everywhere by measurement, and a
-// round particle is the one shape that would give the effect away as borrowed from
-// somewhere else.
+// Circles, not squares. These were squares under the previous reference, where
+// border-radius was 0 by measurement; with the chrome now built from capsules and a
+// circular monogram, a square particle is the element that looks borrowed.
 
 type Dot = { x: number; y: number; born: number; size: number };
 
@@ -96,7 +96,9 @@ export function DotTrail() {
         const a = k * k * 0.85;
         const s = d.size * k;
         ctx.fillStyle = `rgba(${rgb}, ${a.toFixed(3)})`;
-        ctx.fillRect(d.x - s / 2, d.y - s / 2, s, s);
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, s / 2, 0, Math.PI * 2);
+        ctx.fill();
       }
       // Stop burning frames once the trail has fully decayed and the pointer is still.
       if (alive === 0 && ++idle > 30) { raf = 0; return; }

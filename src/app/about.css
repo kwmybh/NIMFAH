@@ -78,6 +78,7 @@
   margin-top: clamp(2.5rem, 8vh, 5rem);
 }
 .abt-pill {
+  border-radius: var(--r-pill);
   display: inline-block;
   margin: 0 0 1rem;
   padding: 0.45rem 0.85rem 0.38rem;
