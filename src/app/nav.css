@@ -94,9 +94,27 @@
   place-items: center;
 }
 
+/* The two actions used to be display:none below 860px. They are the only two things a
+   hiring manager opening this on a phone is here for — the résumé and a way to write —
+   and hiding them left the mobile header as a monogram, two nav links and a theme
+   switch. They stay, and the chrome shrinks around them instead. */
 @media (max-width: 860px) {
-  .nv-btn { display: none; }
+  .nv { gap: 0.5rem; }
   .nv-pod a { padding: 9px 14px; }
+  .nv-btn { padding: 10px 14px; }
+}
+
+/* Phones. What yields here is "About": the monogram already goes home, so that link is
+   the one redundant thing in the row. The résumé and the mailto are not. */
+@media (max-width: 620px) {
+  .nv { gap: 0.4rem; padding-left: 12px; padding-right: 12px; }
+  .nv-mark { width: 38px; height: 38px; }
+  .nv-pod { padding: 4px; }
+  .nv-pod a { padding: 8px 12px; }
+  .nv-pod a:first-child { display: none; }
+  .nv-actions { gap: 0.35rem; }
+  .nv-actions .theme-toggle { width: 36px; height: 36px; }
+  .nv-btn { padding: 9px 11px; font-size: 0.6875rem; }
 }
 
 /* Light mode: the capsule is white on a warm paper ground, which measures 1.13:1 —

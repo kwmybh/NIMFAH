@@ -193,10 +193,14 @@ export default function FirstFifteenLastMileOnboarding() {
             <dd>One low sub-bass note, −26 LUFS, once, no tail. No voice — the absence of a narrator is more serious than a narrator.</dd>
             <dt>Dev notes</dt>
             <dd>
-              Set three layer properties explicitly, because the defaults are wrong. Restore{" "}
-              <span className="f15-mono">varSafetyScore</span> to 60 after the micro-lesson — above the
-              floor of 55, below the 80 threshold. Without it, re-deciding lands at 50 and re-trips
-              forever.
+              Set three layer properties explicitly, because the defaults are wrong. On exit, apply the
+              chosen option&rsquo;s authored Safety cost — &minus;20 here, &minus;25 at DP4 — and clamp to
+              0&ndash;100. An earlier draft set{" "}
+              <span className="f15-mono">varSafetyScore</span> to a flat 60 instead, which meant a learner
+              who arrived already below 60 gained points for committing the violation. A gate that can
+              raise your score is not a gate. The re-trap that the flat value was there to prevent is
+              handled by <span className="f15-mono">varRemediationFlag</span>, which guards the floor
+              trigger so it fires at most once per attempt.
             </dd>
             <dt>A11y</dt>
             <dd>The crimson rule is decorative; the word STOP. carries the meaning. Dismissible only via Continue; Escape must not close it.</dd>

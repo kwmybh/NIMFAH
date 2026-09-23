@@ -31,7 +31,7 @@
   --fg: #070210;
   --dim: #5d616e;
   --dim2: #5d616e;
-  --dim3: #6b6f79;
+  --dim3: #666a74;      /* 4.78:1 on paper. #6b6f79 measured 4.44:1 and failed AA. */
   --muted: #5d616e;
   --surface: #ffffff;
   --panel: #ffffff;
@@ -46,13 +46,18 @@
   /* Neutral #101012, not the violet-cast #070210: the current reference runs a
      neutral dark. Acid holds at 13.63:1 on it and paper at 16.79:1.
      The secondary grey had to move with it — #747785 measured 4.60:1 on the
-     violet ground but only 4.27:1 here, which fails AA. #7e818d restores 4.90:1. */
+     violet ground but only 4.27:1 here, which fails AA. #7e818d restored 4.90:1 —
+     but only against the GROUND. Everything chrome-shaped sits on --surface #202024,
+     which is lighter, and there the same grey measured 4.18:1: the nav's inactive
+     link failed AA while the token it reads was "verified". A muted colour has to
+     clear the lightest surface it lands on, not the page behind it. #8b8e99 is
+     5.82:1 on the ground and 4.97:1 on the surface, so both hold. */
   --bg: #101012;
   --fg: var(--paper);
-  --dim: #7e818d;
-  --dim2: #7e818d;
-  --dim3: #7e818d;
-  --muted: #7e818d;
+  --dim: #8b8e99;
+  --dim2: #8b8e99;
+  --dim3: #8b8e99;
+  --muted: #8b8e99;
   --surface: #202024;
   --panel: #202024;
   --edge: #2b2b31;

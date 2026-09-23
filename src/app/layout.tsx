@@ -14,6 +14,8 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  // Without this Next emits no canonical at all, and the site answers on three origins.
+  alternates: { canonical: "./" },
   title: {
     default: "NIMFAH — Portfolio",
     template: "NIMFAH — %s",

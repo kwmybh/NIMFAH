@@ -43,6 +43,11 @@
   color: var(--fg);
   text-decoration: none;
   transition: color 0.3s ease-out;
+  /* 21px of line box is under the 24px minimum in WCAG 2.2 (2.5.8). */
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
 }
 .fd-col a:hover { color: var(--acid-fg); }
 .fd-col a i { font-style: normal; display: inline-block; transition: transform 0.3s var(--ease-out); }

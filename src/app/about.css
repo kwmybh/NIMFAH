@@ -129,6 +129,11 @@
   text-decoration: none;
   white-space: nowrap;
 }
+/* 21px of line box is under the 24px minimum in WCAG 2.2 (2.5.8). Padding on an
+   inline element grows the hit area without disturbing the baseline row it sits in. */
+.abt-sechead a {
+  padding-block: 4px;
+}
 .abt-sechead a:hover {
   color: var(--accent);
 }
@@ -148,8 +153,9 @@
   text-transform: uppercase;
   text-decoration: none;
   color: #101013;
-  background: var(--accent);
-  border: 1px solid var(--accent);
+  /* --acid, not --accent — see .wc-pill. Dark text on the light-mode --accent is 3.35:1. */
+  background: var(--acid);
+  border: 1px solid var(--acid);
 }
 .abt-btn-ghost {
   color: var(--fg);

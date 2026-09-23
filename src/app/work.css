@@ -98,7 +98,10 @@
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
   color: #101013;
-  background: var(--accent);
+  /* --acid, not --accent: this is a FILL with dark text on it (13.6:1 in both themes).
+     --accent is acid used as a MARK and darkens to #44730d in light, where dark text
+     on it measures 3.35:1 and fails AA. */
+  background: var(--acid);
 }
 
 .wc-foot {
@@ -153,6 +156,12 @@
   position: absolute;
   inset: 0;
   padding: clamp(1.1rem, 3.2vw, 1.85rem);
+  /* The CASE STUDY badge is an overlay pinned to the bottom-left of this frame, and it
+     was landing squarely on the third meter — its opaque fill hid the TIME label
+     outright, so a third of the scoring model the card exists to show was invisible.
+     The badge stays where it belongs; the plate's own content stops above it. Top-left
+     is not the alternative: the rule and the timestamp already live there. */
+  padding-bottom: calc(clamp(1.1rem, 3.2vw, 1.85rem) + 2.3rem);
   background: #14161a;
   display: flex;
   flex-direction: column;
@@ -228,5 +237,11 @@
    thumbnail on a wide screen; on a narrow one the card is already the full measure,
    and keeping it would only re-create the overflow the max-width now absorbs. */
 @media (max-width: 760px) {
-  .wc-thumb { min-height: 0; }
+  .wc-thumb {
+    min-height: 0;
+    /* 16/9 at a phone's column width is 201px, and the plate needs about 230: the
+       meters ran past the frame and under the badge. 4/3 gives the panel the height
+       its own content asks for without reintroducing a height floor. */
+    aspect-ratio: 4 / 3;
+  }
 }
