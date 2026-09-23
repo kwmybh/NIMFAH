@@ -1,7 +1,36 @@
 # NIMFAH — Design System
 
-Extracted by measuring computed styles on curtisdesignr.me (21 Sept 2026, 1440×900),
-then adapted for NIMFAH. Every value below is measured, not estimated.
+> **Status, 22 Sept 2026 — the reference changed, and parts of this document are now
+> historical.** Sections 1–8 were measured off curtisdesignr.me. After colleague
+> critique the style reference moved to christoph-nagel.dev, whose language is close
+> to the inverse: capsules and pills rather than zero radius, neutral dark rather than
+> violet black, centred rather than hard left, photographic rather than typographic.
+>
+> What survived the move, and why:
+> - **Rajdhani + DM Sans** (§1) — unchanged.
+> - **`#9df133`** (§2) — unchanged, and specifically commended in the critique. It
+>   holds 13.63:1 on the new ground.
+> - **The type scale** (§3) and **the motion pairings** (§5) — unchanged.
+>
+> What is superseded, with the current value:
+> - **`--radius: 0` everywhere** (§4) — superseded. Radius is now a scale:
+>   `--r-pill: 999px`, `--r-card: 18px`, `--r-sm: 10px`. Zero is retained only for
+>   the typographic plate and hairline marks.
+> - **Ground `#070210`** (§2) — superseded by a neutral `#101012`.
+> - **Secondary grey `#747785`** (§2) — superseded by `#7e818d`. The old value measured
+>   4.60:1 on the violet ground but only 4.27:1 on the neutral one, which fails AA.
+> - **The HUD** (§7: corner ticks, hairline column rules) — removed. It is zero-radius
+>   vocabulary and ran as a second design language once the chrome became capsules.
+> - **The nav** (§7) — superseded. Circular monogram, centred capsule of links, pill
+>   actions; current page is a filled pill, not an underline.
+>
+> Unlike sections 1–8, the christoph-nagel.dev values were **read from screenshots, not
+> measured**: the JS bridge to that page timed out repeatedly. Re-measure before
+> treating the radius numbers as authoritative.
+
+Sections 1–8 were extracted by measuring computed styles on curtisdesignr.me
+(21 Sept 2026, 1440×900), then adapted for NIMFAH. Every value in them is measured,
+not estimated.
 
 These are values and patterns observed from a published page — the implementation here
 is our own. Nothing is copied from that site's source.

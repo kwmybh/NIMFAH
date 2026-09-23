@@ -88,20 +88,10 @@
 .hs-jump { margin: clamp(8px, 2vh, 20px) 0 0; color: var(--muted); text-decoration: none; }
 .hs-jump:hover { color: var(--acid-fg); }
 
-/* -------------------------------------------------------------------- HUD */
-.hs-hud { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.hs-col { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--edge); opacity: 0.55; }
-.hs-tick { position: absolute; width: 14px; height: 14px; }
-.hs-tick::before, .hs-tick::after { content: ""; position: absolute; background: var(--acid-fg); }
-.hs-tick::before { width: 14px; height: 1px; }
-.hs-tick::after { width: 1px; height: 14px; }
-.hs-tl { top: var(--gutter); left: var(--gutter); }
-.hs-tr { top: var(--gutter); right: var(--gutter); }
-.hs-tr::before { right: 0; } .hs-tr::after { right: 0; }
-.hs-bl { bottom: var(--gutter); left: var(--gutter); }
-.hs-bl::before { bottom: 0; } .hs-bl::after { bottom: 0; }
-.hs-br { bottom: var(--gutter); right: var(--gutter); }
-.hs-br::before { bottom: 0; right: 0; } .hs-br::after { bottom: 0; right: 0; }
+/* The HUD is gone. Hairline column rules and hard corner ticks are zero-radius
+   vocabulary; once the chrome became capsules the page was running two design
+   languages at the same time, which reads as unfinished rather than layered.
+   The new reference keeps its ground clean and lets the chrome float over it. */
 
 /* Heading for assistive tech and search; the visual word-layers are decorative. */
 .hs-sr {

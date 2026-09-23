@@ -94,15 +94,6 @@ export function HeroSequence() {
     <section className="hs" ref={wrap}>
       <h1 className="hs-sr">Kwame Yeboah — designer who builds</h1>
       <div className="hs-stage" ref={stage}>
-        <div className="hs-hud" aria-hidden="true">
-          <span className="hs-col" style={{ left: "25%" }} />
-          <span className="hs-col" style={{ left: "50%" }} />
-          <span className="hs-col" style={{ left: "75%" }} />
-          <span className="hs-tick hs-tl" />
-          <span className="hs-tick hs-tr" />
-          <span className="hs-tick hs-bl" />
-          <span className="hs-tick hs-br" />
-        </div>
 
         <div className="hs-layer" data-layer="intro">
           <div className="bleed hs-inner">

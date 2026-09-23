@@ -170,54 +170,5 @@
 /* ── HUD layer ─────────────────────────────────────────────
    Structure for a type-only hero: hairline column rules and corner ticks,
    at the 0.5px/1px weights the system specifies. Decorative, aria-hidden. */
-.abt-hud {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.abt-col {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--edge);
-  opacity: 0.55;
-}
-.abt-tick {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  opacity: 0.8;
-}
-.abt-tick::before,
-.abt-tick::after {
-  content: "";
-  position: absolute;
-  background: var(--acid-fg);
-}
-.abt-tick::before {
-  width: 14px;
-  height: 1px;
-}
-.abt-tick::after {
-  width: 1px;
-  height: 14px;
-}
-.abt-tick-tl { top: var(--gutter); left: var(--gutter); }
-.abt-tick-tr { top: var(--gutter); right: var(--gutter); }
-.abt-tick-bl { bottom: var(--gutter); left: var(--gutter); }
-.abt-tick-br { bottom: var(--gutter); right: var(--gutter); }
-.abt-tick-tl::before, .abt-tick-tl::after { top: 0; left: 0; }
-.abt-tick-tr::before { top: 0; right: 0; }
-.abt-tick-tr::after { top: 0; right: 0; }
-.abt-tick-bl::before { bottom: 0; left: 0; }
-.abt-tick-bl::after { bottom: 0; left: 0; }
-.abt-tick-br::before { bottom: 0; right: 0; }
-.abt-tick-br::after { bottom: 0; right: 0; }
+/* The .abt-* HUD was removed with the static hero it belonged to. */
 
-@media (max-width: 720px) {
-  .abt-col {
-    display: none;
-  }
-}
