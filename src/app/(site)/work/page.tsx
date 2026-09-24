@@ -53,7 +53,7 @@ export default function WorkIndex() {
 
           <ul className="wc-grid">
             {photography.map((i, n) => (
-              <WorkCard item={i} key={i.href} index={n} />
+              <WorkCard item={i} key={i.href} index={n} headingLevel={3} />
             ))}
           </ul>
         </>

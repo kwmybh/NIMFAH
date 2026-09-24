@@ -42,7 +42,20 @@ function Plate() {
   );
 }
 
-export function WorkCard({ item, index = 0 }: { item: WorkItem; index?: number }) {
+// The card's title level depends on what sits above it, so the page decides rather than
+// the component: directly under the page h1 it is an h2, and under a section heading of
+// its own — Photography — it is an h3. Hard-coding h3 meant that with photography
+// archived the index ran h1 → h3, skipping a level nobody had announced.
+export function WorkCard({
+  item,
+  index = 0,
+  headingLevel = 2,
+}: {
+  item: WorkItem;
+  index?: number;
+  headingLevel?: 2 | 3;
+}) {
+  const Title = headingLevel === 3 ? "h3" : "h2";
   return (
     <li
       className="wc"
@@ -65,7 +78,7 @@ export function WorkCard({ item, index = 0 }: { item: WorkItem; index?: number }
           <span className="wc-pill">{item.category}</span>
         </div>
         <div className="wc-foot">
-          <h3 className="wc-title">{item.title}</h3>
+          <Title className="wc-title">{item.title}</Title>
           <span className="wc-visit">
             Visit <i aria-hidden="true">↗</i>
           </span>

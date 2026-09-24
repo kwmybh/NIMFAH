@@ -46,8 +46,11 @@ const SPEC: [string, string][] = [
 ];
 
 export default function FirstFifteenLastMileOnboarding() {
+  // <article>, not <main>: SiteChrome already wraps every page in <main id="main">, so a
+  // <main> here nested a second one inside it — two main landmarks, and a screen reader
+  // user cycling landmarks lands on the same region twice.
   return (
-    <main className="f15">
+    <article className="f15">
       <section className="f15-hero">
         <div className="f15-wrap">
           <div className="f15-rise">
@@ -265,6 +268,6 @@ export default function FirstFifteenLastMileOnboarding() {
           </p>
         </div>
       </section>
-    </main>
+    </article>
   );
 }
