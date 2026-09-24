@@ -13,8 +13,11 @@ import { ScrollProgress, ScrollReveal } from "./scroll";
 // the reveal observer reads [data-reveal] off the DOM precisely so pages can opt in
 // with an attribute instead of becoming client components.
 export function SiteChrome({ children }: { children: ReactNode }) {
+  // .tsys carries the home page's palette, faces and hard-edged geometry onto these
+  // pages — see tsys.css. It wraps the chrome as well as the content, because a rounded
+  // capsule nav over a squared-off HUD page is the seam it exists to close.
   return (
-    <>
+    <div className="tsys">
       <a className="skip" href="#main">
         Skip to content
       </a>
@@ -26,6 +29,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <ScrollReveal />
       <DotTrail />
       <Cursor />
-    </>
+    </div>
   );
 }

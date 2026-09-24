@@ -1,0 +1,232 @@
+/* TERMINAL SYSTEM — the home page's language, carried onto the rest of the site.
+   ─────────────────────────────────────────────────────────────────────────────
+   The four-panel HUD became the front door on 24 Sept 2026, which left /about and /work
+   speaking the older capsule-and-Bricolage dialect: rounded chrome, warm paper, a
+   different display face. A visitor crossing from the home page met a different site.
+
+   This layer re-points the shared tokens rather than rewriting about.css and work.css.
+   Those files already read every colour, radius and face from variables, so redefining
+   the variables moves them wholesale, and the handful of rules below cover the places
+   where the terminal look is a shape rather than a value — hairlines instead of
+   capsules, the halftone over a card, a dashed rule under a section.
+
+   Scoped to .tsys, which SiteChrome puts around the whole tree. Nothing here reaches
+   the home page (its own .tm scope) or the First 15 case study, which keeps its
+   editorial Bodoni design on purpose: it is the artefact being shown, not the frame.
+
+   Palette and metrics are the mockup's, and the light values are the AA-corrected pair
+   — #44730d at 4.68:1 and #b23f00 at 4.81:1 on #ece9e4 — not the originals that failed. */
+
+.tsys {
+  /* ── the ground ── */
+  --bg: #0e0e0e;
+  --fg: #ece9e4;
+  --dim: #9a978f;              /* 6.62:1 on #0e0e0e — running prose, clears AA */
+  --muted: #9a978f;
+  --accent: #9df133;
+  --acid: #9df133;
+  --warning: #ff5c00;
+  --surface: #151515;
+  --panel: #151515;
+  --glass: rgba(236, 233, 228, 0.05);
+  --edge: rgba(236, 233, 228, 0.15);
+  --line: rgba(236, 233, 228, 0.15);
+  --line2: rgba(236, 233, 228, 0.08);
+  --linestrong: rgba(236, 233, 228, 0.3);
+
+  /* ── the geometry ── */
+  /* The HUD is hard-edged throughout. Zeroing the radius scale squares the monogram,
+     the nav capsule, the buttons and every card in one move. */
+  --r-pill: 0px;
+  --r-card: 0px;
+  --r-sm: 0px;
+
+  /* ── the faces ── */
+  --display: var(--font-inter), system-ui, sans-serif;
+  --body: var(--font-jetbrains), ui-monospace, monospace;
+  --pixel: var(--font-silkscreen), ui-monospace, monospace;
+
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  letter-spacing: 0.03em;
+}
+
+:root:not([data-theme="dark"]) .tsys {
+  --bg: #ece9e4;
+  --fg: #0e0e0e;
+  --dim: #55534e;              /* 6.34:1 on #ece9e4 */
+  --muted: #55534e;
+  --accent: #44730d;
+  --acid: #9df133;             /* stays bright: it is a FILL, always with dark text */
+  --warning: #b23f00;
+  --surface: #e2ded7;
+  --panel: #e2ded7;
+  --glass: rgba(14, 14, 14, 0.05);
+  --edge: rgba(14, 14, 14, 0.18);
+  --line: rgba(14, 14, 14, 0.18);
+  --line2: rgba(14, 14, 14, 0.09);
+  --linestrong: rgba(14, 14, 14, 0.35);
+}
+
+/* The body paints whatever the wrapper does not — the overscroll area at either end,
+   and any gap under a short page. Literal values, not var(--bg): a variable read at
+   body level resolves against :root, which is still the old palette. */
+body:has(.tsys) { background: #0e0e0e; }
+:root:not([data-theme="dark"]) body:has(.tsys) { background: #ece9e4; }
+
+.tsys { display: flow-root; min-height: 100svh; }
+
+/* ── display type ─────────────────────────────────────────────────────────────
+   Inter 900 at a tight negative track, as on the panels. The old faces stay loaded for
+   the case study, which still uses them. */
+.tsys h1,
+.tsys h2,
+.tsys .workidx-h2,
+.tsys .wc-title,
+.tsys .abt-statement {
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+/* ── labels, eyebrows, meta ───────────────────────────────────────────────────
+   The HUD's small type: uppercase, tracked, mono. 11px rather than the panels' 8–10px
+   — these pages are read, not scanned, and nothing here is decoration. */
+.tsys .abt-seclabel,
+.tsys .abt-pill,
+.tsys .wc-visit,
+.tsys .fd-eyebrow,
+.tsys .nv-pod a,
+.tsys .nv-btn,
+.tsys .nv-mark {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tsys .abt-seclabel,
+.tsys .fd-eyebrow { color: var(--warning); }
+
+/* Running prose keeps sentence case and a readable measure. The panels can afford
+   uppercase at 10px because they hold four lines; these pages hold paragraphs. */
+.tsys .workidx-lede,
+.tsys .wc-meta,
+.tsys .abt-subs p,
+.tsys .abt-statement + p {
+  font-family: var(--body);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+/* ── section rules ────────────────────────────────────────────────────────────
+   Dashed, like the divider between panels. */
+.tsys .workidx-head,
+.tsys .abt-sechead {
+  border-bottom: 1px dashed var(--line);
+}
+
+/* ── work cards ───────────────────────────────────────────────────────────────
+   Hairline box, panel ground, the accent halftone laid over the image, and a square
+   label chip — the artefact cards from the work panel, at page scale. */
+.tsys .wc-thumb {
+  border: 1px solid var(--edge);
+  border-radius: 0;
+  background: var(--panel);
+}
+.tsys .wc-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--accent) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  opacity: 0.2;
+}
+.tsys .wc-img { filter: grayscale(1) contrast(1.2); }
+.tsys .wc-link:hover .wc-img { filter: grayscale(1) contrast(1.2); }
+
+.tsys .wc-pill {
+  border-radius: 0;
+  border: 1px solid var(--accent);
+  background: var(--bg);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.tsys .wc-foot { border-bottom: 1px solid var(--line); }
+.tsys .wc-link:hover .wc-foot { border-bottom-color: var(--accent); }
+.tsys .wc-visit { color: var(--accent); }
+
+/* ── chrome: the nav reads as the HUD's ── */
+.tsys .nv-mark,
+.tsys .nv-pod,
+.tsys .nv-btn {
+  border-radius: 0;
+  border: 1px solid var(--edge);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.tsys .nv-mark:hover { background: var(--acid); color: #0e0e0e; }
+.tsys .nv-pod { padding: 4px; }
+.tsys .nv-pod a { border-radius: 0; color: var(--fg); }
+.tsys .nv-pod a:hover { color: var(--accent); }
+.tsys .nv-pod a[aria-current="page"] { background: var(--acid); color: #0e0e0e; }
+.tsys .nv-btn-solid {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: #0e0e0e;
+}
+
+/* ── chrome: the footer dock ── */
+.tsys .fd { border-top: 1px dashed var(--line); }
+.tsys .fd-h { font-family: var(--display); font-weight: 900; letter-spacing: -0.04em; }
+.tsys .fd a:hover { color: var(--accent); }
+
+/* ── about: the wordmark is the panel's ── */
+.tsys .abt-name {
+  font-family: var(--pixel);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-synthesis: none;
+  text-transform: uppercase;
+}
+
+.tsys .abt-btn {
+  border-radius: 0;
+  background: var(--acid);
+  border: 1px solid var(--acid);
+  color: #0e0e0e;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.tsys .abt-btn-ghost {
+  background: none;
+  border-color: var(--edge);
+  color: var(--fg);
+}
+.tsys .abt-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Focus: the accent ring the panels use. 4.68:1 against the light ground and 13.85:1
+   against the dark one, so the indicator itself clears 1.4.11 either way. */
+.tsys a:focus-visible,
+.tsys button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tsys .wc-img,
+  .tsys .wc-foot { transition: none !important; }
+}

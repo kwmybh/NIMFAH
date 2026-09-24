@@ -39,8 +39,14 @@
 :root:not([data-theme="dark"]) .tm {
   --bg: #ece9e4;
   --fg: #0e0e0e;
-  --accent: #5c8a0e;
-  --warning: #d94f00;
+  /* Were #5c8a0e (3.40:1) and #d94f00 (3.42:1) — both used as text on #ece9e4, both
+     below the 4.5:1 AA floor, on a site whose case study sells WCAG 2.1 AA. Same hues,
+     darkened until they pass on THIS ground: 4.68:1 and 4.81:1 against #ece9e4. (The
+     same inks measure 5.01 and 5.15 on the site's #f5f0eb paper — lighter page.)
+     #ece9e4 on the accent fill is that same 4.68:1, so the toggle passes as well.
+     Dark mode never failed: 13.85:1 and 6.24:1. */
+  --accent: #44730d;
+  --warning: #b23f00;
   --glass: rgba(14, 14, 14, 0.05);
   --border: rgba(14, 14, 14, 0.18);
   --panel: #e2ded7;
@@ -66,13 +72,13 @@
    the other five pages scroll vertically and must keep doing so. */
 body:has(.tm) {
   overflow: hidden;
-  height: 100vh;
+  height: 100svh;
 }
 
 .tm {
   position: relative;
-  height: 100vh;
-  width: 100vw;
+  height: 100svh;
+  width: 100%;
   background-color: var(--bg);
   color: var(--fg);
   font-family: var(--font-jetbrains), ui-monospace, monospace;
@@ -144,6 +150,20 @@ body:has(.tm) {
 
 @keyframes tm-blink { 50% { opacity: 0; } }
 
+/* ── reduced motion ───────────────────────────────────────────────────────────
+   The blink, the snap glide and the panel transitions all stop. The shader stops in
+   terminal-client.tsx, which draws one frame instead of running a loop. */
+@media (prefers-reduced-motion: reduce) {
+  .tm-status-dot,
+  .tm-cursor { animation: none !important; }
+  .tm-main { scroll-behavior: auto; }
+  .tm,
+  .tm-work-item,
+  .tm-work-item img,
+  .tm-work-mark,
+  .tm-data { transition: none !important; }
+}
+
 /* ── nav ──────────────────────────────────────────────────────────────────────── */
 .tm-nav {
   position: fixed;
@@ -190,19 +210,32 @@ body:has(.tm) {
 .tm-main {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  will-change: transform;
+  height: 100svh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
 }
+.tm-main::-webkit-scrollbar { display: none; }
 
 .tm-section {
   min-width: 100vw;
-  height: 100vh;
+  height: 100svh;
   padding: 120px 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   border-right: 1px dashed var(--border);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  /* A panel taller than the viewport scrolls instead of clipping. The mockup pinned
+     every panel to 100vh inside overflow:hidden, so at 320px or 200% zoom the content
+     below the fold simply could not be reached. */
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
 }
 .tm-section--wide { min-width: 150vw; }
 
@@ -425,24 +458,52 @@ body:has(.tm) {
   outline-offset: 3px;
 }
 
+/* ── small screens and zoom ───────────────────────────────────────────────────
+   120px/80px of padding on a 100vh panel leaves nothing for content on a phone, and
+   the three-up artefact grid needs a column it does not have. The panels keep their
+   full-viewport geometry; what changes is the room inside them. A wide panel at 150vw
+   is a desktop idea — on a phone it becomes one screen like the rest. */
+@media (max-width: 900px) {
+  .tm-section { padding: 90px 24px; }
+  .tm-section--wide { min-width: 100vw; }
+  .tm-work-grid { grid-template-columns: 1fr; gap: 12px; }
+  .tm-work-item { aspect-ratio: auto; min-height: 96px; }
+  .tm-section-meta { font-size: 84px; top: 8%; }
+  .tm-section-meta--work { left: 5%; }
+  .tm-nav { top: 16px; right: 16px; gap: 12px; padding: 8px 12px; }
+  .tm-telemetry { bottom: 16px; left: 16px; gap: 12px; }
+  .tm-progress-track { left: 200px; right: 16px; bottom: 18px; }
+  .tm-hud { padding: 10px; }
+  .tm-email { font-size: 22px; }
+  .tm-links { gap: 20px; flex-wrap: wrap; }
+  .tm-desc { margin-left: 0; }
+}
+
+/* Short viewports — a laptop at 200% zoom, or a phone in landscape — get the panel
+   scrolling that the fixed height would otherwise deny them. */
+@media (max-height: 560px) {
+  .tm-section { padding: 70px 24px; justify-content: flex-start; }
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    KNOWN, DELIBERATE, AND NOT YET FIXED
    Carried over from the mockup on request. Each one is a decision, not an oversight:
 
+   FIXED, 24 Sept 2026, when this became the home page rather than a side route:
+   contrast (AA in both themes now), input (a real scroller, so keyboard, touch,
+   scrollbar and screen readers all work), reflow (panels scroll rather than clip, and
+   the layout has phone and short-viewport branches), and reduced motion (honoured here
+   and in the shader).
+
+   STILL TRUE, and still a choice:
+
    1. Type size. Body 10px, HUD labels 9px, telemetry 8px, all uppercase with
       letter-spacing — the least legible combination at the smallest size on offer.
-   2. Light-mode contrast. --accent #5c8a0e measures 3.40:1 on #ece9e4 and --warning
-      #d94f00 3.42:1. Both are used as text. WCAG 2.1 AA wants 4.5:1, and the First 15
-      case study on this same site claims AA. Dark mode passes (13.6:1 and 6.1:1).
-   3. Input. The track is a transform driven by a `wheel` listener, so there is no
-      keyboard scrolling, no touch scrolling, no scrollbar to drag, and nothing for a
-      screen reader to move through. Phones and trackpad-free setups reach panel 01
-      and stop. The nav buttons are the only other way across.
-   4. `cursor: crosshair` on every element, links and buttons included, so the pointer
+      No WCAG criterion sets a minimum, so this passes and still asks a lot of a reader.
+      Raising the three values is a one-line change whenever the look can afford it.
+   2. `cursor: crosshair` on every element, links and buttons included, so the pointer
       no longer signals what is clickable.
-   5. The shader runs an uncapped requestAnimationFrame loop for a texture that barely
-      moves, and Three.js is ~600KB before compression.
-   6. No `prefers-reduced-motion` branch: the blink, the lerp and the shader all run
-      regardless.
+   3. Three.js is ~600KB before compression, for a grain an SVG turbulence tile can
+      draw for nothing. It runs one rAF loop, and none under reduced motion.
 
-   src/app/terminal/terminal-client.tsx is where 3, 5 and 6 live. */
+   src/components/terminal-client.tsx is where 3 lives. */

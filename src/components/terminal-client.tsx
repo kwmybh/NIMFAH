@@ -38,9 +38,6 @@ const ARTEFACTS = [
   { label: "Production storyboard", mark: "XLS", meta: "8 tabs ↓", href: "/first-15/production-storyboard.xlsx" },
 ];
 
-// 0.075 per frame, as the mockup sets it. The lag is the effect.
-const EASE = 0.075;
-
 export function TerminalClient() {
   const track = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLDivElement>(null);
@@ -49,47 +46,45 @@ export function TerminalClient() {
   const xCoord = useRef<HTMLSpanElement>(null);
   const yCoord = useRef<HTMLSpanElement>(null);
   const canvasHost = useRef<HTMLDivElement>(null);
-  const target = useRef(0);
   const { theme, toggle } = useTheme();
 
   // ── the track ───────────────────────────────────────────────────────────────
-  // One rAF loop owns the transform, the progress bar and the readouts, all written
-  // straight to the DOM. Through React state this would be sixty re-renders a second
-  // of the whole page.
+  // A real scroller, not a transform driven by a wheel listener. It looks identical and
+  // it is the whole accessibility story: arrow keys, Home/End, PageUp/PageDown, a
+  // draggable scrollbar, touch and trackpad, and a browser that can bring a focused
+  // element into view by itself. The lerp owned one input device and locked out every
+  // other — a phone reached panel 01 and stopped.
+  //
+  // A vertical wheel is mapped across by hand. Browsers only do that for themselves when
+  // a container has no vertical scroll of its own, and these panels may.
   useEffect(() => {
     const el = track.current;
     if (!el) return;
 
-    let current = 0;
-    let frame = 0;
-    const max = () => Math.max(0, el.scrollWidth - window.innerWidth);
-
-    const onWheel = (e: WheelEvent) => {
-      target.current = Math.min(Math.max(0, target.current + e.deltaY), max());
-    };
-    const onResize = () => {
-      target.current = Math.min(target.current, max());
-    };
-
-    const tick = () => {
-      current += (target.current - current) * EASE;
-      el.style.transform = `translateX(-${current}px)`;
-
-      const span = max();
-      const pct = span > 0 ? (current / span) * 100 : 0;
+    const paint = () => {
+      const span = el.scrollWidth - el.clientWidth;
+      const pct = span > 0 ? (el.scrollLeft / span) * 100 : 0;
       if (bar.current) bar.current.style.width = `${pct}%`;
       if (depth.current) depth.current.textContent = `${Math.round(pct)}%`;
-
-      frame = requestAnimationFrame(tick);
     };
-    frame = requestAnimationFrame(tick);
+    paint();
 
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("resize", onResize);
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      const panel = el.querySelector<HTMLElement>(".tm-section");
+      // A panel tall enough to scroll keeps its own wheel; only pass the gesture
+      // sideways once the reader is at the end of it.
+      if (panel && panel.scrollHeight > panel.clientHeight + 1) return;
+      e.preventDefault();
+      el.scrollBy({ left: e.deltaY });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("scroll", paint, { passive: true });
+    window.addEventListener("resize", paint);
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("resize", onResize);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("scroll", paint);
+      window.removeEventListener("resize", paint);
     };
   }, []);
 
@@ -98,18 +93,30 @@ export function TerminalClient() {
   // same loop as the coordinates so it is one loop rather than two.
   useEffect(() => {
     let frame = 0;
+    let timer = 0;
     const pad = (n: number) => n.toString().padStart(2, "0");
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const tick = () => {
+    const stamp = (withHundredths: boolean) => {
       const now = new Date();
-      if (clock.current) {
-        clock.current.textContent =
-          `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}:` +
-          pad(Math.floor(now.getMilliseconds() / 10));
-      }
-      frame = requestAnimationFrame(tick);
+      if (!clock.current) return;
+      clock.current.textContent =
+        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}` +
+        (withHundredths ? `:${pad(Math.floor(now.getMilliseconds() / 10))}` : "");
     };
-    frame = requestAnimationFrame(tick);
+
+    if (still) {
+      // Hundredths repainted sixty times a second is motion, and it is the kind nobody
+      // can read anyway. Reduced motion gets a clock that ticks once a second.
+      stamp(false);
+      timer = window.setInterval(() => stamp(false), 1000);
+    } else {
+      const tick = () => {
+        stamp(true);
+        frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+    }
 
     const onMove = (e: PointerEvent) => {
       if (xCoord.current) xCoord.current.textContent = (e.clientX / window.innerWidth).toFixed(3);
@@ -118,6 +125,7 @@ export function TerminalClient() {
     window.addEventListener("pointermove", onMove);
     return () => {
       cancelAnimationFrame(frame);
+      window.clearInterval(timer);
       window.removeEventListener("pointermove", onMove);
     };
   }, []);
@@ -167,16 +175,22 @@ export function TerminalClient() {
     scene.add(mesh);
 
     let frame = 0;
+    // Reduced motion gets the same grain, drawn once and left alone. The texture reseeds
+    // from u_time so slowly that a still frame is the same image — which is the honest
+    // argument for not running an uncapped loop at all.
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const animate = (time: number) => {
       material.uniforms.u_time.value = time * 0.005;
       renderer.render(scene, camera);
       frame = requestAnimationFrame(animate);
     };
-    frame = requestAnimationFrame(animate);
+    if (still) renderer.render(scene, camera);
+    else frame = requestAnimationFrame(animate);
 
     const onResize = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
       material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+      if (still) renderer.render(scene, camera);
     };
     window.addEventListener("resize", onResize);
 
@@ -190,12 +204,13 @@ export function TerminalClient() {
     };
   }, []);
 
-  // Nav jumps set the same target the wheel does, so the lerp carries the page there.
+  // Nav jumps scroll the track, so they travel the same path as every other input and
+  // land on the same snap point.
   const jump = useCallback((id: string) => {
     const section = document.getElementById(id);
     const el = track.current;
     if (!section || !el) return;
-    target.current = Math.min(section.offsetLeft, Math.max(0, el.scrollWidth - window.innerWidth));
+    el.scrollTo({ left: section.offsetLeft - el.offsetLeft });
   }, []);
 
   return (

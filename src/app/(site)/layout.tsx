@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import "../tsys.css";
 import { SiteChrome } from "@/components/site-chrome";
 
 // A route group: the parentheses keep it out of the URL, so these pages stay at /,
