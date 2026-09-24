@@ -211,8 +211,12 @@ export default function FirstFifteenLastMileOnboarding() {
               <span className="f15-mono">varSafetyScore</span> to a flat 60 instead, which meant a learner
               who arrived already below 60 gained points for committing the violation. A gate that can
               raise your score is not a gate. The re-trap that the flat value was there to prevent is
-              handled by <span className="f15-mono">varRemediationFlag</span>, which guards the floor
-              trigger so it fires at most once per attempt.
+              handled by a guard, not by the number &mdash;{" "}
+              <span className="f15-mono">varFloorFired</span> for the accumulation floor,{" "}
+              <span className="f15-mono">varRedecidedHere</span> for the gate itself. Keeping those
+              separate from <span className="f15-mono">varRemediationFlag</span> matters: the flag is
+              the record and has to survive a retry, so a guard sharing it would stop firing on every
+              attempt after the first.
             </dd>
             <dt>A11y</dt>
             <dd>The crimson rule is decorative; the word STOP. carries the meaning. Dismissible only via Continue; Escape must not close it.</dd>
