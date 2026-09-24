@@ -1,26 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import * as THREE from "three";
 import { useTheme } from "@/components/theme-provider";
+import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 
-/* Four panels, all of it real. The original shipped PROJECT_NEON_VOID, SYSTEM_HAPTIC
-   and ORBITAL_ARCHIVE over Unsplash stock, archive@null.com, a LinkedIn placeholder,
-   "+14.2 GB" and a set of coordinates in London. None of that is his, and a portfolio
-   is the one document where invented work is not a placeholder, it is a claim.
+/* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
+   as written. What is NOT carried over is its content: PROJECT_NEON_VOID, SYSTEM_HAPTIC
+   and ORBITAL_ARCHIVE over Unsplash stock, archive@null.com, a placeholder LinkedIn,
+   "+14.2 GB" and a set of London coordinates. A portfolio is the one document where
+   invented work is not a placeholder, it is a claim.
 
-   There is one case study, so the work panel shows one case study. The three-up grid
-   the design wants is filled by the three artefacts that actually exist and actually
-   download. */
+   So: the three cards in the work grid are the three artefacts that exist and download,
+   the panel headings name the one case study that exists, and every link resolves.
 
-const FACTS = [
+   The interaction bill this design runs up — wheel-only scrolling, 10px type, a
+   crosshair over everything — is listed at the foot of terminal.css. */
+
+const FACTS: [string, string][] = [
   ["Discipline", "Learning experience design"],
   ["Also", "Product design · front-end"],
   ["Stack", "React · TypeScript · CSS"],
   ["Status", "Open to roles"],
 ];
 
-const SPECS = [
+const SPECS: [string, string][] = [
   ["Design", "Figma · Illustrator · Storyboarding"],
   ["Learning", "Storyline 360 · Rise 360 · Scenario design"],
   ["Build", "React · TypeScript · Next.js · WCAG 2.1 AA"],
@@ -28,157 +33,256 @@ const SPECS = [
 ];
 
 const ARTEFACTS = [
-  { label: "Design document", meta: "23 pp · PDF", href: "/first-15/learning-design-document.pdf" },
-  { label: "Decision guide", meta: "1 p · PDF", href: "/first-15/decision-guide-job-aid.pdf" },
-  { label: "Production storyboard", meta: "8 tabs · XLSX", href: "/first-15/production-storyboard.xlsx" },
+  { label: "Design document", mark: "PDF", meta: "23 pp ↓", href: "/first-15/learning-design-document.pdf" },
+  { label: "Decision guide", mark: "PDF", meta: "1 p ↓", href: "/first-15/decision-guide-job-aid.pdf" },
+  { label: "Production storyboard", mark: "XLS", meta: "8 tabs ↓", href: "/first-15/production-storyboard.xlsx" },
 ];
 
-const PANELS = ["Index", "Work", "About", "Contact"];
+// 0.075 per frame, as the mockup sets it. The lag is the effect.
+const EASE = 0.075;
 
 export function TerminalClient() {
   const track = useRef<HTMLDivElement>(null);
-  const [panel, setPanel] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const [clock, setClock] = useState("--:--:--");
+  const bar = useRef<HTMLDivElement>(null);
+  const depth = useRef<HTMLSpanElement>(null);
+  const clock = useRef<HTMLSpanElement>(null);
+  const xCoord = useRef<HTMLSpanElement>(null);
+  const yCoord = useRef<HTMLSpanElement>(null);
+  const canvasHost = useRef<HTMLDivElement>(null);
+  const target = useRef(0);
   const { theme, toggle } = useTheme();
 
-  // One interval at 1Hz. The original repainted a hundredths-of-a-second counter from
-  // inside a requestAnimationFrame loop — sixty repaints a second of a digit nobody can
-  // read, next to two other uncapped loops.
+  // ── the track ───────────────────────────────────────────────────────────────
+  // One rAF loop owns the transform, the progress bar and the readouts, all written
+  // straight to the DOM. Through React state this would be sixty re-renders a second
+  // of the whole page.
   useEffect(() => {
-    const tick = () => setClock(new Date().toTimeString().slice(0, 8));
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
-  }, []);
-
-  const onScroll = useCallback(() => {
     const el = track.current;
     if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setProgress(max > 0 ? (el.scrollLeft / max) * 100 : 0);
-    setPanel(Math.round(el.scrollLeft / el.clientWidth));
+
+    let current = 0;
+    let frame = 0;
+    const max = () => Math.max(0, el.scrollWidth - window.innerWidth);
+
+    const onWheel = (e: WheelEvent) => {
+      target.current = Math.min(Math.max(0, target.current + e.deltaY), max());
+    };
+    const onResize = () => {
+      target.current = Math.min(target.current, max());
+    };
+
+    const tick = () => {
+      current += (target.current - current) * EASE;
+      el.style.transform = `translateX(-${current}px)`;
+
+      const span = max();
+      const pct = span > 0 ? (current / span) * 100 : 0;
+      if (bar.current) bar.current.style.width = `${pct}%`;
+      if (depth.current) depth.current.textContent = `${Math.round(pct)}%`;
+
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
-  const go = useCallback((i: number) => {
+  // ── HUD clock and pointer readout ───────────────────────────────────────────
+  // The mockup repaints hundredths from inside a rAF loop. Kept, and folded into the
+  // same loop as the coordinates so it is one loop rather than two.
+  useEffect(() => {
+    let frame = 0;
+    const pad = (n: number) => n.toString().padStart(2, "0");
+
+    const tick = () => {
+      const now = new Date();
+      if (clock.current) {
+        clock.current.textContent =
+          `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}:` +
+          pad(Math.floor(now.getMilliseconds() / 10));
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+
+    const onMove = (e: PointerEvent) => {
+      if (xCoord.current) xCoord.current.textContent = (e.clientX / window.innerWidth).toFixed(3);
+      if (yCoord.current) yCoord.current.textContent = (e.clientY / window.innerHeight).toFixed(3);
+    };
+    window.addEventListener("pointermove", onMove);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, []);
+
+  // ── the grain ───────────────────────────────────────────────────────────────
+  // The mockup's shader, unchanged: a full-screen quad through an orthographic camera,
+  // white noise reseeded from u_time. Three.js holds GPU resources that survive a React
+  // unmount, so everything created here is disposed on the way out.
+  useEffect(() => {
+    const host = canvasHost.current;
+    if (!host) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    host.appendChild(renderer.domElement);
+
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        u_time: { value: 0 },
+        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      },
+      vertexShader: `
+        void main() {
+          gl_Position = vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float u_time;
+        uniform vec2 u_resolution;
+
+        float random(vec2 st) {
+          return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+        }
+
+        void main() {
+          vec2 st = gl_FragCoord.xy / u_resolution.xy;
+          float noise = random(st + u_time * 0.01);
+          gl_FragColor = vec4(vec3(noise), 1.0);
+        }
+      `,
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    let frame = 0;
+    const animate = (time: number) => {
+      material.uniforms.u_time.value = time * 0.005;
+      renderer.render(scene, camera);
+      frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+
+    const onResize = () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", onResize);
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+      renderer.domElement.remove();
+    };
+  }, []);
+
+  // Nav jumps set the same target the wheel does, so the lerp carries the page there.
+  const jump = useCallback((id: string) => {
+    const section = document.getElementById(id);
     const el = track.current;
-    if (!el) return;
-    const n = Math.max(0, Math.min(PANELS.length - 1, i));
-    el.scrollTo({ left: n * el.clientWidth });
+    if (!section || !el) return;
+    target.current = Math.min(section.offsetLeft, Math.max(0, el.scrollWidth - window.innerWidth));
   }, []);
-
-  // The scroller handles arrows, Home, End and PageUp/PageDown natively once it holds
-  // focus. These are here so the keys work from anywhere on the page, which is what
-  // someone who has just landed will try first.
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      const map: Record<string, number> = {
-        ArrowRight: panel + 1, ArrowLeft: panel - 1,
-        PageDown: panel + 1, PageUp: panel - 1,
-        Home: 0, End: PANELS.length - 1,
-      };
-      if (!(e.key in map)) return;
-      e.preventDefault();
-      go(map[e.key]);
-    },
-    [panel, go],
-  );
 
   return (
-    <div className="tm relative h-[100svh] w-full overflow-hidden" onKeyDown={onKeyDown}>
-      <div className="tm-grain pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
+    <div className={`tm ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable}`}>
+      <div className="tm-canvas" ref={canvasHost} aria-hidden="true" />
 
-      {/* ── HUD frame ── decorative, and told so: it is corner rules and a build
-          string, and a screen reader reading it would learn nothing. */}
-      <div className="pointer-events-none fixed inset-0 z-30 p-5" aria-hidden="true">
-        <div className="relative h-full w-full">
-          <span className="absolute left-0 top-0 h-5 w-5 border-l border-t" style={{ borderColor: "var(--tm-accent)" }} />
-          <span className="absolute right-0 top-0 h-5 w-5 border-r border-t" style={{ borderColor: "var(--tm-accent)" }} />
-          <span className="absolute bottom-0 left-0 h-5 w-5 border-b border-l" style={{ borderColor: "var(--tm-accent)" }} />
-          <span className="absolute bottom-0 right-0 h-5 w-5 border-b border-r" style={{ borderColor: "var(--tm-accent)" }} />
-          <p className="absolute left-2 top-2 hidden whitespace-nowrap text-[12px] uppercase tracking-[0.18em] lg:block"
-             style={{ color: "var(--tm-accent)" }}>
-            Nimfah · terminal view
-          </p>
-          <p className="absolute left-1 top-1/2 hidden -translate-y-1/2 text-[12px] uppercase tracking-[0.18em] [writing-mode:vertical-rl] sm:block"
-             style={{ color: "var(--tm-accent)" }}>
-            Panel {panel + 1} / {PANELS.length}
-          </p>
-          <p className="absolute right-1 top-1/2 hidden -translate-y-1/2 rotate-180 text-[12px] uppercase tracking-[0.18em] [writing-mode:vertical-rl] sm:block"
-             style={{ color: "var(--tm-accent)" }}>
-            {PANELS[panel]}
-          </p>
+      <nav className="tm-nav" aria-label="Panels">
+        <a
+          href="#work"
+          onClick={(e) => {
+            e.preventDefault();
+            jump("work");
+          }}
+        >
+          <span>01</span>Work
+        </a>
+        <a
+          href="#about"
+          onClick={(e) => {
+            e.preventDefault();
+            jump("about");
+          }}
+        >
+          <span>02</span>About
+        </a>
+        <button type="button" className="tm-theme-toggle" onClick={toggle} suppressHydrationWarning>
+          {theme === "dark" ? "Light" : "Dark"}
+        </button>
+      </nav>
+
+      {/* Corner rules, a build string and a pointer readout: decorative, and told so. */}
+      <div className="tm-hud" aria-hidden="true">
+        <div className="tm-corner tm-corner--tl" />
+        <div className="tm-hud-label tm-hud-label--center">Nimfah // terminal view</div>
+        <div className="tm-corner tm-corner--tr" />
+
+        <div className="tm-hud-label tm-hud-label--left">
+          L-Coord: <span ref={yCoord}>0.000</span>
+        </div>
+        <div />
+        <div className="tm-hud-label tm-hud-label--right">
+          R-Coord: <span ref={xCoord}>0.000</span>
+        </div>
+
+        <div className="tm-corner tm-corner--bl" />
+        <div className="tm-hud-label tm-hud-label--center">© 2026 Nimfah</div>
+        <div className="tm-corner tm-corner--br" />
+      </div>
+
+      <div className="tm-telemetry" aria-hidden="true">
+        <div>
+          <span className="tm-status-dot" /> Connection: secure
+        </div>
+        <div>
+          <span ref={clock}>00:00:00:00</span>
+        </div>
+        <div>
+          Scan_depth: <span ref={depth}>0%</span>
         </div>
       </div>
 
-      {/* ── nav ── */}
-      <nav className="fixed right-4 top-4 z-40 flex items-center gap-1 border p-1 backdrop-blur sm:right-10 sm:top-10 sm:gap-2 sm:p-2"
-           style={{ borderColor: "var(--tm-edge)", background: "var(--tm-glass)" }}
-           aria-label="Panels">
-        {PANELS.map((p, i) => (
-          <button
-            key={p}
-            type="button"
-            onClick={() => go(i)}
-            aria-current={panel === i ? "true" : undefined}
-            className="min-h-[36px] px-2 text-[12px] font-bold uppercase tracking-[0.1em] sm:px-3"
-            style={panel === i
-              ? { background: "var(--tm-accent)", color: "var(--tm-bg)" }
-              : { color: "var(--tm-fg)" }}
-          >
-            <span style={{ color: panel === i ? "var(--tm-bg)" : "var(--tm-warning)" }}>
-              {String(i + 1).padStart(2, "0")}
-            </span>{" "}
-            {p}
-          </button>
-        ))}
-        <button
-          type="button"
-          onClick={toggle}
-          suppressHydrationWarning
-          className="min-h-[36px] border px-2 text-[12px] font-bold uppercase tracking-[0.1em] sm:px-3"
-          style={{ borderColor: "var(--tm-edge)", color: "var(--tm-fg)" }}
-        >
-          {theme === "dark" ? "Light" : "Dark"}
-        </button>
-        <Link
-          href="/"
-          className="min-h-[36px] px-2 text-[12px] font-bold uppercase tracking-[0.1em] sm:px-3"
-          style={{ color: "var(--tm-fg)" }}
-        >
-          Exit ↗
-        </Link>
-      </nav>
+      <div className="tm-progress-track" aria-hidden="true">
+        <div className="tm-progress-bar" ref={bar} />
+      </div>
 
-      {/* ── the track ── */}
-      <div
-        ref={track}
-        onScroll={onScroll}
-        tabIndex={0}
-        role="group"
-        aria-label="Panels, scroll horizontally or use the arrow keys"
-        className="tm-track relative z-10 flex h-full w-full overflow-x-auto overflow-y-hidden"
-      >
+      <main className="tm-main" ref={track}>
         {/* 01 — index */}
-        <section className="tm-panel relative flex h-full w-full shrink-0 flex-col justify-center px-6 py-24 sm:px-16 lg:px-24">
-          <p className="tm-ghost pointer-events-none absolute left-[5%] top-[12%] hidden select-none text-[20vw] sm:block" aria-hidden="true">01</p>
-          <div className="relative max-w-2xl">
-            <p className="mb-5 text-[12px] uppercase tracking-[0.2em]" style={{ color: "var(--tm-warning)" }}>
-              Learning experience design
+        <section className="tm-section" id="home">
+          <div className="tm-section-meta" aria-hidden="true">
+            Index_01
+          </div>
+          <div style={{ maxWidth: 1000 }}>
+            <p className="tm-warning" style={{ marginBottom: 20 }}>
+              [ Learning experience design ]
             </p>
-            <h1 className="text-[clamp(28px,7vw,64px)] uppercase leading-[1.1]">
-              Kwame Yeboah<span className="tm-blink" style={{ color: "var(--tm-accent)" }}>_</span>
+            <h1 className="tm-pixel-heading">
+              Nimfah<span className="tm-accent tm-cursor">_</span>
             </h1>
-            <p className="mt-6 max-w-md border-l-2 pl-5 text-[14px] leading-[1.7] tracking-normal normal-case"
-               style={{ borderColor: "var(--tm-warning)" }}>
-              I&rsquo;m a designer who builds. Hand me a messy operational problem and I&rsquo;ll find the{" "}
-              <em className="not-italic" style={{ color: "var(--tm-accent)" }}>decision</em> hiding inside it.
-            </p>
-            <dl className="mt-10 max-w-sm border p-4" style={{ borderColor: "var(--tm-edge)", background: "var(--tm-glass)" }}>
+            <div className="tm-desc">
+              Kwame Yeboah. A designer who builds — hand me a messy operational problem and
+              I&rsquo;ll find the decision hiding inside it, then ship the thing that teaches it.
+            </div>
+            <dl className="tm-data tm-data--narrow">
               {FACTS.map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-4 border-b py-1.5 last:border-b-0" style={{ borderColor: "var(--tm-edge)" }}>
-                  <dt className="text-[12px] uppercase tracking-[0.12em] opacity-70">{k}</dt>
-                  <dd className="text-right text-[12px] uppercase tracking-[0.12em]">{v}</dd>
+                <div className="tm-data-row" key={k}>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
                 </div>
               ))}
             </dl>
@@ -186,61 +290,55 @@ export function TerminalClient() {
         </section>
 
         {/* 02 — work */}
-        <section className="tm-panel relative flex h-full w-full shrink-0 flex-col justify-center px-6 py-24 sm:px-16 lg:px-24">
-          <p className="tm-ghost pointer-events-none absolute left-[5%] top-[12%] hidden select-none text-[20vw] sm:block" aria-hidden="true">02</p>
-          <div className="relative w-full max-w-5xl">
-            <div className="mb-8 flex flex-wrap items-baseline gap-x-8 gap-y-2">
-              <h2 className="text-[clamp(32px,6vw,72px)] uppercase leading-none tracking-[-0.02em]">First 15</h2>
-              <p className="text-[12px] uppercase tracking-[0.16em]" style={{ color: "var(--tm-warning)" }}>
-                Scenario-based onboarding
-              </p>
+        <section className="tm-section tm-section--wide" id="work">
+          <div className="tm-section-meta tm-section-meta--work" aria-hidden="true">
+            Work_02
+          </div>
+          <div style={{ width: "100%" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 40, marginBottom: 40, flexWrap: "wrap" }}>
+              <h2>First 15</h2>
+              <p className="tm-warning">/ Scenario-based onboarding · MileOne Logistics</p>
             </div>
-            <p className="mb-8 max-w-xl text-[14px] leading-[1.7] tracking-normal normal-case">
-              A blended Rise 360 and Storyline 360 experience that trains last-mile delivery associates to
-              decide under pressure. Built for MileOne Logistics, a realistic fictional carrier — designed,
-              art-directed and built end to end.
-            </p>
-            <Link href="/work/first-15-last-mile-onboarding"
-                  className="mb-10 inline-block min-h-[44px] border px-5 py-3 text-[12px] font-bold uppercase tracking-[0.14em]"
-                  style={{ background: "var(--tm-accent)", borderColor: "var(--tm-accent)", color: "var(--tm-bg)" }}>
+            <Link className="tm-cta" href="/work/first-15-last-mile-onboarding">
               Open the case study ↗
             </Link>
-            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="tm-work-grid">
               {ARTEFACTS.map((a) => (
-                <li key={a.href}>
-                  <a href={a.href} target="_blank" rel="noopener"
-                     className="flex min-h-[96px] flex-col justify-between border p-4"
-                     style={{ borderColor: "var(--tm-edge)", background: "var(--tm-glass)" }}>
-                    <span className="text-[13px] uppercase tracking-[0.1em]">{a.label}</span>
-                    <span className="text-[12px] uppercase tracking-[0.1em]" style={{ color: "var(--tm-accent)" }}>
-                      {a.meta} ↓
-                    </span>
-                  </a>
-                </li>
+                <a className="tm-work-item" key={a.href} href={a.href} target="_blank" rel="noopener">
+                  <span className="tm-work-mark" aria-hidden="true">
+                    {a.mark}
+                  </span>
+                  <span className="tm-work-meta">{a.meta}</span>
+                  <span className="tm-work-label">{a.label}</span>
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 
         {/* 03 — about */}
-        <section className="tm-panel relative flex h-full w-full shrink-0 flex-col justify-center px-6 py-24 sm:px-16 lg:px-24">
-          <p className="tm-ghost pointer-events-none absolute left-[5%] top-[12%] hidden select-none text-[20vw] sm:block" aria-hidden="true">03</p>
-          <div className="relative flex w-full max-w-5xl flex-col gap-8 lg:flex-row lg:items-center lg:gap-20">
-            <h2 className="text-[clamp(32px,6vw,72px)] uppercase leading-none tracking-[-0.02em] lg:flex-1"
-                style={{ color: "var(--tm-accent)" }}>
-              Core<br />specs
-            </h2>
-            <div className="border-l pl-6 lg:flex-1" style={{ borderColor: "var(--tm-accent)" }}>
-              <p className="mb-5 text-[14px] leading-[1.7] tracking-normal normal-case">
-                Instructional design rigour, editorial art direction, and enough front-end to ship the thing
-                rather than only specify it.
+        <section className="tm-section" id="about">
+          <div className="tm-section-meta" aria-hidden="true">
+            About_03
+          </div>
+          <div style={{ display: "flex", gap: 80, alignItems: "center" }}>
+            <div style={{ flex: 1 }}>
+              <h2 className="tm-accent">
+                Core
+                <br />
+                Specs
+              </h2>
+            </div>
+            <div style={{ flex: 1, borderLeft: "1px solid var(--accent)", paddingLeft: 40 }}>
+              <p style={{ marginBottom: 20, fontSize: 14, lineHeight: 1.6 }}>
+                Instructional design rigour, editorial art direction, and enough front-end to ship
+                the thing rather than only specify it.
               </p>
-              <dl className="border p-4" style={{ borderColor: "var(--tm-edge)", background: "var(--tm-glass)" }}>
+              <dl className="tm-data">
                 {SPECS.map(([k, v]) => (
-                  <div key={k} className="flex flex-col gap-0.5 border-b py-2 last:border-b-0 sm:flex-row sm:justify-between sm:gap-6"
-                       style={{ borderColor: "var(--tm-edge)" }}>
-                    <dt className="text-[12px] uppercase tracking-[0.12em]" style={{ color: "var(--tm-accent)" }}>{k}</dt>
-                    <dd className="text-[12px] uppercase tracking-[0.1em] sm:text-right">{v}</dd>
+                  <div className="tm-data-row" key={k}>
+                    <dt>{k}</dt>
+                    <dd>{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -249,50 +347,29 @@ export function TerminalClient() {
         </section>
 
         {/* 04 — contact */}
-        <section className="tm-panel relative flex h-full w-full shrink-0 flex-col items-center justify-center px-6 py-24 text-center sm:px-16">
-          <p className="tm-ghost pointer-events-none absolute left-[5%] top-[12%] hidden select-none text-[20vw] sm:block" aria-hidden="true">04</p>
-          <div className="relative">
-            <p className="mb-4 text-[12px] uppercase tracking-[0.2em]" style={{ color: "var(--tm-warning)" }}>
-              Open channel
-            </p>
-            <h2 className="mb-8 text-[clamp(30px,7vw,84px)] uppercase leading-none tracking-[-0.02em]">
-              Get in touch
-            </h2>
-            <a href="mailto:kwame.nimfah@gmail.com"
-               className="inline-block min-h-[44px] border-b-2 pb-1 text-[clamp(15px,3vw,26px)] tracking-normal normal-case"
-               style={{ borderColor: "var(--tm-accent)", color: "var(--tm-fg)" }}>
+        <section className="tm-section" id="contact">
+          <div className="tm-section-meta" aria-hidden="true">
+            Send_04
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <p className="tm-warning">-- Open channel --</p>
+            <h2 className="tm-h2--contact">Establish_link</h2>
+            <a className="tm-email" href="mailto:kwame.nimfah@gmail.com">
               kwame.nimfah@gmail.com
             </a>
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              <a href="/cv/Kwame Yeboah - LXD - Resume.pdf" target="_blank" rel="noopener"
-                 className="min-h-[44px] text-[12px] uppercase tracking-[0.14em]" style={{ color: "var(--tm-accent)" }}>
-                Résumé ↓
+            <div className="tm-links">
+              <a href="mailto:kwame.nimfah@gmail.com">Email.sys</a>
+              <a href="/cv/Kwame Yeboah - LXD - Resume.pdf" target="_blank" rel="noopener">
+                Resume.sys
               </a>
-              <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener"
-                 className="min-h-[44px] text-[12px] uppercase tracking-[0.14em]" style={{ color: "var(--tm-accent)" }}>
-                LinkedIn ↗
+              <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener">
+                LinkedIn.sys
               </a>
-              <Link href="/work" className="min-h-[44px] text-[12px] uppercase tracking-[0.14em]" style={{ color: "var(--tm-accent)" }}>
-                All work ↗
-              </Link>
+              <Link href="/">Index.sys</Link>
             </div>
           </div>
         </section>
-      </div>
-
-      {/* ── telemetry + progress ── */}
-      <div className="pointer-events-none fixed bottom-4 left-4 right-4 z-40 flex items-center gap-4 sm:bottom-10 sm:left-10 sm:right-10">
-        <p className="flex shrink-0 items-center gap-2 text-[12px] uppercase tracking-[0.14em]">
-          <span className="tm-blink inline-block h-1.5 w-1.5" style={{ background: "var(--tm-warning)" }} aria-hidden="true" />
-          <span className="tabular-nums">{clock}</span>
-        </p>
-        <div className="h-px flex-1" style={{ background: "var(--tm-edge)" }} aria-hidden="true">
-          <div className="h-full transition-[width] duration-150" style={{ width: `${progress}%`, background: "var(--tm-accent)" }} />
-        </div>
-        <p className="shrink-0 text-[12px] uppercase tracking-[0.14em] tabular-nums">
-          {String(panel + 1).padStart(2, "0")} / {String(PANELS.length).padStart(2, "0")}
-        </p>
-      </div>
+      </main>
     </div>
   );
 }

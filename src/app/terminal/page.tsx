@@ -17,15 +17,7 @@ export const metadata: Metadata = {
 
 export default function TerminalPage() {
   // Outside the (site) group, so this page owns the landmarks the chrome would
-  // otherwise provide.
-  return (
-    <>
-      <a className="skip" href="#main">
-        Skip to content
-      </a>
-      <main id="main">
-        <TerminalClient />
-      </main>
-    </>
-  );
+  // otherwise provide. The <main> landmark is the panel track itself, inside
+  // TerminalClient — the mockup's #main-container — so there is exactly one.
+  return <TerminalClient />;
 }

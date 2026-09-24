@@ -3,9 +3,12 @@ import {
   Bricolage_Grotesque,
   DM_Sans,
   IBM_Plex_Mono,
+  Inter,
+  JetBrains_Mono,
   Montserrat,
   Press_Start_2P,
   Rajdhani,
+  Silkscreen,
 } from "next/font/google";
 
 // The single typeface for the whole platform. Variable font (weights 300–800 via the
@@ -90,4 +93,40 @@ export const dmSans = DM_Sans({
   display: "swap",
   variable: "--font-dm-sans",
   fallback: ["system-ui", "sans-serif"],
+});
+
+// ── /terminal only ────────────────────────────────────────────────────────────
+// The three faces the terminal mockup calls for, self-hosted rather than fetched from
+// fonts.googleapis.com at runtime as the source HTML did: same files, one less origin
+// on the critical path, and no layout shift while a third party answers. The variables
+// are applied on the route's own wrapper, not on <html>, so these bytes are requested
+// on /terminal and nowhere else.
+
+// Body, labels and telemetry. Static weights, listed explicitly.
+export const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+  variable: "--font-jetbrains",
+  fallback: ["ui-monospace", "SFMono-Regular", "Consolas", "monospace"],
+});
+
+// The panel headings — SENSORS, CORE SPECS — at 900 and clamped up to 220px, where the
+// weight is the whole effect.
+export const inter = Inter({
+  subsets: ["latin"],
+  weight: ["900"],
+  display: "swap",
+  variable: "--font-inter",
+  fallback: ["system-ui", "sans-serif"],
+});
+
+// The wordmark. A bitmap face: like Press Start 2P it wants sizes that land on whole
+// pixels, and it carries no lowercase worth using — the mockup sets it uppercase.
+export const silkscreen = Silkscreen({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-silkscreen",
+  fallback: ["ui-monospace", "Consolas", "monospace"],
 });

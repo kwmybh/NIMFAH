@@ -1,117 +1,434 @@
 /* TERMINAL — the HUD variant, as its own route.
    ─────────────────────────────────────────────────────────────────────────────
-   Tailwind, as asked, but WITHOUT preflight. The rest of this site is hand-written
-   CSS by decision (see the note at the top of first15.css), and Tailwind's base layer
-   is a global element reset: once this route's stylesheet is loaded, the App Router
-   keeps it loaded across client navigations, so preflight would silently restyle the
-   five pages that were never built for it. Importing theme and utilities on their own
-   is the documented way to take Tailwind's utility layer and leave its reset behind.
+   A verbatim port of the mockup at ~/Desktop/variant/index.html: its palette, its
+   metrics, its 10px uppercase body, its crosshair, its wheel-driven horizontal track.
+   Asked for and answered as written, on a branch. Three departures, all of them
+   mechanical rather than visual:
 
-   The PostCSS plugin was already in the repo and emitting nothing, because no
-   stylesheet imported Tailwind. This is the first one that does. */
+     · the theme is the site's [data-theme] switch, not a `body.light` class, so this
+       page and the rest of the site agree on light or dark and a visitor's choice
+       survives moving between them
+     · the three faces come from next/font rather than fonts.googleapis.com
+     · everything is scoped to .tm. The mockup styles `*`, `body` and bare `section`
+       and `h2`, which on a multi-page app would reach the other five routes
+
+   The accessibility bill this design runs up is real and is listed at the foot of
+   this file, so whoever opens it next is not left to rediscover it.
+
+   Tailwind stays imported (without preflight) because an earlier pass asked for it on
+   this route; v4 emits only what ./terminal actually uses, which is now close to
+   nothing. The markup below is plain CSS, as the mockup is. */
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 @source "./terminal";
 
-/* ── palette ──────────────────────────────────────────────────────────────────
-   Driven by [data-theme] on <html>, the same switch the rest of the site uses, so
-   the toggle in the site header and the toggle here move together and a visitor's
-   choice survives navigating between them. The original used a `body.light` class
-   of its own, which would have given this page a second, conflicting theme state.
-
-   Both accents are replaced on the light ground. #5c8a0e measured 3.40:1 and
-   #d94f00 3.42:1 there — both used as text, both failing AA, which on this site is
-   the one claim the case study cannot afford to contradict. */
+/* ── palette ─────────────────────────────────────────────────────────────────── */
 .tm {
-  --tm-bg: #101012;
-  --tm-fg: #f5f0eb;
-  --tm-accent: #9df133;        /* 13.63:1 */
-  --tm-warning: #ff5c00;       /*  6.14:1 */
-  --tm-edge: #2b2b31;          /* decorative hairline, carries no meaning */
-  --tm-panel: #17171a;
-  --tm-glass: rgba(245, 240, 235, 0.04);
+  --bg: #0e0e0e;
+  --fg: #ece9e4;
+  --accent: #9df133;
+  --warning: #ff5c00;
+  --glass: rgba(236, 233, 228, 0.05);
+  --border: rgba(236, 233, 228, 0.15);
+  --panel: #151515;
+  --panel-glass: rgba(0, 0, 0, 0.3);
 }
+
+/* The mockup's `body.light`, rewired to the site's switch. Values unchanged. */
 :root:not([data-theme="dark"]) .tm {
-  --tm-bg: #f5f0eb;
-  --tm-fg: #070210;
-  --tm-accent: #44730d;        /* 5.01:1 — was #5c8a0e at 3.40 */
-  --tm-warning: #b23f00;       /* 5.15:1 — was #d94f00 at 3.42 */
-  --tm-edge: #cbc5bd;
-  --tm-panel: #ffffff;
-  --tm-glass: rgba(7, 2, 16, 0.03);
+  --bg: #ece9e4;
+  --fg: #0e0e0e;
+  --accent: #5c8a0e;
+  --warning: #d94f00;
+  --glass: rgba(14, 14, 14, 0.05);
+  --border: rgba(14, 14, 14, 0.18);
+  --panel: #e2ded7;
+  --panel-glass: rgba(14, 14, 14, 0.04);
 }
 
-/* ── the reset preflight would have done, scoped ─────────────────────────────
-   Dropping Tailwind's base layer keeps it from restyling the rest of the site, and the
-   bill for that is the handful of user-agent defaults this page actually meets: list
-   markers beside the artefact cards, the 40px indent the UA gives every <dd>, and the
-   margins on headings and paragraphs. Scoped to .tm, so it stops at this route's edge.
-   Anything added here later that uses a new element needs its default checked. */
-@layer base {
-  .tm :where(h1, h2, h3, p, dl, dd, figure) { margin: 0; }
-  .tm :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
-  .tm :where(button) { background: none; border: 0; font: inherit; color: inherit; }
-  .tm :where(a) { color: inherit; text-decoration: none; }
+/* ── the `*` and `body` rules, scoped ─────────────────────────────────────────
+   The mockup's reset, plus the user-agent defaults it silently relied on: margins on
+   headings and paragraphs, list markers, <dd>'s 40px indent, button chrome. */
+.tm,
+.tm *,
+.tm *::before,
+.tm *::after {
+  box-sizing: border-box;
+  cursor: crosshair;
+}
+.tm :where(h1, h2, h3, p, dl, dd, figure) { margin: 0; }
+.tm :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.tm :where(button) { background: none; border: 0; font: inherit; color: inherit; }
+.tm :where(a) { color: inherit; text-decoration: none; }
+
+/* `body { overflow: hidden; height: 100vh }` in the mockup. Pinned to this route only —
+   the other five pages scroll vertically and must keep doing so. */
+body:has(.tm) {
+  overflow: hidden;
+  height: 100vh;
 }
 
 .tm {
-  background: var(--tm-bg);
-  color: var(--tm-fg);
-  font-family: var(--font-plex-mono, ui-monospace, monospace);
-  /* The original set 10px body, 9px labels and 8px telemetry, all uppercase with
-     letter-spacing — the hardest combination to read at the smallest size anyone
-     would choose. Nothing here goes below 12px. */
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* ── grain ────────────────────────────────────────────────────────────────────
-   The original ran a full-screen WebGL noise shader on an uncapped rAF loop, which
-   cost 600KB of Three.js and a permanently busy GPU for a texture that never moves
-   perceptibly. One SVG turbulence filter, tiled, is the same image for no bytes and
-   no frame loop. */
-.tm-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  opacity: 0.09;
+/* ── noise background ─────────────────────────────────────────────────────────
+   The Three.js shader canvas mounts here. */
+.tm-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
 }
-:root:not([data-theme="dark"]) .tm-grain { opacity: 0.05; }
+:root:not([data-theme="dark"]) .tm-canvas { opacity: 0.15; }
 
-/* ── the track ────────────────────────────────────────────────────────────────
-   A real scroller, not a transform driven by a wheel listener. This is what buys
-   arrow keys, Home/End, PageUp/PageDown, touch, trackpad, a draggable scrollbar and
-   screen-reader scrolling — all of which the lerp version had thrown away in order
-   to own one input device. */
-.tm-track {
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-}
-.tm-track::-webkit-scrollbar { display: none; }
-.tm-panel { scroll-snap-align: start; scroll-snap-stop: always; }
-
-@media (prefers-reduced-motion: reduce) {
-  .tm-track { scroll-behavior: auto; }
-  .tm-blink { animation: none !important; }
+/* ── HUD frame ────────────────────────────────────────────────────────────────── */
+.tm-hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  grid-template-rows: 40px 1fr 40px;
+  padding: 20px;
 }
 
-.tm-blink { animation: tm-blink 1.2s steps(1) infinite; }
+.tm-hud-label {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 9px;
+  color: var(--accent);
+}
+.tm-hud-label--center { justify-self: center; }
+.tm-hud-label--left { writing-mode: vertical-rl; }
+.tm-hud-label--right { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+.tm-corner { width: 20px; height: 20px; }
+.tm-corner--tl { border-left: 1px solid var(--accent); border-top: 1px solid var(--accent); }
+.tm-corner--tr { border-right: 1px solid var(--accent); border-top: 1px solid var(--accent); justify-self: end; }
+.tm-corner--bl { border-left: 1px solid var(--accent); border-bottom: 1px solid var(--accent); align-self: end; }
+.tm-corner--br { border-right: 1px solid var(--accent); border-bottom: 1px solid var(--accent); align-self: end; justify-self: end; }
+
+.tm-telemetry {
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  display: flex;
+  gap: 20px;
+  z-index: 101;
+  font-size: 8px;
+}
+
+.tm-status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--warning);
+  display: inline-block;
+  margin-right: 5px;
+  animation: tm-blink 1s infinite steps(1);
+}
+
 @keyframes tm-blink { 50% { opacity: 0; } }
 
+/* ── nav ──────────────────────────────────────────────────────────────────────── */
+.tm-nav {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  z-index: 102;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  pointer-events: auto;
+}
+
+.tm-nav a,
+.tm-nav button.tm-nav-jump {
+  color: var(--fg);
+  font-weight: 700;
+  transition: color 0.3s;
+}
+.tm-nav a:hover,
+.tm-nav button.tm-nav-jump:hover { color: var(--accent); }
+.tm-nav a span,
+.tm-nav button.tm-nav-jump span { color: var(--warning); margin-right: 4px; }
+
+.tm-theme-toggle {
+  background: var(--accent);
+  color: var(--bg);
+  border: 1px solid var(--accent);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 10px;
+  transition: opacity 0.3s;
+}
+.tm-theme-toggle:hover { opacity: 0.8; }
+
+/* ── horizontal sections ──────────────────────────────────────────────────────── */
+.tm-main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  will-change: transform;
+}
+
+.tm-section {
+  min-width: 100vw;
+  height: 100vh;
+  padding: 120px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  border-right: 1px dashed var(--border);
+}
+.tm-section--wide { min-width: 150vw; }
+
+.tm-section-meta {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  font-size: 150px;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 900;
+  opacity: 0.03;
+  line-height: 0.8;
+  pointer-events: none;
+}
+.tm-section-meta--work { left: 40%; }
+
+/* ── typography ───────────────────────────────────────────────────────────────── */
+.tm h2 {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(80px, 15vw, 220px);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  margin-bottom: 20px;
+}
+.tm h2.tm-h2--contact { font-size: 10vw; }
+
+.tm-pixel-heading {
+  font-family: var(--font-silkscreen), ui-monospace, monospace;
+  font-weight: 700;
+  font-size: clamp(64px, 10.5vw, 160px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  font-synthesis: none;
+}
+
+.tm-cursor { animation: tm-blink 1s infinite steps(1); }
+
+.tm-accent { color: var(--accent); }
+.tm-warning { color: var(--warning); }
+
+.tm-desc {
+  max-width: 400px;
+  line-height: 1.6;
+  margin-left: 10px;
+  border-left: 2px solid var(--warning);
+  padding-left: 20px;
+}
+
+/* ── work grid ────────────────────────────────────────────────────────────────── */
+.tm-work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.tm-work-item {
+  position: relative;
+  display: block;
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--panel);
+  transition: background-color 0.4s ease;
+}
+
+.tm-work-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.2);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  transition: transform 0.5s ease;
+}
+.tm-work-item:hover img { transform: scale(1.05); opacity: 1; }
+:root:not([data-theme="dark"]) .tm-work-item img { mix-blend-mode: multiply; }
+
+/* The halftone the mockup lays over the artwork. Here it falls over the file mark, which
+   is what these three cards hold instead: the artefacts are documents, not images. */
+.tm-work-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--accent) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+.tm-work-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 90px);
+  letter-spacing: -0.04em;
+  opacity: 0.13;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.tm-work-item:hover .tm-work-mark { opacity: 0.22; transform: scale(1.05); }
+
+.tm-work-meta {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 8px;
+  color: var(--accent);
+}
+
+.tm-work-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: var(--bg);
+  padding: 5px 10px;
+  border: 1px solid var(--accent);
+  font-size: 9px;
+}
+
+/* ── data displays ────────────────────────────────────────────────────────────── */
+.tm-data {
+  border: 1px solid var(--border);
+  padding: 15px;
+  background: var(--panel-glass);
+  margin-top: 40px;
+  transition: background-color 0.4s ease;
+}
+.tm-data--narrow { width: 300px; }
+
+.tm-data-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.tm-data-row:last-child { border-bottom: 0; }
+.tm-data-row dd { text-align: right; }
+
+/* ── scroll progress ──────────────────────────────────────────────────────────── */
+.tm-progress-track {
+  position: fixed;
+  bottom: 40px;
+  left: 250px;
+  right: 40px;
+  height: 2px;
+  background: var(--border);
+  z-index: 101;
+}
+
+.tm-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  position: relative;
+}
+.tm-progress-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ── the case-study link and the contact links ────────────────────────────────── */
+.tm-cta {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 10px 20px;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 10px;
+  transition: opacity 0.3s;
+}
+.tm-cta:hover { opacity: 0.8; }
+
+.tm-email {
+  color: var(--fg);
+  font-size: 32px;
+  text-transform: none;
+  border-bottom: 2px solid var(--accent);
+}
+
+.tm-links {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+.tm-links a { color: var(--accent); }
+
 .tm a:focus-visible,
-.tm button:focus-visible,
-.tm [tabindex]:focus-visible {
-  outline: 2px solid var(--tm-accent);
+.tm button:focus-visible {
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-/* The ghost numeral behind each panel. Inter 900 is not loaded here and does not need
-   to be — at 3% opacity the face is a shape, so it rides on the display face already
-   in the build. */
-.tm-ghost {
-  font-family: var(--display);
-  font-weight: 700;
-  opacity: 0.045;
-  line-height: 0.8;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   KNOWN, DELIBERATE, AND NOT YET FIXED
+   Carried over from the mockup on request. Each one is a decision, not an oversight:
+
+   1. Type size. Body 10px, HUD labels 9px, telemetry 8px, all uppercase with
+      letter-spacing — the least legible combination at the smallest size on offer.
+   2. Light-mode contrast. --accent #5c8a0e measures 3.40:1 on #ece9e4 and --warning
+      #d94f00 3.42:1. Both are used as text. WCAG 2.1 AA wants 4.5:1, and the First 15
+      case study on this same site claims AA. Dark mode passes (13.6:1 and 6.1:1).
+   3. Input. The track is a transform driven by a `wheel` listener, so there is no
+      keyboard scrolling, no touch scrolling, no scrollbar to drag, and nothing for a
+      screen reader to move through. Phones and trackpad-free setups reach panel 01
+      and stop. The nav buttons are the only other way across.
+   4. `cursor: crosshair` on every element, links and buttons included, so the pointer
+      no longer signals what is clickable.
+   5. The shader runs an uncapped requestAnimationFrame loop for a texture that barely
+      moves, and Three.js is ~600KB before compression.
+   6. No `prefers-reduced-motion` branch: the blink, the lerp and the shader all run
+      regardless.
+
+   src/app/terminal/terminal-client.tsx is where 3, 5 and 6 live. */
