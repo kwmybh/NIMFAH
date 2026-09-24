@@ -299,9 +299,16 @@ export function TerminalClient() {
               <h2>First 15</h2>
               <p className="tm-warning">/ Scenario-based onboarding · MileOne Logistics</p>
             </div>
-            <Link className="tm-cta" href="/work/first-15-last-mile-onboarding">
-              Open the case study ↗
-            </Link>
+            {/* The panel is a trailer for the case study, not a replacement: the full
+                write-up and the index both stay one click away now that this is home. */}
+            <div className="tm-panel-links">
+              <Link className="tm-cta" href="/work/first-15-last-mile-onboarding">
+                Open the case study ↗
+              </Link>
+              <Link className="tm-cta tm-cta--ghost" href="/work">
+                All work ↗
+              </Link>
+            </div>
             <div className="tm-work-grid">
               {ARTEFACTS.map((a) => (
                 <a className="tm-work-item" key={a.href} href={a.href} target="_blank" rel="noopener">
@@ -342,6 +349,9 @@ export function TerminalClient() {
                   </div>
                 ))}
               </dl>
+              <Link className="tm-cta tm-cta--ghost" href="/about" style={{ marginTop: 24 }}>
+                The long version ↗
+              </Link>
             </div>
           </div>
         </section>
@@ -365,7 +375,8 @@ export function TerminalClient() {
               <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener">
                 LinkedIn.sys
               </a>
-              <Link href="/">Index.sys</Link>
+              <Link href="/about">About.sys</Link>
+              <Link href="/work">Work.sys</Link>
             </div>
           </div>
         </section>

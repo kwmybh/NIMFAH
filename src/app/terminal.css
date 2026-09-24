@@ -390,6 +390,20 @@ body:has(.tm) {
 }
 .tm-cta:hover { opacity: 0.8; }
 
+/* The second way out of a panel — /work beside the case study, /about beside the specs.
+   Outlined rather than filled, so the primary action still reads first. */
+.tm-cta--ghost {
+  background: none;
+  color: var(--accent);
+}
+.tm-cta--ghost:hover { background: var(--glass); opacity: 1; }
+
+.tm-panel-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
 .tm-email {
   color: var(--fg);
   font-size: 32px;

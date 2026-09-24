@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const pages: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/`, lastModified: now, changeFrequency: "monthly", priority: 1 },
+    { url: `${siteUrl}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/work`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     {
       url: `${siteUrl}/work/first-15-last-mile-onboarding`,

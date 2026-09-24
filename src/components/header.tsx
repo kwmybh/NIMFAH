@@ -19,7 +19,7 @@ export function Header() {
       </Link>
 
       <nav className="nv-pod" aria-label="Primary">
-        <Link href="/" aria-current={on("/") ? "page" : undefined}>
+        <Link href="/about" aria-current={on("/about") ? "page" : undefined}>
           About
         </Link>
         <Link href="/work" aria-current={on("/work") || on("/series") ? "page" : undefined}>

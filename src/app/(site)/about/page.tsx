@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WorkCard, type WorkItem } from "@/components/work-card";
 import { HeroCarousel } from "@/components/hero-carousel";
-import "../about.css";
-import "../carousel.css";
-import "../work.css";
+import "../../about.css";
+import "../../carousel.css";
+import "../../work.css";
 
 export const metadata: Metadata = {
   title: { absolute: "Kwame Yeboah — Designer who builds" },
