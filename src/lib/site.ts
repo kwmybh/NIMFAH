@@ -3,7 +3,13 @@
 // URL is what put https://nimfah.vercel.app into the sitemap, the robots Host line and
 // every og:image on the site: three origins serving identical pages and nothing telling
 // a crawler which one is the real address.
-const PRODUCTION_ORIGIN = "https://nimfah.com";
+//
+// www, not the apex, since 24 Sept 2026: the Vercel project holds www.nimfah.com and the
+// apex 307s to it. Naming the apex here pointed every canonical tag, sitemap entry and
+// og:image at an address that redirects — telling a crawler the real page lives at the
+// URL it was just sent away from. Whichever host actually answers is the one that
+// belongs here; change both together or not at all.
+const PRODUCTION_ORIGIN = "https://www.nimfah.com";
 
 // Canonical origin, in one place. layout.tsx, robots.ts and sitemap.ts all need it and
 // must agree: a sitemap on one origin and metadata on another is worse than neither.
