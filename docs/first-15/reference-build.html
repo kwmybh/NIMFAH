@@ -420,7 +420,7 @@ footer{border-top:1px solid var(--hair-d); padding-block:var(--s5) var(--s4)}
         Storyline question with points assigned per choice, so the LMS receives a defensible score while
         the learner experiences a story.</p>
       <p><b>Consequence before correction.</b> Choose to top up the tire and go, and the coaching doesn't
-        appear immediately — the pressure warning returns at stop 61, on a bridge approach, and
+        appear immediately — the pressure warning returns at stop nine, on a bridge approach, and
         <i>then</i> the station lead talks to you. Adults revise a mental model when the model visibly
         fails, not when they're told it's wrong.</p>
       <p><b>Time is a budget, not a score.</b> Safety and Service are 0–100 scores; Time is a
@@ -542,7 +542,7 @@ footer{border-top:1px solid var(--hair-d); padding-block:var(--s5) var(--s4)}
         <thead><tr><th>DP</th><th>Option</th><th>Pts</th><th>Safety</th><th>Service</th><th>Time</th><th>Outcome</th></tr></thead>
         <tbody>
           <tr class="pref"><td class="num">DP1</td><td>Air it up, log it, flag the overnight drop</td><td class="num">25</td><td class="num">+15</td><td class="num">0</td><td class="num">−3</td><td>Preferred</td></tr>
-          <tr><td class="num">DP1</td><td>Air it up and roll out</td><td class="num">15</td><td class="num">−10</td><td class="num">−5</td><td class="num">−2</td><td>Delayed coaching, stop 61</td></tr>
+          <tr><td class="num">DP1</td><td>Air it up and roll out</td><td class="num">15</td><td class="num">−10</td><td class="num">−5</td><td class="num">−2</td><td>Delayed coaching, stop nine</td></tr>
           <tr class="crit"><td class="num">DP1</td><td>Drive it and keep an eye on it</td><td class="num">0</td><td class="num">−20</td><td class="num">0</td><td class="num">0</td><td>Critical → remediation</td></tr>
           <tr><td class="num">DP1</td><td>Park the van and wait for fleet</td><td class="num">10</td><td class="num">+10</td><td class="num">−15</td><td class="num">−9</td><td>Over-escalation coaching</td></tr>
           <tr class="pref"><td class="num">DP3</td><td>Resequence, confirm the window, flag a number</td><td class="num">25</td><td class="num">0</td><td class="num">+15</td><td class="num">−3</td><td>Preferred</td></tr>
@@ -862,9 +862,16 @@ AUDIO        One low sub-bass note, −26 LUFS, once, no tail. NO VOICE —
 DEV NOTES    Set three layer properties EXPLICITLY (defaults are wrong):
              prevent clicking the base layer; hide other slide layers;
              pause the base timeline. SET FOCUS TO THE LAYER ON SHOW.
-             Restore varSafetyScore to 60 at the end of the micro-lesson
-             — above the floor of 55, below the 80 threshold. Without it,
-             re-deciding with option B lands at 50 and re-trips forever.
+             The learner is stopped BEFORE the choice takes effect, so
+             1C's deltas are never applied on the way in. At the end of
+             the micro-lesson, subtract 1C's own authored cost — Safety
+             −20 — clamp to 0-100, disable 1C, and cap the re-decide at
+             15 points. Do NOT assign varSafetyScore a flat value: an
+             absolute restore PAYS a learner who arrived below it, which
+             is a gate that can raise your score. The re-trap is closed
+             by the per-decision guard varRedecidedHere, not by the
+             number. varRemediationFlag is the record, set here, and it
+             survives Retry.
 
 A11Y         The crimson rule is decorative; the word STOP. carries the
              meaning. Focus order: STOP., body, closing statement,
