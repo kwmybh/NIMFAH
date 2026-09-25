@@ -5,7 +5,6 @@ import {
   IBM_Plex_Mono,
   Inter,
   JetBrains_Mono,
-  Montserrat,
   Press_Start_2P,
   Rajdhani,
   Silkscreen,
@@ -71,19 +70,6 @@ export const pressStart = Press_Start_2P({
   display: "swap",
   variable: "--font-press-start",
   fallback: ["ui-monospace", "Consolas", "monospace"],
-});
-
-// Available as --sans-alt, and deliberately not wired to anything yet: it replaces
-// none of the five faces above. preload is off for exactly that reason — a preloaded
-// font that no rule references is bytes on the critical path buying nothing. Turn
-// preload on in the same commit that gives it a job.
-export const montserrat = Montserrat({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-montserrat",
-  preload: false,
-  fallback: ["system-ui", "sans-serif"],
 });
 
 // Running prose only. Neutral geometric sans, kept out of labels and display type.
