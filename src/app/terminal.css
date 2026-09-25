@@ -507,3 +507,20 @@ body:has(.tm) {
       draw for nothing. It runs one rAF loop, and none under reduced motion.
 
    src/components/terminal-client.tsx is where 3 lives. */
+
+/* Visually hidden, still announced and still indexed. Scoped to .tm because this route
+   sits outside the (site) group and shares none of its utilities. The clip-path pairs
+   with the legacy clip for older engines; both are needed, and the absolute positioning
+   is what keeps it out of a nowrap heading's layout. */
+.tm-vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

@@ -286,8 +286,16 @@ export function TerminalClient() {
             <p className="tm-warning" style={{ marginBottom: 20 }}>
               [ Learning experience design ]
             </p>
+            {/* The visible wordmark stays exactly as designed. What changes is what the
+                heading *says*: this is the only h1 on the front door of a job-search
+                portfolio, and it read as the site's name rather than the person's. The
+                title element already says "Kwame Yeboah — Learning experience design";
+                the heading now agrees with it, for search and for anyone arriving by
+                screen reader. The trailing cursor is decoration and is hidden from
+                assistive tech rather than announced as an underscore. */}
             <h1 className="tm-pixel-heading">
-              Nimfah<span className="tm-accent tm-cursor">_</span>
+              <span className="tm-vh">Kwame Yeboah, learning experience design. </span>
+              Nimfah<span className="tm-accent tm-cursor" aria-hidden="true">_</span>
             </h1>
             <div className="tm-desc">
               Kwame Yeboah. A designer who builds — hand me a messy operational problem and
