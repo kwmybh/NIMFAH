@@ -771,11 +771,13 @@
    caption stays on the prose measure, which is the ordinary treatment for a figure
    wider than its column. Narrower than that, it scrolls, and it should. */
 @media (min-width: 1240px) {
-  .f15 .f15-flow-scroll {
+  .f15 .f15-flow-scroll,
+  .f15 .f15-omap-scroll {
     margin-inline: calc(-1 * clamp(16px, 4vw, 56px));
   }
 }
-.f15 .f15-flow-scroll {
+.f15 .f15-flow-scroll,
+.f15 .f15-omap-scroll {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   border: 1px solid var(--f15-hairline-dark);
@@ -783,11 +785,13 @@
   background: #101216;
   padding: 0.75rem;
 }
-.f15 .f15-flow-scroll:focus-visible {
+.f15 .f15-flow-scroll:focus-visible,
+.f15 .f15-omap-scroll:focus-visible {
   outline: 3px solid var(--f15-ivory);
   outline-offset: 2px;
 }
-.f15 .f15-flow-svg {
+.f15 .f15-flow-svg,
+.f15 .f15-omap-svg {
   display: block;
   width: 100%;
   min-width: 1100px;  /* 0.93 scale — below this the 10px labels stop being labels */
@@ -879,5 +883,56 @@
 .f15 .f15-flow-legend { font: 400 10px var(--f15-ui); fill: var(--f15-silver); }
 
 @media (max-width: 760px) {
-  .f15 .f15-flow-scroll { padding: 0.5rem; }
+  .f15 .f15-flow-scroll,
+  .f15 .f15-omap-scroll { padding: 0.5rem; }
+}
+
+/* ── objective-to-evidence map ──────────────────────────────────────
+   Asset 8 from the media plan. Shares the flow map's scroll container, focus ring,
+   1100px legibility floor and >=1240px escape from the prose column — two scrolling
+   figures on one page should behave identically, so those rules are declared once,
+   above, and carry both. What follows is only what differs: the trace, and the type.
+
+   Every value checked on the #101216 ground of the scroll container. */
+
+.f15 .f15-omap {
+  margin: 2.75rem 0 0;
+}
+
+/* The trace and its stations carry the meaning here — the argument the picture makes is
+   that no row stops early — so they are non-text components and owe SC 1.4.11 its 3:1.
+   #616872 measures 3.33:1. The obvious #5a616b is 2.99 and would have missed. */
+.f15 .f15-omap-trace {
+  stroke: #616872;
+  stroke-width: 1;
+}
+.f15 .f15-omap-station {
+  fill: #616872;
+}
+.f15 .f15-omap-origin {
+  fill: var(--f15-gold-light);   /* 8.33:1 — the objective each trace departs from */
+}
+
+.f15 .f15-omap-head {
+  font: 500 10px var(--f15-ui);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--f15-silver);       /* 8.10:1 */
+}
+.f15 .f15-omap-lo {
+  font: 600 11px var(--f15-data);
+  letter-spacing: 0.06em;
+  fill: var(--f15-gold-light);
+}
+.f15 .f15-omap-obj {
+  font: 600 11px var(--f15-ui);
+  fill: var(--f15-ivory);
+}
+.f15 .f15-omap-bloom {
+  font: 600 11px var(--f15-data);
+  fill: var(--f15-gold-light);
+}
+.f15 .f15-omap-cell {
+  font: 400 10px var(--f15-ui);
+  fill: var(--f15-silver);
 }

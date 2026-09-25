@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../../../first15.css";
 import { TriageDemo } from "./triage";
 import { FlowMap } from "./flow-map";
+import { ObjectiveMap } from "./objective-map";
 
 export const metadata: Metadata = {
   title: "First 15: Scenario-Based Delivery Onboarding | Kwame Yeboah, LXD",
@@ -184,6 +185,15 @@ export default function FirstFifteenLastMileOnboarding() {
       </Section>
 
       <Section id="build" tone="dark" number="03" eyebrow="How It&apos;s Built" title="A state machine wearing a story.">
+        <div className="f15-prose">
+          <p>
+            The four decision points are not authored preferences. Six objectives had to be assessed,
+            each one needing an interaction that teaches it and a piece of evidence that measures it,
+            and the scenario is what that requirement produced.
+          </p>
+        </div>
+        <ObjectiveMap />
+
         <FlowMap />
 
         <dl className="f15-spec">
