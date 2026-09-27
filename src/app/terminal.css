@@ -220,6 +220,16 @@ body:has(.tm) {
 }
 .tm-main::-webkit-scrollbar { display: none; }
 
+/* The track is focusable now, so it owes SC 2.4.7 a visible indicator. The offset is
+   negative because the track is the full viewport: an outward outline would be drawn
+   off-screen and the ring would simply not exist. --tm-accent carries both themes —
+   #9df133 on the dark ground and #44730d on the light one, and both clear the 3:1
+   that SC 1.4.11 asks of a focus indicator. */
+.tm-main:focus-visible {
+  outline: 3px solid var(--tm-accent);
+  outline-offset: -3px;
+}
+
 .tm-section {
   min-width: 100vw;
   height: 100svh;

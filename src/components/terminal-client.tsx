@@ -276,7 +276,22 @@ export function TerminalClient() {
         <div className="tm-progress-bar" ref={bar} />
       </div>
 
-      <main className="tm-main" ref={track}>
+      {/* The panel track is a real scroll container — overflow-x auto, scroll-snap-type
+          x mandatory, panels snapping to start — which is what buys touch, trackpad,
+          wheel, scrollbar and reduced-motion support without writing any of them. The
+          one thing it did not buy is the keyboard: a browser scrolls a scroll container
+          with the arrow keys only once that container can hold focus, and a bare <main>
+          cannot. tabIndex makes it focusable, and the label is what a screen reader
+          announces when focus lands on a region that is otherwise just a box. SC 2.1.1
+          asks for the operation, not for a particular mechanism, and this is the
+          cheapest mechanism that already exists in every browser. */}
+      <main
+        className="tm-main"
+        ref={track}
+        tabIndex={0}
+        role="group"
+        aria-label="Panels. Scroll horizontally, or use the left and right arrow keys."
+      >
         {/* 01 — index */}
         <section className="tm-section" id="home">
           <div className="tm-section-meta" aria-hidden="true">
