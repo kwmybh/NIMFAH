@@ -41,7 +41,7 @@ const SPEC: [string, string][] = [
   ["Consequence", "Delayed on purpose. Top up the tire and go, and the warning returns at stop nine, on a bridge approach — then the station lead talks to you"],
   ["Debrief", "Replays the learner's path and shows how each choice moved each dimension. Fast-and-exposed gets different coaching from careful-and-costly, because those two people need opposite advice"],
   ["Rise 360", "Six lessons before the scenario for the model; a field guide after, built to reopen on a phone in a van at 6:55 a.m."],
-  ["Accessibility", "No timers anywhere · nothing signalled by color alone · explicit focus order on every slide · captions and transcript · reduced motion set before the story starts"],
+  ["Accessibility", "No timers anywhere · nothing signaled by color alone · explicit focus order on every slide · captions and transcript · reduced motion set before the story starts"],
   ["Standards", "WCAG 2.1 AA · SCORM 1.2 and 2004 4th Edition · optional xAPI decision-path statements"],
   ["Measurement", "The scenario records a path string for every learner, so the plan surfaces which distractor a cohort picks most. That is a curriculum instrument, not a report"],
 ];

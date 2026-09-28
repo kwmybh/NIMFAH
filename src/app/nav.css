@@ -120,7 +120,7 @@
 /* Light mode: the capsule is white on a warm paper ground, which measures 1.13:1 —
    technically fine (it carries no text of its own) but it stops reading as a floating
    object, and floating is the whole point of the shape. More contrast would make it a
-   grey slab; a shadow is the right instrument, and shadows belong to this language now
+   gray slab; a shadow is the right instrument, and shadows belong to this language now
    in a way they never did to the hard-edged one. Dark mode needs none: there the
    surface is lighter than the ground, so it lifts on its own. */
 :root:not([data-theme="dark"]) .nv-pod,

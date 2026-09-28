@@ -17,7 +17,7 @@
 >   `--r-pill: 999px`, `--r-card: 18px`, `--r-sm: 10px`. Zero is retained only for
 >   the typographic plate and hairline marks.
 > - **Ground `#070210`** (§2) — superseded by a neutral `#101012`.
-> - **Secondary grey `#747785`** (§2) — superseded by `#7e818d`. The old value measured
+> - **Secondary gray `#747785`** (§2) — superseded by `#7e818d`. The old value measured
 >   4.60:1 on the violet ground but only 4.27:1 on the neutral one, which fails AA.
 > - **The HUD** (§7: corner ticks, hairline column rules) — removed. It is zero-radius
 >   vocabulary and ran as a second design language once the chrome became capsules.
@@ -67,7 +67,7 @@ Measured hex values, by frequency of use.
 | `--paper` | `#F5F0EB` | Primary text. Warm off-white, never pure white for body. | 506 |
 | `--white` | `#FFFFFF` | Reserved for peak emphasis only. | 388 |
 | `--acid` | `#9DF133` | **The accent.** Structural and interactive, never decorative. | 186 |
-| `--muted` | `#747785` | Secondary text. Grey with a violet lean, matching the ground. | 982 |
+| `--muted` | `#747785` | Secondary text. Gray with a violet lean, matching the ground. | 982 |
 | `--coral` | `#F75049` | Single warm counter-accent. One word in the hero, one category pill. | 67 |
 | `--panel` | `#131418` | Raised panels. | 19 |
 | `--edge` | `#25272F` | Hairlines and borders. | 8 |
@@ -75,7 +75,7 @@ Measured hex values, by frequency of use.
 | `--scrim-55` | `rgba(0,0,0,0.55)` | Image scrim, heavy — under overlaid type. | 126 |
 
 **Note:** `--muted` is the single most-used color on the page (982 uses). The system is
-mostly grey text on near-black, with acid used sparingly. Restraint is the point.
+mostly gray text on near-black, with acid used sparingly. Restraint is the point.
 
 Against NIMFAH's current `--accent: #5fe12c`: close, but `#9DF133` is yellower and reads
 warmer against the violet ground. Adopt `#9DF133`.

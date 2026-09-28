@@ -45,10 +45,10 @@
 [data-theme="dark"] {
   /* Neutral #101012, not the violet-cast #070210: the current reference runs a
      neutral dark. Acid holds at 13.63:1 on it and paper at 16.79:1.
-     The secondary grey had to move with it — #747785 measured 4.60:1 on the
+     The secondary gray had to move with it — #747785 measured 4.60:1 on the
      violet ground but only 4.27:1 here, which fails AA. #7e818d restored 4.90:1 —
      but only against the GROUND. Everything chrome-shaped sits on --surface #202024,
-     which is lighter, and there the same grey measured 4.18:1: the nav's inactive
+     which is lighter, and there the same gray measured 4.18:1: the nav's inactive
      link failed AA while the token it reads was "verified". A muted color has to
      clear the lightest surface it lands on, not the page behind it. #8b8e99 is
      5.82:1 on the ground and 4.97:1 on the surface, so both hold. */

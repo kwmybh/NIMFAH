@@ -502,7 +502,7 @@ body:has(.tm) {
    FIXED, 24 Sept 2026, when this became the home page rather than a side route:
    contrast (AA in both themes now), input (a real scroller, so keyboard, touch,
    scrollbar and screen readers all work), reflow (panels scroll rather than clip, and
-   the layout has phone and short-viewport branches), and reduced motion (honoured here
+   the layout has phone and short-viewport branches), and reduced motion (honored here
    and in the shader).
 
    STILL TRUE, and still a choice:
