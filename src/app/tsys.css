@@ -5,7 +5,7 @@
    different display face. A visitor crossing from the home page met a different site.
 
    This layer re-points the shared tokens rather than rewriting about.css and work.css.
-   Those files already read every colour, radius and face from variables, so redefining
+   Those files already read every color, radius and face from variables, so redefining
    the variables moves them wholesale, and the handful of rules below cover the places
    where the terminal look is a shape rather than a value — hairlines instead of
    capsules, the halftone over a card, a dashed rule under a section.

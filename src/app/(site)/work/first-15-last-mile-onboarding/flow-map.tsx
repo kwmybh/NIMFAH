@@ -6,7 +6,7 @@
 // description as well, because the *shape* is the argument here — sixteen branches with
 // one route through them — and shape is what alt text is worst at.
 //
-// Colour follows the page's two standing rules: indigo is reserved for things you can
+// Color follows the page's two standing rules: indigo is reserved for things you can
 // click, so none appears here; gold on this ground is --f15-gold-light at 8.6:1.
 
 const DP = [

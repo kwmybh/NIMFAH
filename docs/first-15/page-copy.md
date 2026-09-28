@@ -103,7 +103,7 @@ label is a signpost, not a sentence; "Estimated course duration" reads as a form
 | **Role and contribution** | Sole designer and developer. Discovery framing, audience definition, learning objectives, instructional strategy, branching architecture, storyboard, interaction design, visual direction, Rise 360 and Storyline 360 development, accessibility specification, and measurement plan. |
 | **Project type** | Self-directed portfolio project · scenario-based onboarding · fictional client brief |
 | **Client** | MileOne Logistics — a realistic fictional last-mile carrier created to demonstrate end-to-end learning design |
-| **Tools used** | Articulate Storyline 360 · Rise 360 · Review 360 · Figma · Adobe Illustrator · Adobe Photoshop · Adobe Audition · Claude (content structuring, dialogue drafting, QA pass scripting) · Colour Contrast Analyser · NVDA and VoiceOver |
+| **Tools used** | Articulate Storyline 360 · Rise 360 · Review 360 · Figma · Adobe Illustrator · Adobe Photoshop · Adobe Audition · Claude (content structuring, dialogue drafting, QA pass scripting) · Color Contrast Analyser · NVDA and VoiceOver |
 | **Intended audience** | Newly hired last-mile delivery associates (days 1–14) and newly promoted dispatch coordinators |
 | **Estimated course duration** | 37–48 minutes total (typically ~45) · Rise 19–24 min · Storyline 8–12 min · Rise field guide 10–12 min |
 | **Learning modality** | Self-paced blended eLearning — mobile-responsive Rise 360 for concepts and transfer, desktop-and-tablet Storyline 360 for the branching performance assessment, with a printable job aid and a manager coaching guide for on-the-job reinforcement |
@@ -152,14 +152,14 @@ knowledge. Most new associates can recite the pre-shift checklist. The gap is **
 competing pressure**, which is the one thing a checklist cannot teach and a knowledge check cannot
 measure.
 
-So the design problem was not "build a pre-shift course." It was: *how do you let someone practise
+So the design problem was not "build a pre-shift course." It was: *how do you let someone practice
 the first fifteen minutes of a bad morning forty times before it counts?*
 
 ### 2. The Learner and Business Context
 
 MileOne Logistics is a realistic fictional regional carrier: contracted parcel volume plus a growing
 medical-courier line, operating out of a set of metro stations with a mixed fleet of cargo vans. Like
-the real operations it is modelled on, it runs with high seasonal hiring, a compressed training
+the real operations it is modeled on, it runs with high seasonal hiring, a compressed training
 window, and dispatch coordinators who are often promoted from the driver's seat with no training in
 how to coordinate.
 
@@ -195,7 +195,7 @@ lived.
 
 ### 4. Learning Goals and Success Measures
 
-The experience is designed to target four performance behaviours, not four topics: triage a pre-shift
+The experience is designed to target four performance behaviors, not four topics: triage a pre-shift
 discovery into Fix, Flag, or Note within ninety seconds; apply the four escalation triggers to decide
 whether an issue needs someone else; compose an escalation message complete enough to be acted on
 without a follow-up question; and sequence a route so that time-sensitive and custody-controlled
@@ -231,7 +231,7 @@ most real pre-shift discoveries actually belong. This directly targets the obser
 both over- and under-escalation.
 
 **Cognitive load managed by tool.** Concepts, criteria, and worked examples live in Rise, where a
-learner can read at their own pace on a phone, re-open a labelled graphic, and stop. Judgment under
+learner can read at their own pace on a phone, re-open a labeled graphic, and stop. Judgment under
 pressure lives in Storyline, where state can be tracked and consequence can be staged. Nothing is
 taught twice, and nothing is assessed where it was taught.
 
@@ -245,7 +245,7 @@ one restrained indigo reserved exclusively for things the learner can act on.
 
 That last rule does most of the work. In this system, **indigo means "you can touch this."** Gold
 means "this is a structural or evaluative element" — a rule, a meter, a scene marker. Because the
-interaction colour is reserved and never used for emphasis, a learner never has to hunt for what is
+interaction color is reserved and never used for emphasis, a learner never has to hunt for what is
 clickable, and a keyboard user never has to guess where focus is.
 
 The interface avoids the two clichés of the genre. There is no cartoon office and no stock-photo
@@ -255,7 +255,7 @@ gradients, no glassmorphism, and no animation that exists to prove animation is 
 used for exactly three jobs: to show state changing, to direct attention to a consequence, and to
 transition between scenes.
 
-Every colour pair in the system was checked with a contrast calculator rather than an eye. Three of my
+Every color pair in the system was checked with a contrast calculator rather than an eye. Three of my
 first-pass tokens failed WCAG AA and were replaced — the burnished gold in particular is beautiful on
 charcoal at 5.66:1 and illegible on ivory at 2.83:1, so a darkened variant carries any gold that has
 to appear as text on a light surface. The published palette in the design document lists the measured
@@ -267,7 +267,7 @@ The scenario is a state machine wearing a story. Four numeric and eight supporti
 Safety, Service, and the remaining time budget, plus the learner's choice at each decision point, the
 count of escalations raised, a remediation flag, and a concatenated path string such as `1B-2A-3C-4A`.
 
-A few constructions a developer will recognise as the real work:
+A few constructions a developer will recognize as the real work:
 
 - **A hub-and-spoke shift-start dashboard** with four inspectable cards. The "Roll out" control is
   disabled until all four have a Visited state, which enforces a complete pre-shift review without a
@@ -288,7 +288,7 @@ A few constructions a developer will recognise as the real work:
 Rise carries two jobs that Storyline is genuinely worse at.
 
 Before the scenario, *Prepare for the Shift* teaches the decision model in six short lessons using
-blocks chosen for instructional reason: a labelled graphic over a photographed van bay for the
+blocks chosen for instructional reason: a labeled graphic over a photographed van bay for the
 pre-shift inspection zones, because spatial knowledge should be learned spatially; a sorting activity
 that forces learners to place eight real discoveries into Fix, Flag, and Note, because the model is
 only learned when it is applied to ambiguous cases; flashcards for the four escalation triggers,
@@ -327,7 +327,7 @@ addresses the specific reasoning behind it rather than restating policy.
 Accessibility shaped the design rather than auditing it. The concrete consequences: no real-time
 timers anywhere in the experience, so the pressure is narrative and a learner using assistive
 technology is not penalised for reading speed; every status communicated by an icon and a word as well
-as a colour, so the Safety, Service, and Time meters never depend on hue; a focus indicator built as
+as a color, so the Safety, Service, and Time meters never depend on hue; a focus indicator built as
 an ivory ring with a dark inner stroke so that it is visible on charcoal, ivory, and indigo alike;
 focus order set explicitly on every Storyline slide, with decorative art marked decorative so a
 screen-reader user hears the decision, not the background; captions and a downloadable transcript for
@@ -353,7 +353,7 @@ the cohort selects most often. That is a curriculum instrument, not a report: if
 up the tire and drive, the gap is in how Lesson 3 teaches the difference between a leak and a
 temperature variance, and the fix is one Rise screen.
 
-At the behaviour level, it would use a manager observation checklist during the first ride-along and
+At the behavior level, it would use a manager observation checklist during the first ride-along and
 sample escalation messages for completeness against the four fields. At the results level, it would
 propose watching pre-shift window duration, avoidable first-attempt failures, and preventable
 roadside events across the first thirty days on route.
@@ -403,14 +403,14 @@ managers will reinforce — and that I will tell you plainly which parts of it s
 ## 2.6 Page footer elements
 
 **Fictional-client disclosure** (place directly below the hero facts panel, at 14px, in secondary text)
-> MileOne Logistics is a fictional organisation created for this project. All scenarios, characters,
+> MileOne Logistics is a fictional organization created for this project. All scenarios, characters,
 > and data are illustrative. No proprietary or client information is represented, and no metrics in
 > this case study are reported outcomes.
 
 **Accessibility statement** (full text in §13.9; short version for the page)
-> This project was designed to WCAG 2.1 AA. Contrast ratios were verified for every colour pair, all
+> This project was designed to WCAG 2.1 AA. Contrast ratios were verified for every color pair, all
 > interactions are keyboard-operable with a visible focus indicator, no information is conveyed by
-> colour alone, narration is captioned and available as a transcript, and there are no timed
+> color alone, narration is captioned and available as a transcript, and there are no timed
 > interactions. The prototype was tested keyboard-only and with NVDA and VoiceOver.
 
 **Next-project navigation** · `Next case study →` and `All work →`

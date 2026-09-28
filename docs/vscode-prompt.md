@@ -1,5 +1,5 @@
 Read `docs/design-system.md` and `src/app/tokens.css` first. Every value you need is
-measured and recorded there — don't invent sizes, colours or easings, and don't guess
+measured and recorded there — don't invent sizes, colors or easings, and don't guess
 where the doc is specific.
 
 ## Part 1 — foundation

@@ -3,7 +3,7 @@
 
 :root {
   /* ── palette ────────────────────────────────────────────────────────────────
-     Fixed values. These never flip with the theme — they are the colours the
+     Fixed values. These never flip with the theme — they are the colors the
      system owns. Anything that must change between light and dark is a ROLE,
      declared in globals.css against [data-theme]. Reading a palette value
      directly in a component is what broke light mode the first time: the hero

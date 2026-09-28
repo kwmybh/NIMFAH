@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-// Two scroll behaviours, both dependency-free.
+// Two scroll behaviors, both dependency-free.
 //
 // ScrollReveal is a single IntersectionObserver over every [data-reveal] on the page,
 // rather than a wrapper component. That keeps the pages server-rendered: a section opts

@@ -3,14 +3,14 @@
 //
 // The argument this picture makes is completeness, not structure. Six objectives, and
 // every one of them runs unbroken from a Bloom's level through the interaction that
-// teaches it and the evidence that assesses it to the behaviour it supports. A row that
+// teaches it and the evidence that assesses it to the behavior it supports. A row that
 // cannot complete describes an objective that is not measurable, and it does not ship.
 // So the drawing is six traces with four stations each, and the thing to notice is that
 // none of them stop early.
 //
 // Inline SVG rather than a Figma export, for the same reasons as the flow map: the
 // labels stay real text, they scale, they are selectable, and a screen reader meets
-// them in reading order. Colour follows the page's two standing rules — indigo is
+// them in reading order. Color follows the page's two standing rules — indigo is
 // reserved for things you can click, so none appears here; gold on this ground is
 // --f15-gold-light at 8.33:1.
 
@@ -20,7 +20,7 @@ type Row = {
   bloom: string;
   interaction: [string, string];
   evidence: [string, string];
-  behaviour: [string, string];
+  behavior: [string, string];
 };
 
 const ROWS: Row[] = [
@@ -30,15 +30,15 @@ const ROWS: Row[] = [
     bloom: "Apply",
     interaction: ["Rise L2 process block → sorting activity,", "eight real discoveries → L4 check"],
     evidence: ["Sort pattern · KC4 score · all four dashboard", "cards visited before roll-out"],
-    behaviour: ["Reaches a disposition on every pre-shift discovery", "instead of proceeding by default"],
+    behavior: ["Reaches a disposition on every pre-shift discovery", "instead of proceeding by default"],
   },
   {
     lo: "LO2",
     objective: ["Distinguish a degrading vehicle", "condition from a stable variance"],
-    bloom: "Analyse",
-    interaction: ["Rise L3 labelled graphic → tabs (pressure,", "fluid, load, lights) → Decision Point 1"],
+    bloom: "Analyze",
+    interaction: ["Rise L3 labeled graphic → tabs (pressure,", "fluid, load, lights) → Decision Point 1"],
     evidence: ["DP1 choice and points · KC2 · remediation", "flag if the Safety floor trips"],
-    behaviour: ["Airs up and logs a cold variance; flags a 19-psi", "overnight drop as a suspected leak"],
+    behavior: ["Airs up and logs a cold variance; flags a 19-psi", "overnight drop as a suspected leak"],
   },
   {
     lo: "LO3",
@@ -46,7 +46,7 @@ const ROWS: Row[] = [
     bloom: "Evaluate",
     interaction: ["Decision Point 3, priority conflict, with", "consequence layers → Rise L5 scenario"],
     evidence: ["DP3 choice · Safety and Service deltas ·", "debrief justification prompt"],
-    behaviour: ["Protects the medical receiving window under", "volume pressure instead of absorbing first"],
+    behavior: ["Protects the medical receiving window under", "volume pressure instead of absorbing first"],
   },
   {
     lo: "LO4",
@@ -54,7 +54,7 @@ const ROWS: Row[] = [
     bloom: "Create",
     interaction: ["Rise L5 accordion with a worked example", "→ scenario block → DP2 composition"],
     evidence: ["DP2 message variant scored against the", "four-field rubric · Module C reflection"],
-    behaviour: ["Escalations arrive complete and actionable;", "no follow-up call needed"],
+    behavior: ["Escalations arrive complete and actionable;", "no follow-up call needed"],
   },
   {
     lo: "LO5",
@@ -62,7 +62,7 @@ const ROWS: Row[] = [
     bloom: "Apply",
     interaction: ["Rise L3 flashcards, custody categories →", "dashboard manifest card → DP3"],
     evidence: ["DP3 sequencing choice · Time budget", "consumed · Service score"],
-    behaviour: ["Medical tote sequenced first; volume absorbed", "after commitments are protected"],
+    behavior: ["Medical tote sequenced first; volume absorbed", "after commitments are protected"],
   },
   {
     lo: "LO6",
@@ -70,7 +70,7 @@ const ROWS: Row[] = [
     bloom: "Evaluate",
     interaction: ["Rise L4 accordion, access-note red flags", "→ Decision Point 4"],
     evidence: ["DP4 choice and Safety delta ·", "documentation sub-choice"],
-    behaviour: ["Declines to enter a dwelling; delivers to the", "safest compliant point and documents it"],
+    behavior: ["Declines to enter a dwelling; delivers to the", "safest compliant point and documents it"],
   },
 ];
 
@@ -95,7 +95,7 @@ const HEADS: [number, string][] = [
   [COL.bloom, "Bloom"],
   [COL.act, "Interaction that teaches it"],
   [COL.ev, "Evidence that assesses it"],
-  [COL.beh, "Workplace behaviour supported"],
+  [COL.beh, "Workplace behavior supported"],
 ];
 
 export function ObjectiveMap() {
@@ -112,7 +112,7 @@ export function ObjectiveMap() {
           <desc id="omapD">
             Six learning objectives, each traced left to right across four stations: its level in
             Bloom&rsquo;s taxonomy, the course interaction that teaches it, the assessment evidence that
-            measures it, and the workplace behaviour it supports. Every one of the six traces completes
+            measures it, and the workplace behavior it supports. Every one of the six traces completes
             all four stations. An objective whose row cannot complete is not measurable and is cut
             rather than shipped.
           </desc>
@@ -153,8 +153,8 @@ export function ObjectiveMap() {
                 <text x={COL.ev} y={top + L1} className="f15-omap-cell">{r.evidence[0]}</text>
                 <text x={COL.ev} y={top + L2} className="f15-omap-cell">{r.evidence[1]}</text>
 
-                <text x={COL.beh} y={top + L1} className="f15-omap-cell">{r.behaviour[0]}</text>
-                <text x={COL.beh} y={top + L2} className="f15-omap-cell">{r.behaviour[1]}</text>
+                <text x={COL.beh} y={top + L1} className="f15-omap-cell">{r.behavior[0]}</text>
+                <text x={COL.beh} y={top + L2} className="f15-omap-cell">{r.behavior[1]}</text>
               </g>
             );
           })}
@@ -164,7 +164,7 @@ export function ObjectiveMap() {
       </div>
       <figcaption>
         Every objective traced to an interaction, a piece of assessment evidence, and an observable
-        workplace behaviour. The point of the picture is that none of the six rows stops early &mdash; if
+        workplace behavior. The point of the picture is that none of the six rows stops early &mdash; if
         a row cannot complete, the objective is not measurable, and it gets cut rather than shipped.
       </figcaption>
     </figure>

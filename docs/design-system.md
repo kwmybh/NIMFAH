@@ -39,7 +39,7 @@ is our own. Nothing is copied from that site's source.
 
 ## 1. Typefaces
 
-Both are Google Fonts, open licence, free to self-host through `next/font/google`.
+Both are Google Fonts, open license, free to self-host through `next/font/google`.
 
 | Role | Face | Notes |
 |---|---|---|
@@ -53,7 +53,7 @@ Ratio observed: Rajdhani on ~1133 elements, DM Sans on ~539. Display face domina
 
 ---
 
-## 2. Colour
+## 2. Color
 
 > Token names `--panel` and `--edge` avoid a collision with `--surface` and `--line`,
 > which `globals.css` already defines.
@@ -74,7 +74,7 @@ Measured hex values, by frequency of use.
 | `--scrim-35` | `rgba(0,0,0,0.35)` | Image scrim, light. | 144 |
 | `--scrim-55` | `rgba(0,0,0,0.55)` | Image scrim, heavy — under overlaid type. | 126 |
 
-**Note:** `--muted` is the single most-used colour on the page (982 uses). The system is
+**Note:** `--muted` is the single most-used color on the page (982 uses). The system is
 mostly grey text on near-black, with acid used sparingly. Restraint is the point.
 
 Against NIMFAH's current `--accent: #5fe12c`: close, but `#9DF133` is yellower and reads
@@ -130,7 +130,7 @@ Four measured pairings. Use these, not invented ones.
 |---|---|---|---|
 | Transforms, hover lifts | `0.3s` | `cubic-bezier(0, 0, 0.2, 1)` (decelerate) | 42 uses — the workhorse |
 | Large positional moves | `0.6s` | `cubic-bezier(0.16, 1, 0.3, 1)` (expo out) | 9 uses |
-| Colour changes | `0.3s` | `ease-out` | 21 uses |
+| Color changes | `0.3s` | `ease-out` | 21 uses |
 | Opacity | `0.15s` | `ease` | 15 uses |
 | Accordion open/close | `0.3s` | `ease-out` on `grid-template-rows` | 7 uses |
 

@@ -3,7 +3,7 @@
    Hand-written CSS to match the site's existing architecture — this page does
    NOT use Tailwind utilities.
 
-   Every colour pair below was contrast-verified. Two rules are load-bearing:
+   Every color pair below was contrast-verified. Two rules are load-bearing:
      1. --f15-indigo appears on interactive elements ONLY, never for emphasis.
      2. --f15-gold is for dark surfaces only. On light surfaces use --f15-gold-deep.
         (Gold on ivory measures 2.83:1 and fails AA at every size.)
@@ -38,7 +38,7 @@
   --f15-silver: #a8aeb5;          /* 8.10:1 on ink */
   --f15-mid: #5f646a;  /* LIGHT SURFACES ONLY — 5.29:1 on ivory, but 3.03:1 on ink (fails body). On dark, use --f15-silver (8.10:1). */
 
-  /* semantic — always paired with an icon or a word, never colour alone */
+  /* semantic — always paired with an icon or a word, never color alone */
   --f15-teal: #5fb79a;
   --f15-amber: #e8a951;
   --f15-crimson: #e58a8a;

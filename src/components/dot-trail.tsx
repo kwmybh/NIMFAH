@@ -43,7 +43,7 @@ export function DotTrail() {
     };
     size();
 
-    // The trail colour is read from --acid-fg rather than hard-coded, because bright
+    // The trail color is read from --acid-fg rather than hard-coded, because bright
     // acid on the light ground is 1.23:1 — a trail nobody can see. Re-read when the
     // theme attribute changes so a toggle takes effect on the next frame.
     let rgb = "157, 241, 51";

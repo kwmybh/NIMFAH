@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 
 // Chrome after the current reference: a circular monogram hard left, a floating
-// capsule of links in the centre, and pill actions right. The previous header was
+// capsule of links in the center, and pill actions right. The previous header was
 // edge-pinned text on a transparent bar, which belonged to the zero-radius system.
 export function Header() {
   const pathname = usePathname();

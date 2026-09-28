@@ -41,7 +41,7 @@ const SPEC: [string, string][] = [
   ["Consequence", "Delayed on purpose. Top up the tire and go, and the warning returns at stop nine, on a bridge approach — then the station lead talks to you"],
   ["Debrief", "Replays the learner's path and shows how each choice moved each dimension. Fast-and-exposed gets different coaching from careful-and-costly, because those two people need opposite advice"],
   ["Rise 360", "Six lessons before the scenario for the model; a field guide after, built to reopen on a phone in a van at 6:55 a.m."],
-  ["Accessibility", "No timers anywhere · nothing signalled by colour alone · explicit focus order on every slide · captions and transcript · reduced motion set before the story starts"],
+  ["Accessibility", "No timers anywhere · nothing signalled by color alone · explicit focus order on every slide · captions and transcript · reduced motion set before the story starts"],
   ["Standards", "WCAG 2.1 AA · SCORM 1.2 and 2004 4th Edition · optional xAPI decision-path statements"],
   ["Measurement", "The scenario records a path string for every learner, so the plan surfaces which distractor a cohort picks most. That is a curriculum instrument, not a report"],
 ];
@@ -148,7 +148,7 @@ export default function FirstFifteenLastMileOnboarding() {
           </p>
           <p className="f15-pull">
             So the design problem wasn&apos;t &quot;build a pre-shift course.&quot; It was: how do you let someone
-            practise the first fifteen minutes of a bad morning forty times before it counts?
+            practice the first fifteen minutes of a bad morning forty times before it counts?
           </p>
         </div>
 
@@ -264,8 +264,8 @@ export default function FirstFifteenLastMileOnboarding() {
         <div className="f15-wrap">
           <p className="f15-close-a11y">
             <strong>Accessibility</strong>
-            Designed to WCAG 2.1 AA. Contrast verified for every colour pair, all interactions
-            keyboard-operable with a visible focus indicator, nothing conveyed by colour alone,
+            Designed to WCAG 2.1 AA. Contrast verified for every color pair, all interactions
+            keyboard-operable with a visible focus indicator, nothing conveyed by color alone,
             narration captioned and available as a transcript, no timed interactions. Tested
             keyboard-only and with NVDA and VoiceOver.
           </p>
