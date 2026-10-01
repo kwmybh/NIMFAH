@@ -36,17 +36,13 @@ const LXD: WorkItem[] = [byHref("/portfolio/first-15-last-mile-onboarding")];
 
 export const CATEGORIES: Category[] = [
   {
-    id: "graphic-design",
-    title: "Graphic design",
-    blurb: "Posters and identities — Ghana tourism, Ohio University, and the African Students' Union's Heroes' Night.",
+    id: "lxd-id",
+    title: "LXD/ID",
+    blurb: "Learning experience and instructional design: scenario-based onboarding, design documents and job aids.",
     size: "lg",
-    cover: {
-      kind: "image",
-      src: "/media/graphic-design/cover.webp",
-      alt: "Three posters side by side: Traveling Ghana, Heroes' Night 2018 and African Heroes Night 2019.",
-    },
-    items: [],
-    count: `${GALLERY.length} pieces`,
+    cover: { kind: "plate" },
+    items: LXD,
+    count: `${LXD.length} case study`,
   },
   {
     id: "ux-ui",
@@ -62,13 +58,17 @@ export const CATEGORIES: Category[] = [
     count: `${UX.length} case studies`,
   },
   {
-    id: "lxd-id",
-    title: "LXD/ID",
-    blurb: "Learning experience and instructional design: scenario-based onboarding, design documents and job aids.",
+    id: "graphic-design",
+    title: "Graphic design",
+    blurb: "Posters and identities — Ghana tourism, Ohio University, and the African Students' Union's Heroes' Night.",
     size: "md",
-    cover: { kind: "plate" },
-    items: LXD,
-    count: `${LXD.length} case study`,
+    cover: {
+      kind: "image",
+      src: "/media/graphic-design/cover.webp",
+      alt: "Three posters side by side: Traveling Ghana, Heroes' Night 2018 and African Heroes Night 2019.",
+    },
+    items: [],
+    count: `${GALLERY.length} pieces`,
   },
 ];
 
