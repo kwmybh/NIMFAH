@@ -211,8 +211,10 @@ body:has(.tsys) { background: #0e0e0e; }
 }
 .tsys .nv-mark:hover { background: none; color: var(--fg); }
 
-.tsys .nv-pod { padding: 0; gap: 20px; }
-.tsys .nv-pod a { padding: 0; color: var(--fg); }
+.tsys .nv-pod { padding: 0; gap: 4px; }
+/* Every link carries the current-page fill's padding, filled or not, so the row keeps
+   one width from page to page instead of shifting by 16px when an item lights up. */
+.tsys .nv-pod a { padding: 2px 8px; color: var(--fg); }
 .tsys .nv-pod a:hover { color: var(--accent); }
 /* The panels mark the current item by filling it; keep that, as a square. */
 .tsys .nv-pod a[aria-current="page"] {
@@ -261,7 +263,7 @@ body:has(.tsys) { background: #0e0e0e; }
     padding: 8px 12px;
     justify-content: space-between;
   }
-  .tsys .nv-pod { gap: 12px; }
+  .tsys .nv-pod { gap: 0; }
   .tsys .nv-actions { gap: 12px; }
 }
 

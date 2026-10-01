@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./tsys.css";
 import "./terminal.css";
 import { TerminalClient } from "@/components/terminal-client";
 

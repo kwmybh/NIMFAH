@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { useTheme } from "@/components/theme-provider";
 import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 import { PixelPortrait } from "@/components/pixel-portrait";
+import { Header } from "@/components/header";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
    as written. What is NOT carried over is its content: PROJECT_NEON_VOID, SYSTEM_HAPTIC
@@ -47,7 +47,6 @@ export function TerminalClient() {
   const xCoord = useRef<HTMLSpanElement>(null);
   const yCoord = useRef<HTMLSpanElement>(null);
   const canvasHost = useRef<HTMLDivElement>(null);
-  const { theme, toggle } = useTheme();
 
   // ── the track ───────────────────────────────────────────────────────────────
   // A real scroller, not a transform driven by a wheel listener. It looks identical and
@@ -205,42 +204,18 @@ export function TerminalClient() {
     };
   }, []);
 
-  // Nav jumps scroll the track, so they travel the same path as every other input and
-  // land on the same snap point.
-  const jump = useCallback((id: string) => {
-    const section = document.getElementById(id);
-    const el = track.current;
-    if (!section || !el) return;
-    el.scrollTo({ left: section.offsetLeft - el.offsetLeft });
-  }, []);
-
   return (
     <div className={`tm ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable}`}>
       <div className="tm-canvas" ref={canvasHost} aria-hidden="true" />
 
-      <nav className="tm-nav" aria-label="Panels">
-        <a
-          href="#work"
-          onClick={(e) => {
-            e.preventDefault();
-            jump("work");
-          }}
-        >
-          <span>01</span>Work
-        </a>
-        <a
-          href="#about"
-          onClick={(e) => {
-            e.preventDefault();
-            jump("about");
-          }}
-        >
-          <span>02</span>About
-        </a>
-        <button type="button" className="tm-theme-toggle" onClick={toggle} suppressHydrationWarning>
-          {theme === "dark" ? "Light" : "Dark"}
-        </button>
-      </nav>
+      {/* The same header every other page uses — same items, same order, same corner.
+          This panel track used to carry its own nav (01 Work / 02 About / theme), which
+          meant the navigation changed under the visitor the moment they left the home
+          page. The wrapper borrows the .tsys tokens the header is styled with; see
+          .tm-sitenav in terminal.css for why it paints nothing itself. */}
+      <div className="tsys tm-sitenav">
+        <Header />
+      </div>
 
       {/* Corner rules, a build string and a pointer readout: decorative, and told so. */}
       <div className="tm-hud" aria-hidden="true">

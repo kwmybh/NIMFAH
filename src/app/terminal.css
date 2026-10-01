@@ -568,3 +568,17 @@ body:has(.tm) {
 @media (max-width: 900px) {
   .tm .tm-portrait { right: -10vw; height: 70svh; opacity: 0.55; }
 }
+
+/* ── the shared header ───────────────────────────────────────────────────────
+   The home page renders the same <Header /> as every (site) page, inside a .tsys
+   wrapper so it picks up the tokens tsys.css styles it with. That wrapper is a full-
+   height painted box everywhere else (min-height, background); here it must be neither,
+   so it gets out of the layout entirely and only passes its custom properties down.
+   z-index: the header has to sit above the HUD frame (100) and telemetry (101). */
+.tsys.tm-sitenav { display: contents; }
+.tm-sitenav .nv { z-index: 102; }
+
+/* On a phone the header spans the top edge, right where the HUD's centre label sits. */
+@media (max-width: 900px) {
+  .tm-hud > .tm-hud-label--center:nth-child(2) { visibility: hidden; }
+}
