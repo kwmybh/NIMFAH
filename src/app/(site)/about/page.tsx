@@ -14,10 +14,40 @@ export const metadata: Metadata = {
 };
 
 
+const SPECS: [string, string][] = [
+  ["Art", "Graphic design · Photography · Fashion design · Art direction"],
+  ["Design", "Product & UX · Research & usability testing · Figma · Illustrator"],
+  ["Technology", "React · TypeScript · Next.js · Creative coding · Accessibility (WCAG 2.2 AA)"],
+];
+
 export default function About() {
   return (
     <div className="abt">
       <HeroCarousel />
+
+      {/* Core specs — moved here from the home page's third panel (1 Oct 2026) and
+          rewritten to the hero's three words: Art / Design / Technology. */}
+      <section className="abt-sec abt-specs" data-reveal="up" aria-labelledby="specs-h">
+        <div className="abt-wrap">
+          <div className="abt-sechead">
+            <h2 id="specs-h">Core specs</h2>
+          </div>
+          <div className="abt-specs-body">
+            <p className="abt-specs-pitch">
+              Art direction, design and code in one pair of hands — so the idea that gets drawn
+              is the one that ships.
+            </p>
+            <dl className="abt-specs-list">
+              {SPECS.map(([k, v]) => (
+                <div className="abt-specs-row" key={k}>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
 
       <section className="abt-sec" data-reveal="up">
         <div className="abt-wrap">

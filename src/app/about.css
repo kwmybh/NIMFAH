@@ -185,3 +185,40 @@
 @media (min-width: 1101px) {
   .abt-sec .wc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.25rem, 2vw, 2rem); }
 }
+
+/* ── Core specs (1 Oct 2026, moved from the home page) ──────────────────────── */
+.abt-specs-body {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.75rem, 5vw, 5rem);
+  align-items: start;
+}
+.abt-specs-pitch {
+  margin: 0;
+  font: 400 clamp(1.25rem, 2.2vw, 1.75rem) / 1.35 var(--display);
+  color: var(--fg);
+  text-wrap: balance;
+}
+.abt-specs-list { margin: 0; border-top: 1px solid var(--line); }
+.abt-specs-row {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.abt-specs-row dt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 0.6875rem/1.6 var(--display);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.abt-specs-row dt::before { content: ""; width: 7px; height: 7px; background: var(--acid); flex: none; }
+.abt-specs-row dd { margin: 0; font: 400 1rem/1.6 var(--body); color: var(--dim); }
+@media (max-width: 760px) {
+  .abt-specs-body { grid-template-columns: 1fr; }
+  .abt-specs-row { grid-template-columns: 1fr; gap: 0.35rem; }
+}

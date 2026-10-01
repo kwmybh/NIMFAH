@@ -37,15 +37,7 @@ const FACTS = ["Design + code", "Open to roles & commissions"];
 const PANELS: [string, string][] = [
   ["home", "00 — Intro"],
   ["work", "01 — Work"],
-  ["about", "02 — About"],
-  ["contact", "03 — Contact"],
-];
-
-const SPECS: [string, string][] = [
-  ["Design", "Figma · Illustrator · Storyboarding"],
-  ["Learning", "Storyline 360 · Rise 360 · Scenario design"],
-  ["Build", "React · TypeScript · Next.js · WCAG 2.1 AA"],
-  ["Research", "Interviews · journey maps · usability testing"],
+  ["contact", "02 — Contact"],
 ];
 
 export function TerminalClient() {
@@ -392,43 +384,10 @@ export function TerminalClient() {
           </div>
         </section>
 
-        {/* 03 — about */}
-        <section className="tm-section" id="about">
-          <div className="tm-section-meta" aria-hidden="true">
-            About_03
-          </div>
-          <div style={{ display: "flex", gap: 80, alignItems: "center" }}>
-            <div style={{ flex: 1 }}>
-              <h2 className="tm-accent">
-                Core
-                <br />
-                Specs
-              </h2>
-            </div>
-            <div style={{ flex: 1, borderLeft: "1px solid var(--accent)", paddingLeft: 40 }}>
-              <p style={{ marginBottom: 20, fontSize: 14, lineHeight: 1.6 }}>
-                Instructional design rigour, editorial art direction, and enough front-end to ship
-                the thing rather than only specify it.
-              </p>
-              <dl className="tm-data">
-                {SPECS.map(([k, v]) => (
-                  <div className="tm-data-row" key={k}>
-                    <dt>{k}</dt>
-                    <dd>{v}</dd>
-                  </div>
-                ))}
-              </dl>
-              <Link className="tm-cta tm-cta--ghost" href="/about" style={{ marginTop: 24 }}>
-                The long version ↗
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* 04 — contact */}
+        {/* 03 — contact. (The Core Specs panel that sat before it moved to /about, 1 Oct 2026.) */}
         <section className="tm-section" id="contact">
           <div className="tm-section-meta" aria-hidden="true">
-            Send_04
+            Send_03
           </div>
           <div style={{ textAlign: "center" }}>
             <p className="tm-warning">-- Open channel --</p>
