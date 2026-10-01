@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from "./theme-toggle";
+import { MotionToggle } from "./motion-toggle";
 
 // A full-width bar on a hairline: brand at left (the home link), numbered destinations
 // and the light/dark switch in the centre, one solid action at right. Hovering a link
@@ -9,7 +11,7 @@ import { usePathname } from "next/navigation";
 //
 // Three destinations and nothing else. The résumé lives in the footer.
 const LINKS = [
-  { href: "/work", n: "01", label: "Work", match: ["/work", "/series"] },
+  { href: "/portfolio", n: "01", label: "Portfolio", match: ["/portfolio", "/series"] },
   { href: "/about", n: "02", label: "About", match: ["/about"] },
 ];
 
@@ -31,14 +33,19 @@ export function Header() {
 
   return (
     <header className="nv">
-      <Link href="/" className="nv-brand" aria-label="NIMFAH — home">
-        <span className="nv-mark">
-          NIMFAH<span className="nv-dot blink">_</span>
-        </span>
-        <span className="nv-tag" aria-hidden="true">
-          Portfolio/2026
-        </span>
-      </Link>
+      {/* Brand, then the display settings (1 Oct 2026: they replaced the dated
+          "Portfolio/2026" tag, and left the corner cluster). */}
+      <div className="nv-left">
+        <Link href="/" className="nv-brand" aria-label="NIMFAH — home">
+          <span className="nv-mark">
+            NIMFAH<span className="nv-dot blink">_</span>
+          </span>
+        </Link>
+        <div className="nv-ctl" role="group" aria-label="Display settings">
+          <ThemeToggle className="ctl-btn" />
+          <MotionToggle className="ctl-btn" />
+        </div>
+      </div>
 
       <nav className="nv-pod" aria-label="Primary">
         {LINKS.map((l) => (

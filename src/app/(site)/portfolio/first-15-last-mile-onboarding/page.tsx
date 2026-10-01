@@ -275,7 +275,7 @@ export default function FirstFifteenLastMileOnboarding() {
             Available for learning experience design and instructional design roles.
           </p>
           <p className="f15-close-nav">
-            <Link href="/work">← All work</Link>
+            <Link href="/portfolio/lxd-id">← LXD/ID</Link>
           </p>
         </div>
       </section>

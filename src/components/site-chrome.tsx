@@ -8,7 +8,6 @@ import { StaticLayer } from "./static-layer";
 import { BroadcastLayer } from "./broadcast-layer";
 import { useSignal } from "@/lib/signal";
 import { Footer } from "./footer";
-import { SiteControls } from "./site-controls";
 import { Preloader } from "./preloader";
 import { ScrollProgress, ScrollReveal } from "./scroll";
 
@@ -21,7 +20,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   // The background signal runs on About and the Work index only — never on a case
   // study, where the work itself has to read clean.
   const pathname = usePathname();
-  const textured = pathname === "/about" || pathname === "/work";
+  const textured = pathname === "/about" || pathname === "/portfolio";
   // .tsys carries the home page's palette, faces and hard-edged geometry onto these
   // pages — see tsys.css. It wraps the chrome as well as the content, because a rounded
   // capsule nav over a squared-off HUD page is the seam it exists to close.
@@ -38,7 +37,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       {textured && signal === "broadcast" ? <BroadcastLayer strength={0.5} /> : null}
       <main id="main">{children}</main>
       <Footer />
-      <SiteControls />
       <ScrollReveal />
     </div>
   );

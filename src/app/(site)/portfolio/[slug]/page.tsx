@@ -153,16 +153,16 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           <p className="f15-contact-line">More work</p>
           <ul className="cs-more">
             <li>
-              <Link href="/work/first-15-last-mile-onboarding">First 15 — scenario-based onboarding ↗</Link>
+              <Link href="/portfolio/first-15-last-mile-onboarding">First 15 — scenario-based onboarding ↗</Link>
             </li>
             {others.map((o) => (
               <li key={o.slug}>
-                <Link href={`/work/${o.slug}`}>{o.title} ↗</Link>
+                <Link href={`/portfolio/${o.slug}`}>{o.title} ↗</Link>
               </li>
             ))}
           </ul>
           <p className="f15-close-nav">
-            <Link href="/work">← All work</Link>
+            <Link href="/portfolio/ux-ui">← UX/UI</Link>
           </p>
         </div>
       </section>

@@ -42,7 +42,7 @@ export type CaseStudy = {
 };
 
 const fig = (slug: string, name: string, w: number, h: number, alt: string, caption?: string, span: Figure["span"] = "wide"): Figure => ({
-  src: `/work/${slug}/${name}.webp`,
+  src: `/media/${slug}/${name}.webp`,
   w,
   h,
   alt,

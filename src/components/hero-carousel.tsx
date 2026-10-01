@@ -108,7 +108,7 @@ export function HeroCarousel() {
           <p className="cx-line">{SLIDES[i].line}</p>
         </div>
 
-        <Link className="cx-jump" href="/work">
+        <Link className="cx-jump" href="/portfolio">
           Selected work ↓
         </Link>
       </div>

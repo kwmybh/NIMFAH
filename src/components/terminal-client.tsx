@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 import { PixelPortrait } from "@/components/pixel-portrait";
 import { Header } from "@/components/header";
-import { SiteControls } from "@/components/site-controls";
 import { SwellText } from "@/components/swell-text";
 import { AnalogPortrait } from "@/components/analog-portrait";
 import { SignalLayer } from "@/components/signal-layer";
@@ -14,8 +13,9 @@ import { StaticLayer } from "@/components/static-layer";
 import { BroadcastPortrait } from "@/components/broadcast-portrait";
 import { BroadcastLayer } from "@/components/broadcast-layer";
 import { useSignal } from "@/lib/signal";
-import { WorkCard } from "@/components/work-card";
-import { WORK_ITEMS } from "@/lib/work-items";
+import { CategoryGrid } from "@/components/category-tile";
+import { CATEGORIES } from "@/lib/portfolio";
+import { SPECS, SPECS_PITCH } from "@/lib/specs";
 import { useMotionPaused } from "@/lib/motion";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
@@ -33,11 +33,11 @@ import { useMotionPaused } from "@/lib/motion";
 // The hero's foot: short facts, square-marked. Location-agnostic on purpose.
 const FACTS = ["Design + code", "Open to roles & commissions"];
 
-// Status-bar names for the four panels, in track order.
+// Status-bar names for the panels, in track order.
 const PANELS: [string, string][] = [
   ["home", "00 — Intro"],
-  ["work", "01 — Work"],
-  ["contact", "02 — Contact"],
+  ["portfolio", "01 — Portfolio"],
+  ["about", "02 — About"],
 ];
 
 export function TerminalClient() {
@@ -265,7 +265,6 @@ export function TerminalClient() {
           Skip to content
         </a>
         <Header />
-        <SiteControls />
       </div>
 
       {/* The status bar: scroll position, pointer, the panel in view, theme and the
@@ -361,50 +360,64 @@ export function TerminalClient() {
           </p>
         </section>
 
-        {/* 02 — work. The same cards as /work, sized to sit on one screen (1 Oct 2026).
-            The three First 15 PDFs that used to fill this panel are still one click away
-            inside the case study. The card wrapper borrows the .tsys tokens the cards
-            are styled with — see .tm-workcards in terminal.css. */}
-        <section className="tm-section" id="work">
+        {/* 02 — portfolio: the hub's category tiles, sized to one screen (1 Oct 2026).
+            The list borrows the .tsys tokens the tiles are styled with — see
+            .tm-pf in terminal.css. */}
+        <section className="tm-section" id="portfolio">
           <div className="tm-section-meta tm-section-meta--work" aria-hidden="true">
-            Work_02
+            Portfolio_02
           </div>
           <div className="tm-work-panel">
             <div className="tm-work-head">
-              <h2>Work</h2>
-              <Link className="tm-cta tm-cta--ghost" href="/work">
-                All work ↗
+              <h2>Portfolio</h2>
+              <Link className="tm-cta tm-cta--ghost" href="/portfolio">
+                Open the portfolio ↗
               </Link>
             </div>
-            <ul className="wc-grid tsys tm-workcards">
-              {WORK_ITEMS.map((item, n) => (
-                <WorkCard item={item} key={item.href} index={n} headingLevel={3} />
-              ))}
-            </ul>
+            <div className="tsys tm-pf">
+              <CategoryGrid cats={CATEGORIES} headingLevel={3} />
+            </div>
           </div>
         </section>
 
-        {/* 03 — contact. (The Core Specs panel that sat before it moved to /about, 1 Oct 2026.) */}
-        <section className="tm-section" id="contact">
+        {/* 03 — about + contact on one screen (1 Oct 2026): the core specs on the left,
+            the open channel on the right. */}
+        <section className="tm-section" id="about">
           <div className="tm-section-meta" aria-hidden="true">
-            Send_03
+            About_03
           </div>
-          <div style={{ textAlign: "center" }}>
-            <p className="tm-warning">-- Open channel --</p>
-            <h2 className="tm-h2--contact">Establish_link</h2>
-            <a className="tm-email" href="mailto:kwame.nimfah@gmail.com">
-              kwame.nimfah@gmail.com
-            </a>
-            <div className="tm-links">
-              <a href="mailto:kwame.nimfah@gmail.com">Email.sys</a>
-              <a href="/cv/Kwame Yeboah - LXD - Resume.pdf" target="_blank" rel="noopener">
-                Resume.sys
+          <div className="tm-about">
+            <div className="tm-about-l">
+              <h2 className="tm-accent">About</h2>
+              <p className="tm-about-pitch">{SPECS_PITCH}</p>
+              <dl className="tm-data tm-specs">
+                {SPECS.map(([k, v]) => (
+                  <div className="tm-data-row" key={k}>
+                    <dt>{k}</dt>
+                    <dd>{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <Link className="tm-cta tm-cta--ghost" href="/about">
+                The long version ↗
+              </Link>
+            </div>
+            <div className="tm-about-r">
+              <p className="tm-warning">-- Open channel --</p>
+              <h3 className="tm-link-h">Establish_link</h3>
+              <a className="tm-email" href="mailto:kwame.nimfah@gmail.com">
+                kwame.nimfah@gmail.com
               </a>
-              <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener">
-                LinkedIn.sys
-              </a>
-              <Link href="/about">About.sys</Link>
-              <Link href="/work">Work.sys</Link>
+              <div className="tm-links">
+                <a href="mailto:kwame.nimfah@gmail.com">Email.sys</a>
+                <a href="/cv/Kwame Yeboah - LXD - Resume.pdf" target="_blank" rel="noopener">
+                  Resume.sys
+                </a>
+                <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener">
+                  LinkedIn.sys
+                </a>
+                <Link href="/portfolio">Portfolio.sys</Link>
+              </div>
             </div>
           </div>
         </section>

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Graphic design",
   description:
     "Posters and logo identities by Kwame Nimfah — Ghana tourism, Ohio University and the African Students' Union's Heroes' Night.",
-  openGraph: { images: [{ url: "/work/graphic-design/cover.webp", width: 1600, height: 1200 }] },
+  openGraph: { images: [{ url: "/media/graphic-design/cover.webp", width: 1600, height: 1200 }] },
 };
 
 // The graphic design gallery, brought over from the old Squarespace site. Not a case
@@ -20,7 +20,7 @@ export default function GraphicDesign() {
     <section className="workidx gal">
       <div className="workidx-head">
         <p className="gal-kicker">
-          <Link href="/work">← All work</Link>
+          <Link href="/portfolio">← Portfolio</Link>
         </p>
         <h1 data-reveal="mask">Graphic design</h1>
         <p className="workidx-lede">

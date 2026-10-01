@@ -846,3 +846,64 @@ body:has(.tm) {
 @media (max-width: 900px) {
   .tm .tm-wordmark { font-size: min(88px, calc((100vw - 48px) / 4.75)); }
 }
+
+/* ── 1 Oct 2026, round 4: Portfolio + About/Contact panels ───────────────────── */
+/* 02 — the hub's category tiles, fitted to one screen. */
+.tm .tm-pf {
+  min-height: 0;
+  background: none;
+  text-transform: none;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+.tm #portfolio .tm-work-head h2 { font-size: clamp(48px, 6vw, 96px); }
+.tm .tm-pf .pf-grid { grid-auto-rows: clamp(150px, calc((100svh - 372px) / 2), 300px); }
+.tm .tm-pf .pf-tile:not([data-size="lg"]) .pf-blurb { display: none; }
+@media (max-width: 1100px) {
+  .tm .tm-pf .pf-grid { grid-auto-rows: clamp(160px, 30vw, 260px); }
+}
+
+/* 03 — About and the open channel, side by side. */
+.tm-about {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 88px);
+  align-items: center;
+}
+.tm .tm-about-l h2 { font-size: clamp(56px, 8vw, 128px); margin: 0 0 18px; }
+.tm-about-pitch {
+  max-width: 46ch;
+  margin: 0 0 4px;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.55;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+.tm .tm-specs { margin: 22px 0 28px; }
+.tm .tm-specs .tm-data-row { align-items: baseline; padding: 8px 0; }
+.tm .tm-specs dt { font-weight: 700; flex: none; }
+.tm .tm-specs dd { margin: 0; text-transform: none; font-size: 12px; letter-spacing: 0.02em; line-height: 1.5; }
+.tm-about-r {
+  padding-left: clamp(24px, 3vw, 48px);
+  border-left: 1px solid var(--border);
+}
+.tm-link-h {
+  margin: 10px 0 22px;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(30px, 3.4vw, 58px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.tm .tm-about-r .tm-email { font-size: clamp(18px, 2vw, 30px); }
+.tm .tm-about-r .tm-links { justify-content: flex-start; margin-top: 32px; gap: 28px; flex-wrap: wrap; }
+@media (max-width: 900px) {
+  .tm-about { grid-template-columns: 1fr; align-items: start; }
+  .tm-about-r { padding-left: 0; border-left: 0; padding-top: 28px; border-top: 1px solid var(--border); }
+}
+@media (max-width: 700px) {
+  .tm .tm-pf .pf-grid { grid-auto-rows: auto; }
+  .tm .tm-pf .pf-tile:not([data-size="lg"]) .pf-blurb { display: -webkit-box; }
+  .tm #portfolio .tm-work-head { flex-wrap: wrap; align-items: flex-start; }
+}

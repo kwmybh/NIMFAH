@@ -544,16 +544,7 @@ html:has(.tsys .nv) { scroll-padding-top: 80px; }
 .blink { animation: cursor-blink 1.06s steps(1) infinite; }
 :root[data-anim="paused"] .blink { animation: none; }
 
-/* ── Display settings: the corner cluster (components/site-controls.tsx) ─────── */
-.ctl {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 45;
-  display: flex;
-  gap: 6px;
-}
-.tm-sitenav .ctl { bottom: 52px; } /* clear of the home page's status bar */
+/* ── Display settings buttons (components/theme-toggle.tsx, motion-toggle.tsx) ─── */
 .ctl-btn {
   display: inline-flex;
   align-items: center;
@@ -572,8 +563,6 @@ html:has(.tsys .nv) { scroll-padding-top: 80px; }
 .ctl-btn:hover { background: var(--acid); border-color: var(--acid); color: #0e0e0e; }
 .ctl-btn .theme-toggle-mark { width: 12px; height: 12px; }
 .ctl-btn .motion-glyph.is-pause { width: 10px; height: 12px; }
-/* the footer's last line stays clear of the cluster */
-.tsys .fd-base { padding-right: 96px; }
 
 /* ── More lime in light mode (1 Oct 2026, round 3) ──────────────────────────────
    Marker highlights behind the headings and a full lime contact band. Every pairing
@@ -597,3 +586,36 @@ html:has(.tsys .nv) { scroll-padding-top: 80px; }
 :root:not([data-theme="dark"]) .tsys .fd-top .fd-eyebrow,
 :root:not([data-theme="dark"]) .tsys .fd-top .fd-shout { color: #0e0e0e; }
 :root:not([data-theme="dark"]) .tsys .fd-top .fd-shout:hover { text-decoration: underline 0.06em; text-underline-offset: 0.1em; }
+
+/* ── Nav left group: brand + display settings (1 Oct 2026, round 4) ─────────────
+   The settings sit beside the wordmark, set apart by a hairline, so they read as
+   controls rather than destinations. 30px squares; the corner cluster is retired. */
+.tsys .nv-left {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.tsys .nv-ctl {
+  display: flex;
+  gap: 6px;
+  padding-left: 18px;
+  border-left: 1px solid var(--edge);
+}
+.tsys .nv-ctl .ctl-btn { width: 30px; height: 30px; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+@media (max-width: 480px) {
+  /* A phone's bar is brand · settings · PORTFOLIO · ABOUT. GET IN TOUCH steps out —
+     the footer's "Shoot a message" and the home Contact panel carry the email. */
+  .tsys .nv-cta { display: none; }
+  .tsys .nv { grid-template-columns: auto 1fr; }
+  .tsys .nv-pod { justify-self: end; }
+  .tsys .nv-left { gap: 10px; }
+  .tsys .nv-ctl { padding-left: 10px; gap: 4px; }
+  .tsys .nv-ctl .ctl-btn { width: 28px; height: 28px; }
+}
+@media (max-width: 360px) {
+  .tsys .nv-left { gap: 8px; }
+  .tsys .nv-ctl { padding-left: 8px; }
+  .tsys .nv-pod a { padding: 8px 6px 7px; letter-spacing: 0.06em; }
+}

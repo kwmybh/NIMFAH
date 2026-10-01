@@ -3,6 +3,7 @@ import Link from "next/link";
 import { WorkCard } from "@/components/work-card";
 import { WORK_ITEMS } from "@/lib/work-items";
 import { HeroCarousel } from "@/components/hero-carousel";
+import { SPECS, SPECS_PITCH } from "@/lib/specs";
 import "../../about.css";
 import "../../carousel.css";
 import "../../work.css";
@@ -13,12 +14,6 @@ export const metadata: Metadata = {
     "NIMFAH — the studio of creative technologist Kwame Nimfah: art, design and technology.",
 };
 
-
-const SPECS: [string, string][] = [
-  ["Art", "Graphic design · Photography · Fashion design · Art direction"],
-  ["Design", "Product & UX · Research & usability testing · Figma · Illustrator"],
-  ["Technology", "React · TypeScript · Next.js · Creative coding · Accessibility (WCAG 2.2 AA)"],
-];
 
 export default function About() {
   return (
@@ -33,10 +28,7 @@ export default function About() {
             <h2 id="specs-h">Core specs</h2>
           </div>
           <div className="abt-specs-body">
-            <p className="abt-specs-pitch">
-              Art direction, design and code in one pair of hands — so the idea that gets drawn
-              is the one that ships.
-            </p>
+            <p className="abt-specs-pitch">{SPECS_PITCH}</p>
             <dl className="abt-specs-list">
               {SPECS.map(([k, v]) => (
                 <div className="abt-specs-row" key={k}>
@@ -53,7 +45,7 @@ export default function About() {
         <div className="abt-wrap">
           <div className="abt-sechead">
             <h2>Selected work</h2>
-            <Link href="/work">All work ↗</Link>
+            <Link href="/portfolio">Portfolio ↗</Link>
           </div>
           <ul className="wc-grid">
             {WORK_ITEMS.map((item, n) => (
@@ -68,8 +60,8 @@ export default function About() {
           <a className="abt-btn" href="mailto:kwame.nimfah@gmail.com">
             Shoot a message
           </a>
-          <Link className="abt-btn abt-btn-ghost" href="/work">
-            See the work
+          <Link className="abt-btn abt-btn-ghost" href="/portfolio">
+            See the portfolio
           </Link>
           <a
             className="abt-btn abt-btn-ghost"

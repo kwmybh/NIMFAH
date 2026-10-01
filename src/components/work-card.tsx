@@ -14,7 +14,7 @@ export type WorkItem = {
 // The typographic thumbnail for First 15 — ink ground, gold rule, Bodoni display
 // and the three tracked dimensions as meters. Real type at any size rather than a
 // raster of a screen that doesn't exist yet.
-function Plate() {
+export function Plate() {
   return (
     <div className="wc-plate" aria-hidden="true">
       <span className="wc-plate-rule" />

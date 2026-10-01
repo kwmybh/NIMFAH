@@ -27,7 +27,7 @@ export function Footer() {
           <a href="https://www.linkedin.com/in/kwame-yeboah/" target="_blank" rel="noopener">
             LinkedIn <i aria-hidden="true">↗</i>
           </a>
-          <Link href="/work">Work</Link>
+          <Link href="/portfolio">Portfolio</Link>
         </div>
       </div>
 

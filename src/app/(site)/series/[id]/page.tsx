@@ -36,8 +36,8 @@ export default async function SeriesDetail({
 
   return (
     <div className="detail">
-      <Link href="/work" className="back">
-        ← All work
+      <Link href="/portfolio" className="back">
+        ← Portfolio
       </Link>
       <h1>{series.title}</h1>
       <p className="meta">

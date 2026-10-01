@@ -12,7 +12,7 @@ export default function NotFound() {
         <div className="workidx-head">
           <h1>404</h1>
           <p className="workidx-lede">
-            That page doesn&apos;t exist — it may have moved. The <Link href="/work">work</Link>{" "}
+            That page doesn&apos;t exist — it may have moved. The <Link href="/portfolio">portfolio</Link>{" "}
             and <Link href="/about">about</Link> pages are good places to start, or go back to
             the <Link href="/">home page</Link>.
           </p>

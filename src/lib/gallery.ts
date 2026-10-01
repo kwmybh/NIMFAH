@@ -13,7 +13,7 @@ export type GalleryPiece = {
   alt: string;
 };
 
-const P = "/work/graphic-design";
+const P = "/media/graphic-design";
 
 export const GALLERY: GalleryPiece[] = [
   {
