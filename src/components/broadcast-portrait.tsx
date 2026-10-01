@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPaused } from "@/lib/motion";
 import { interferenceTile } from "@/lib/interference";
 
 /* The broadcast-interference variant of the hero portrait: the photo in its own colour,
@@ -17,6 +18,7 @@ type Props = { src: string; alt: string; className?: string };
 export function BroadcastPortrait({ src, alt, className }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const paused = useMotionPaused();
 
   useEffect(() => {
     const h = host.current;
@@ -24,7 +26,7 @@ export function BroadcastPortrait({ src, alt, className }: Props) {
     if (!h || !c) return;
     const ctx = c.getContext("2d");
     if (!ctx) return;
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = paused; // reduced motion or the nav Motion switch — see lib/motion.ts
 
     let alive = true;
     let frame = 0;
@@ -127,7 +129,7 @@ export function BroadcastPortrait({ src, alt, className }: Props) {
       alive = false;
       cancelAnimationFrame(frame);
     };
-  }, [src]);
+  }, [src, paused]);
 
   return (
     <div ref={host} className={`an-portrait ${className ?? ""}`} role="img" aria-label={alt}>

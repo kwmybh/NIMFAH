@@ -225,7 +225,8 @@ body:has(.tm) {
    #9df133 on the dark ground and #44730d on the light one, and both clear the 3:1
    that SC 1.4.11 asks of a focus indicator. */
 .tm-main:focus-visible {
-  outline: 3px solid var(--tm-accent);
+  /* was var(--tm-accent), a variable nothing defined — so the ring never drew */
+  outline: 3px solid var(--accent);
   outline-offset: -3px;
 }
 
@@ -244,6 +245,10 @@ body:has(.tm) {
      every panel to 100vh inside overflow:hidden, so at 320px or 200% zoom the content
      below the fold simply could not be reached. */
   overflow-y: auto;
+  /* The giant watermark numerals ran ~75px past the panel's right edge on phones,
+     which made each panel a sideways scroller with nothing focusable in it (axe:
+     scrollable-region-focusable). They are decoration; clip them. */
+  overflow-x: hidden;
   overscroll-behavior-y: contain;
 }
 .tm-section--wide { min-width: 150vw; }
@@ -459,7 +464,7 @@ body:has(.tm) {
   justify-content: center;
   gap: 40px;
 }
-.tm-links a { color: var(--accent); }
+.tm-links a { color: var(--accent); display: inline-block; padding-block: 6px; } /* 24px targets (2.5.8) */
 
 .tm a:focus-visible,
 .tm button:focus-visible {

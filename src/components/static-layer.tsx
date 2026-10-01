@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPaused } from "@/lib/motion";
 import { noiseTiles } from "@/lib/noise-tiles";
 
 /* The TV-static variant's background: fine live snow and CRT scanlines across the
@@ -12,13 +13,14 @@ import { noiseTiles } from "@/lib/noise-tiles";
 
 export function StaticLayer({ className, strength = 1 }: { className?: string; strength?: number }) {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const paused = useMotionPaused();
 
   useEffect(() => {
     const c = canvas.current;
     if (!c) return;
     const ctx = c.getContext("2d");
     if (!ctx) return;
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = paused; // reduced motion or the nav Motion switch — see lib/motion.ts
     const tiles = noiseTiles();
 
     const S = 2;
@@ -70,7 +72,7 @@ export function StaticLayer({ className, strength = 1 }: { className?: string; s
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [strength]);
+  }, [strength, paused]);
 
   return <canvas ref={canvas} className={`signal-layer ${className ?? ""}`} aria-hidden="true" />;
 }

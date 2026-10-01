@@ -419,8 +419,65 @@ body:has(.tsys) { background: #0e0e0e; }
 :root[data-theme="dark"] .theme-to-dark { display: none; }
 .tsys .nv-cta { white-space: nowrap; }
 @media (max-width: 480px) {
-  .tsys .nv-theme .theme-to-dark,
-  .tsys .nv-theme .theme-to-light { display: none; }
+  /* Only the visible word goes: the hidden "Switch to … mode" keeps the button named. */
+  .tsys .nv-theme .tw,
+  .tsys .nv-motion .motion-word { display: none; }
   .tsys .nv-cta { letter-spacing: 0.06em; font-size: 10px; }
   .tsys .nv-tag { display: none; }
 }
+
+/* ── WCAG 2.2 AA pass (1 Oct 2026) ─────────────────────────────────────────────
+   About/secondary grey: globals' --dim3 (#666a74) measured 4.47:1 on this ground —
+   just under 4.5. The .tsys palette now defines all three dims. */
+.tsys { --dim2: #9a978f; --dim3: #9a978f; }
+:root:not([data-theme="dark"]) .tsys { --dim2: #55534e; --dim3: #55534e; }
+
+/* 2.5.8 Target Size: every control in the bar is at least 24px tall. */
+.tsys .nv-brand,
+.tsys .nv-pod a,
+.tsys .nv-theme,
+.tsys .nv-cta { min-height: 24px; }
+.tsys .nv-brand { align-items: center; }
+.tsys .nv-theme { min-width: 24px; justify-content: center; }
+.tsys .nv-cta { display: inline-flex; align-items: center; }
+
+/* The Motion switch (2.2.2): same chassis as the theme switch; the glyph is two bars
+   (pause) or a triangle (play), drawn in CSS so it follows currentColor. */
+.motion-glyph {
+  width: 10px;
+  height: 10px;
+  flex: none;
+}
+.motion-glyph.is-pause {
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+  box-sizing: border-box;
+  width: 9px;
+}
+.motion-glyph.is-play {
+  width: 0;
+  height: 0;
+  border-left: 9px solid currentColor;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.tsys .nv-motion:hover { color: var(--fg); }
+
+/* 1.4.10 Reflow: at 320px (or 400% zoom) "Get in touch" pushed the bar 47px past the
+   edge. Narrow screens get the short label — the name changes with it. */
+.nv-cta-short { display: none; }
+@media (max-width: 400px) {
+  .nv-cta-long { display: none; }
+  .nv-cta-short { display: inline; }
+  .tsys .nv { gap: 6px; padding-inline: 12px; }
+  .tsys .nv-pod { gap: 4px; }
+  /* The hover brackets cost ~18px a link; here the current page is underlined instead. */
+  .tsys .nv-br { display: none; }
+  .tsys .nv-pod a[aria-current="page"] .nv-lbl { text-decoration: underline 1px var(--accent); text-underline-offset: 4px; }
+  .tsys .nv-theme { padding: 2px 4px; gap: 0; }
+  .tsys .nv-cta { padding: 7px 8px 6px; letter-spacing: 0.04em; }
+}
+
+/* 2.4.11 Focus Not Obscured: the fixed bar is ~57px tall; in-page jumps and
+   focus-driven scrolling stop clear of it. */
+html:has(.tsys .nv) { scroll-padding-top: 80px; }

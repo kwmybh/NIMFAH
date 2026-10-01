@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPaused } from "@/lib/motion";
 
 /* The analog variant's background: a faint VHS tracking layer over the whole viewport.
    A few hairline tracking lines drift down the screen; every so often a band of tape
@@ -13,13 +14,14 @@ import { useEffect, useRef } from "react";
 // `strength` scales every alpha: 1 on the home hero, lower over reading pages.
 export function SignalLayer({ className, strength = 1 }: { className?: string; strength?: number }) {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const paused = useMotionPaused();
 
   useEffect(() => {
     const c = canvas.current;
     if (!c) return;
     const ctx = c.getContext("2d");
     if (!ctx) return;
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = paused; // reduced motion or the nav Motion switch — see lib/motion.ts
 
     const S = 2; // half resolution
     const size = () => {
@@ -91,7 +93,7 @@ export function SignalLayer({ className, strength = 1 }: { className?: string; s
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [strength]);
+  }, [strength, paused]);
 
   return <canvas ref={canvas} className={`signal-layer ${className ?? ""}`} aria-hidden="true" />;
 }

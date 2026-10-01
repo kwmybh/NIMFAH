@@ -936,3 +936,6 @@
   font: 400 10px var(--f15-ui);
   fill: var(--f15-silver);
 }
+
+/* 2.5.8 target size — see case-study.css */
+.f15-close-nav a { display: inline-block; padding-block: 3px; min-height: 24px; }

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useMotionPaused } from "@/lib/motion";
 
 // Product leads, Learning follows (1 Oct 2026): the site introduces a creative
 // technologist, and the first word a visitor reads should not file him under one discipline.
@@ -40,13 +41,14 @@ export function HeroCarousel() {
   const still = useRef(false);
   const hold = useRef(false);
 
+  const paused = useMotionPaused();
   useEffect(() => {
-    still.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Reduced motion never auto-advances. WCAG 2.2.2 wants a way to stop moving
-    // content; not starting it is the strongest form of that.
+    still.current = paused;
+    // Reduced motion — or the nav Motion switch — never auto-advances. WCAG 2.2.2
+    // wants a way to stop moving content; not starting it is the strongest form of that.
     if (still.current) setPlaying(false);
     setArmed(true);
-  }, []);
+  }, [paused]);
 
   const go = useCallback((n: number) => {
     setI((c) => (c + n + SLIDES.length) % SLIDES.length);
@@ -86,7 +88,9 @@ export function HeroCarousel() {
           find the <em>decision</em> hiding inside it.
         </p>
 
-        <div className="cx-stage" aria-live="polite" aria-atomic="true">
+        {/* Live only while stopped: announcing every automatic advance talks over
+            whatever a screen-reader user is reading elsewhere on the page. */}
+        <div className="cx-stage" aria-live={playing ? "off" : "polite"} aria-atomic="true">
           {SLIDES.map((s, n) => (
             <p
               key={s.word}

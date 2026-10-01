@@ -132,8 +132,24 @@ img,
 video {
   display: block;
 }
-.skip {
+/* Visually hidden, still announced. */
+.vh {
   position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* The Motion switch (lib/motion.ts) stops CSS loops too — the blinking cursor. */
+:root[data-anim="paused"] .tm-cursor { animation: none !important; }
+.skip {
+  /* fixed, not absolute: it must sit over the fixed nav bar wherever it is in the tree */
+  position: fixed;
   left: -9999px;
   top: 0;
   background: var(--fg);

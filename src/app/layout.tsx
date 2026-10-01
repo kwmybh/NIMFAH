@@ -16,6 +16,7 @@ import {
 } from "@/lib/fonts";
 import { Providers } from "@/components/providers";
 import { themeInitScript } from "@/components/theme-provider";
+import { motionInitScript } from "@/lib/motion-init";
 import { siteUrl } from "@/lib/site";
 
 // Canonical origin lives in src/lib/site.ts so robots and sitemap agree with metadata.
@@ -55,6 +56,8 @@ export default function RootLayout({
       <head>
         {/* Apply the persisted / preferred theme before first paint (no flash). */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* The Motion switch's state (lib/motion.ts), also before first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: motionInitScript }} />
         {/* Arm the reveal layer before first paint. Everything [data-reveal] stays
             visible unless this runs, so no-JS and broken-JS both render a complete
             page rather than an empty one. */}

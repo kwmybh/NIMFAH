@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPaused } from "@/lib/motion";
 
 /* A portrait drawn as a live bitmap: the photo is sampled down to a coarse grid, each
    cell quantized to a handful of grey levels and jittered, then scaled back up with
@@ -46,6 +47,7 @@ export function PixelPortrait({
 }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const paused = useMotionPaused();
 
   useEffect(() => {
     const c = canvas.current;
@@ -57,7 +59,7 @@ export function PixelPortrait({
     let frame = 0;
     let last = 0;
     let alive = true;
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = paused; // reduced motion or the nav Motion switch — see lib/motion.ts
 
     const img = new Image();
     img.decoding = "async";
@@ -131,7 +133,7 @@ export function PixelPortrait({
       alive = false;
       cancelAnimationFrame(frame);
     };
-  }, [src, cols, levels, fps]);
+  }, [src, cols, levels, fps, paused]);
 
   return (
     <div ref={host} className={`px-portrait ${className ?? ""}`} role="img" aria-label={alt}>

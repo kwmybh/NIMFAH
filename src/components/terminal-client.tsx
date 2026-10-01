@@ -13,6 +13,7 @@ import { StaticLayer } from "@/components/static-layer";
 import { BroadcastPortrait } from "@/components/broadcast-portrait";
 import { BroadcastLayer } from "@/components/broadcast-layer";
 import { useSignal } from "@/lib/signal";
+import { useMotionPaused } from "@/lib/motion";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
    as written. What is NOT carried over is its content: PROJECT_NEON_VOID, SYSTEM_HAPTIC
@@ -59,6 +60,7 @@ export function TerminalClient() {
   const yCoord = useRef<HTMLSpanElement>(null);
   const canvasHost = useRef<HTMLDivElement>(null);
   const signal = useSignal();
+  const paused = useMotionPaused();
 
   // ── the track ───────────────────────────────────────────────────────────────
   // A real scroller, not a transform driven by a wheel listener. It looks identical and
@@ -228,7 +230,7 @@ export function TerminalClient() {
 
     let frame = 0;
     let last = 0;
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = paused; // reduced motion or the nav Motion switch — see lib/motion.ts
     const loop = (now: number) => {
       if (now - last > 66) {
         // ~15fps is plenty for something this slow
@@ -255,7 +257,7 @@ export function TerminalClient() {
       window.removeEventListener("resize", onResize);
       c.remove();
     };
-  }, [signal]);
+  }, [signal, paused]);
 
   return (
     <div className={`tm ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable}`}>
@@ -270,6 +272,9 @@ export function TerminalClient() {
           page. The wrapper borrows the .tsys tokens the header is styled with; see
           .tm-sitenav in terminal.css for why it paints nothing itself. */}
       <div className="tsys tm-sitenav">
+        <a className="skip" href="#panels">
+          Skip to content
+        </a>
         <Header />
       </div>
 
@@ -308,8 +313,8 @@ export function TerminalClient() {
       <main
         className="tm-main"
         ref={track}
+        id="panels"
         tabIndex={0}
-        role="group"
         aria-label="Panels. Scroll horizontally, or use the left and right arrow keys."
       >
         {/* 01 — index */}

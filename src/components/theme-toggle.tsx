@@ -12,12 +12,11 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       className={`theme-toggle ${className ?? ""}`}
-      aria-label="Toggle light or dark mode"
       onClick={toggle}
     >
       <span className="theme-toggle-mark" aria-hidden="true" />
-      <span className="theme-to-dark">Dark</span>
-      <span className="theme-to-light">Light</span>
+      <span className="theme-to-dark"><span className="vh">Switch to </span><span className="tw">Dark</span><span className="vh"> mode</span></span>
+      <span className="theme-to-light"><span className="vh">Switch to </span><span className="tw">Light</span><span className="vh"> mode</span></span>
     </button>
   );
 }

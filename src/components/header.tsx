@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
+import { MotionToggle } from "./motion-toggle";
 
 // A full-width bar on a hairline: brand at left (the home link), numbered destinations
 // and the light/dark switch in the centre, one solid action at right. Hovering a link
@@ -59,10 +60,12 @@ export function Header() {
           </Link>
         ))}
         <ThemeToggle className="nv-theme" />
+        <MotionToggle className="nv-theme nv-motion" />
       </nav>
 
       <a className="nv-cta" href="mailto:kwame.nimfah@gmail.com">
-        Get in touch
+        <span className="nv-cta-long">Get in touch</span>
+        <span className="nv-cta-short">Contact</span>
       </a>
     </header>
   );

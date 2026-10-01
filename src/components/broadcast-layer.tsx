@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMotionPaused } from "@/lib/motion";
 import { interferenceTile } from "@/lib/interference";
 
 /* The broadcast variant's background: the woven interference pattern drifting faintly
@@ -11,13 +12,14 @@ import { interferenceTile } from "@/lib/interference";
 
 export function BroadcastLayer({ className, strength = 1 }: { className?: string; strength?: number }) {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const paused = useMotionPaused();
 
   useEffect(() => {
     const c = canvas.current;
     if (!c) return;
     const ctx = c.getContext("2d");
     if (!ctx) return;
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = paused; // reduced motion or the nav Motion switch — see lib/motion.ts
     const weave = interferenceTile();
 
     const size = () => {
@@ -69,7 +71,7 @@ export function BroadcastLayer({ className, strength = 1 }: { className?: string
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [strength]);
+  }, [strength, paused]);
 
   return <canvas ref={canvas} className={`signal-layer ${className ?? ""}`} aria-hidden="true" />;
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "../../../first15.css";
 import { TriageDemo } from "./triage";
 import { FlowMap } from "./flow-map";
@@ -274,7 +275,7 @@ export default function FirstFifteenLastMileOnboarding() {
             Available for learning experience design and instructional design roles.
           </p>
           <p className="f15-close-nav">
-            <a href="/work">← All work</a>
+            <Link href="/work">← All work</Link>
           </p>
         </div>
       </section>

@@ -56,3 +56,12 @@
   .f15.cs .cs-figs { grid-template-columns: 1fr; }
   .f15.cs .cs-fig-half { grid-column: 1 / -1; }
 }
+
+/* WCAG 2.2 2.5.8 (1 Oct 2026): the closing links were 19px tall — under the 24px
+   minimum. Block-level padding grows the hit area without moving the type. */
+.f15-close-nav a,
+.cs-more a {
+  display: inline-block;
+  padding-block: 3px;
+  min-height: 24px;
+}
