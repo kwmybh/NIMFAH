@@ -10,6 +10,8 @@ import { AnalogPortrait } from "@/components/analog-portrait";
 import { SignalLayer } from "@/components/signal-layer";
 import { StaticPortrait } from "@/components/static-portrait";
 import { StaticLayer } from "@/components/static-layer";
+import { BroadcastPortrait } from "@/components/broadcast-portrait";
+import { BroadcastLayer } from "@/components/broadcast-layer";
 import { useSignal } from "@/lib/signal";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
@@ -260,6 +262,7 @@ export function TerminalClient() {
       <div className="tm-canvas" ref={canvasHost} aria-hidden="true" />
       {signal === "vhs" ? <SignalLayer /> : null}
       {signal === "static" ? <StaticLayer /> : null}
+      {signal === "broadcast" ? <BroadcastLayer /> : null}
 
       {/* The same header every other page uses — same items, same order, same corner.
           This panel track used to carry its own nav (01 Work / 02 About / theme), which
@@ -316,7 +319,13 @@ export function TerminalClient() {
           </div>
           {/* The portrait sits behind the type, as on the reference: the figure is the
               ground the heading is set on, not a picture beside it. */}
-          {signal === "static" ? (
+          {signal === "broadcast" ? (
+            <BroadcastPortrait
+              className="tm-portrait"
+              src="/portrait/kwame-studio-cutout.webp"
+              alt="Kwame Nimfah, in a black knit cap and glasses, looking up and away — in colour, as if received on a weak broadcast signal."
+            />
+          ) : signal === "static" ? (
             <StaticPortrait
               className="tm-portrait"
               src="/portrait/kwame-studio-cutout.webp"
