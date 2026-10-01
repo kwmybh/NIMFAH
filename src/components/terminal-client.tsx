@@ -6,6 +6,9 @@ import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 import { PixelPortrait } from "@/components/pixel-portrait";
 import { Header } from "@/components/header";
 import { SwellText } from "@/components/swell-text";
+import { AnalogPortrait } from "@/components/analog-portrait";
+import { SignalLayer } from "@/components/signal-layer";
+import { useSignal } from "@/lib/signal";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
    as written. What is NOT carried over is its content: PROJECT_NEON_VOID, SYSTEM_HAPTIC
@@ -51,6 +54,7 @@ export function TerminalClient() {
   const xCoord = useRef<HTMLSpanElement>(null);
   const yCoord = useRef<HTMLSpanElement>(null);
   const canvasHost = useRef<HTMLDivElement>(null);
+  const signal = useSignal();
 
   // ── the track ───────────────────────────────────────────────────────────────
   // A real scroller, not a transform driven by a wheel listener. It looks identical and
@@ -141,6 +145,7 @@ export function TerminalClient() {
   // comes from the page (--fg on --bg), so it follows the theme. Reduced motion draws
   // one frame and stops.
   useEffect(() => {
+    if (signal !== "pixel") return;
     const host = canvasHost.current;
     if (!host) return;
     const c = document.createElement("canvas");
@@ -246,11 +251,12 @@ export function TerminalClient() {
       window.removeEventListener("resize", onResize);
       c.remove();
     };
-  }, []);
+  }, [signal]);
 
   return (
     <div className={`tm ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable}`}>
       <div className="tm-canvas" ref={canvasHost} aria-hidden="true" />
+      {signal === "analog" ? <SignalLayer /> : null}
 
       {/* The same header every other page uses — same items, same order, same corner.
           This panel track used to carry its own nav (01 Work / 02 About / theme), which
@@ -307,12 +313,20 @@ export function TerminalClient() {
           </div>
           {/* The portrait sits behind the type, as on the reference: the figure is the
               ground the heading is set on, not a picture beside it. */}
+          {signal === "analog" ? (
+            <AnalogPortrait
+              className="tm-portrait"
+              src="/portrait/kwame-studio-cutout.webp"
+              alt="Kwame Nimfah, in a black knit cap and glasses, looking up and away — in grayscale, as if played from a worn videotape."
+            />
+          ) : (
           <PixelPortrait
-            className="tm-portrait"
-            src="/portrait/kwame-studio-cutout.webp"
-            fallback="/portrait/kwame-studio-pixel.png"
-            alt="Kwame Nimfah, in a black knit cap and glasses, looking up and away — rendered as a coarse gray bitmap."
-          />
+              className="tm-portrait"
+              src="/portrait/kwame-studio-cutout.webp"
+              fallback="/portrait/kwame-studio-pixel.png"
+              alt="Kwame Nimfah, in a black knit cap and glasses, looking up and away — rendered as a coarse gray bitmap."
+            />
+          )}
           {/* Role at the top, name at the foot — the structure of the reference the
               owner chose, in NIMFAH's own faces: mono light over the pixel wordmark. */}
           <div className="tm-hero-top tm-index-copy">
