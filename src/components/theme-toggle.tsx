@@ -5,7 +5,7 @@ import { useTheme } from "./theme-provider";
 // ☾ in light, ☀ in dark. suppressHydrationWarning covers the one-time glyph mismatch:
 // SSR renders the light glyph, but on the client the provider reads the real (possibly
 // dark) theme the inline script applied before paint.
-export function ThemeToggle() {
+export function ThemeToggle({ text = false }: { text?: boolean }) {
   const { theme, toggle } = useTheme();
   return (
     <button
@@ -15,7 +15,7 @@ export function ThemeToggle() {
       onClick={toggle}
       suppressHydrationWarning
     >
-      {theme === "dark" ? "☀" : "☾"}
+      {text ? (theme === "dark" ? "Light mode" : "Dark mode") : theme === "dark" ? "☀" : "☾"}
     </button>
   );
 }

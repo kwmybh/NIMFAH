@@ -12,9 +12,9 @@ import { TerminalClient } from "@/components/terminal-client";
 // cursor and reveal layer would all fight a full-viewport HUD that brings its own nav,
 // progress bar and frame.
 export const metadata: Metadata = {
-  title: { absolute: "Kwame Yeboah — Learning experience design" },
+  title: { absolute: "Kwame Yeboah — Creative technologist" },
   description:
-    "Learning experience design, product design and front-end by Kwame Yeboah — scenario-based learning, design systems, and the case study to prove it.",
+    "Kwame Yeboah, creative technologist — product and learning design, front-end, and image-making, with the case studies to prove it.",
 };
 
 export default function Home() {

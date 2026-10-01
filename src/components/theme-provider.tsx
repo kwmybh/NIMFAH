@@ -10,13 +10,13 @@ import {
 
 export type Theme = "light" | "dark";
 
-export const THEME_KEY = "nimfah-theme";
+// v2 since 1 Oct 2026, when light became the default: the old key held "dark" for anyone
+// who had ever loaded the site under the dark default, not only people who chose it.
+export const THEME_KEY = "nimfah-theme-v2";
 
 // Inline script injected into <head> so the theme is applied before first paint (no flash).
-// Dark is the brand default, not a preference: the site's art direction is a near-black
-// ground with the acid accent, and a visitor arriving on a light-mode laptop should still
-// see the site as designed. A persisted choice from the toggle still wins.
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();`;
+// Light is the default (1 Oct 2026). A persisted choice from the footer switch still wins.
+export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();`;
 
 type ThemeContextValue = {
   theme: Theme;
@@ -35,7 +35,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       const attr = document.documentElement.getAttribute("data-theme");
       if (attr === "dark" || attr === "light") return attr;
     }
-    return "dark";
+    return "light";
   });
 
   const toggle = useCallback(() => {

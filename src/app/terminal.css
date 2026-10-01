@@ -582,3 +582,10 @@ body:has(.tm) {
 @media (max-width: 900px) {
   .tm-hud > .tm-hud-label--center:nth-child(2) { visibility: hidden; }
 }
+
+.tm-links .theme-toggle { color: var(--accent); }
+.tm-links .theme-toggle:hover { color: var(--fg); }
+
+/* The NIMFAH wordmark now sits in the top-left corner, where this vertical readout
+   began; start the readout below it. */
+.tm-hud-label--left { padding-top: 56px; }

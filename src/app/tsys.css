@@ -176,11 +176,22 @@ body:has(.tsys) { background: #0e0e0e; }
 .tsys .nv {
   position: fixed;
   top: 40px;
+  left: 40px;
   right: 40px;
-  left: auto;
   inset-block-end: auto;
   width: auto;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* The wordmark sits on its own at the left; the hairline-and-glass box holds the three
+   destinations at the right, in the corner the home page's panels frame. */
+.tsys .nv-box {
+  display: flex;
   align-items: center;
   gap: 20px;
   padding: 10px 20px;
@@ -202,14 +213,17 @@ body:has(.tsys) { background: #0e0e0e; }
   box-shadow: none;
 }
 
-/* The monogram is a label in the row now, not a circle of its own. */
+/* The wordmark: the HUD's pixel face, sized to read as a logotype rather than a link. */
 .tsys .nv-mark {
   width: auto;
   height: auto;
-  color: var(--accent);
-  letter-spacing: 0.14em;
+  padding: 10px 0;
+  font-family: var(--pixel);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--fg);
 }
-.tsys .nv-mark:hover { background: none; color: var(--fg); }
+.tsys .nv-mark:hover { background: none; color: var(--accent); }
 
 .tsys .nv-pod { padding: 0; gap: 4px; }
 /* Every link carries the current-page fill's padding, filled or not, so the row keeps
@@ -255,17 +269,12 @@ body:has(.tsys) { background: #0e0e0e; }
 
 /* The HUD pulls its frame in to 16px on a phone; the nav follows it. */
 @media (max-width: 900px) {
-  .tsys .nv {
-    top: 16px;
-    right: 16px;
-    left: 16px;
-    gap: 12px;
-    padding: 8px 12px;
-    justify-content: space-between;
-  }
+  .tsys .nv { top: 16px; left: 16px; right: 16px; gap: 12px; }
+  .tsys .nv-box { gap: 12px; padding: 8px 12px; }
+  .tsys .nv-mark { font-size: 13px; }
   .tsys .nv-pod { gap: 0; }
-  .tsys .nv-actions { gap: 12px; }
 }
+
 
 /* ── chrome: the footer dock ── */
 .tsys .fd { border-top: 1px dashed var(--line); }
@@ -311,3 +320,20 @@ body:has(.tsys) { background: #0e0e0e; }
   .tsys .wc-img,
   .tsys .wc-foot { transition: none !important; }
 }
+
+/* nav.css hides "About" on phones because the capsule nav had four items to fit. This
+   one has three, and About is one of the three that stays. */
+.tsys .nv-pod a:first-child { display: inline-block; }
+
+/* The footer's theme switch: a text control in the baseline row, not a glyph. */
+.tsys .fd-base .theme-toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.tsys .fd-base .theme-toggle:hover { color: var(--accent); }

@@ -9,7 +9,7 @@ import "../../work.css";
 export const metadata: Metadata = {
   title: { absolute: "Kwame Yeboah — Designer who builds" },
   description:
-    "Learning experience and product design by Kwame Yeboah. Communication design, design systems, front-end, and scenario-based learning.",
+    "Kwame Yeboah, creative technologist: product and learning design, design systems, front-end, and image-making.",
 };
 
 const FEATURED: WorkItem = {

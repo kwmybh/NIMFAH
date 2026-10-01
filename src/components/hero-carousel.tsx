@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
+// Product leads, Learning follows (1 Oct 2026): the site introduces a creative
+// technologist, and the first word a visitor reads should not file him under one discipline.
+//
 // Replaces the five-screen pinned sequence. The reference rotates one large word per
 // offer on a single centred screen; it rotates three services, so the analogue here is
 // the three disciplines already named on the page rather than invented ones.
@@ -12,19 +15,19 @@ import Link from "next/link";
 
 const SLIDES = [
   {
-    word: "Learning.",
-    label: "Learning experience design",
-    line: "Scenario-based onboarding, design documents and job aids — the content distributed teams learn from without being taught.",
-  },
-  {
     word: "Product.",
     label: "Product design",
-    line: "Research synthesised into journey maps, patterns and documentation, so a team can see the decision before it builds.",
+    line: "Research synthesized into journey maps, patterns and documentation, so a team can see the decision before it builds.",
   },
   {
     word: "Code.",
     label: "Front-end",
     line: "React, TypeScript and CSS — so the thing gets built and shipped, not only specified.",
+  },
+  {
+    word: "Learning.",
+    label: "Learning experience design",
+    line: "Scenario-based onboarding, design documents and job aids — the content distributed teams learn from without being taught.",
   },
 ];
 

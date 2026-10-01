@@ -7,7 +7,7 @@ import "../../work.css";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Selected learning experience design, product design and photography by Kwame Yeboah.",
+    "Selected product design, learning design and photography by Kwame Yeboah, creative technologist.",
 };
 
 const CASE_STUDIES: WorkItem[] = [
@@ -42,7 +42,7 @@ export default function WorkIndex() {
       <div className="workidx-head">
         <h1 data-reveal="mask">Work</h1>
         <p className="workidx-lede" data-reveal="up" style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}>
-          Learning and product design, documented end to end — the problem, the decisions, and the
+          Product and learning design, documented end to end — the problem, the decisions, and the
           artefacts a team could actually build from.
         </p>
       </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "./theme-toggle";
 
 // The reference closes on a footer-dock: a large call to action, then letter-spaced link
 // columns under tracked headings, then a baseline row — full-bleed and left-aligned, not
@@ -18,7 +19,7 @@ export function Footer() {
           <p className="fd-h t-label-sm">Direct</p>
           <a href="mailto:kwame.nimfah@gmail.com">kwame.nimfah@gmail.com</a>
           <a href="/cv/Kwame Yeboah - LXD - Resume.pdf" target="_blank" rel="noopener">
-            Download CV <i aria-hidden="true">↓</i>
+            Résumé <i aria-hidden="true">↓</i>
           </a>
         </div>
 
@@ -34,6 +35,7 @@ export function Footer() {
       <div className="bleed fd-base">
         <span>© 2026 Nimfah</span>
         <span>Kwame Yeboah</span>
+        <ThemeToggle text />
       </div>
     </footer>
   );
