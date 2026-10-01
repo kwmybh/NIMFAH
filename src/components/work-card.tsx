@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { PixelResolve } from "./pixel-resolve";
 
 export type WorkItem = {
   href: string;
@@ -65,15 +66,20 @@ export function WorkCard({
       <Link href={item.href} className="wc-link">
         <div className="wc-thumb">
           {item.thumb.kind === "image" ? (
-            <Image
-              src={item.thumb.src}
-              alt={item.thumb.alt}
-              fill
-              sizes="(max-width: 760px) 92vw, 46vw"
-              className="wc-img"
-            />
+            <PixelResolve className="wc-px">
+              <Image
+                src={item.thumb.src}
+                alt={item.thumb.alt}
+                fill
+                sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px"
+                className="wc-img"
+              />
+            </PixelResolve>
           ) : (
-            <Plate />
+            // The plate is live type, so the bitmap is sampled from a snapshot of it.
+            <PixelResolve className="wc-px wc-px-plate" source="/work/first-15-plate.png">
+              <Plate />
+            </PixelResolve>
           )}
           <span className="wc-pill">{item.category}</span>
         </div>

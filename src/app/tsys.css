@@ -139,7 +139,10 @@ body:has(.tsys) { background: #0e0e0e; }
   border-radius: 0;
   background: var(--panel);
 }
+/* Full colour, no halftone (1 Oct 2026): the pixel resolve carries the treatment now.
+   The dot screen stays defined but switched off rather than deleted. */
 .tsys .wc-thumb::after {
+  display: none;
   content: '';
   position: absolute;
   inset: 0;
@@ -149,8 +152,7 @@ body:has(.tsys) { background: #0e0e0e; }
   background-size: 3px 3px;
   opacity: 0.2;
 }
-.tsys .wc-img { filter: grayscale(1) contrast(1.2); }
-.tsys .wc-link:hover .wc-img { filter: grayscale(1) contrast(1.2); }
+.tsys .wc-img { filter: none; }
 
 .tsys .wc-pill {
   border-radius: 0;

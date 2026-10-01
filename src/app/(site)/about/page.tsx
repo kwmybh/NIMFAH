@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { WorkCard, type WorkItem } from "@/components/work-card";
+import { WorkCard } from "@/components/work-card";
+import { WORK_ITEMS } from "@/lib/work-items";
 import { HeroCarousel } from "@/components/hero-carousel";
 import "../../about.css";
 import "../../carousel.css";
@@ -12,13 +13,6 @@ export const metadata: Metadata = {
     "Kwame Yeboah, creative technologist: product and learning design, design systems, front-end, and image-making.",
 };
 
-const FEATURED: WorkItem = {
-  href: "/work/first-15-last-mile-onboarding",
-  title: "First 15 — scenario-based onboarding for last-mile delivery",
-  category: "Case study",
-  meta: "A blended Rise 360 and Storyline 360 experience that trains new delivery associates to decide under pressure.",
-  thumb: { kind: "plate" },
-};
 
 export default function About() {
   return (
@@ -32,7 +26,9 @@ export default function About() {
             <Link href="/work">All work ↗</Link>
           </div>
           <ul className="wc-grid">
-            <WorkCard item={FEATURED} />
+            {WORK_ITEMS.map((item, n) => (
+              <WorkCard item={item} key={item.href} index={n} headingLevel={3} />
+            ))}
           </ul>
         </div>
       </section>

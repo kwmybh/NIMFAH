@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SERIES, SHOW_PHOTOGRAPHY } from "@/lib/data";
-import { CASE_STUDIES as PRODUCT } from "@/lib/case-studies";
+import { WORK_ITEMS as CASE_STUDIES } from "@/lib/work-items";
 import { WorkCard, type WorkItem } from "@/components/work-card";
 import "../../work.css";
 
@@ -10,23 +10,6 @@ export const metadata: Metadata = {
     "Selected product design, learning design and photography by Kwame Yeboah, creative technologist.",
 };
 
-const CASE_STUDIES: WorkItem[] = [
-  {
-    href: "/work/first-15-last-mile-onboarding",
-    title: "First 15 — scenario-based onboarding for last-mile delivery",
-    category: "Case study",
-    meta: "A blended Rise 360 and Storyline 360 experience that trains new delivery associates to decide under pressure. Playable scenario, design document, developer-handoff storyboard.",
-    thumb: { kind: "plate" },
-  },
-  // Product design, carried over from the Squarespace portfolio. Newest first.
-  ...PRODUCT.map<WorkItem>((c) => ({
-    href: `/work/${c.slug}`,
-    title: c.title,
-    category: "Case study",
-    meta: c.cardMeta,
-    thumb: { kind: "image", src: c.cover.src, alt: c.cover.alt },
-  })),
-];
 
 export default function WorkIndex() {
   const photography: WorkItem[] = (SHOW_PHOTOGRAPHY ? SERIES : []).map((s) => ({
