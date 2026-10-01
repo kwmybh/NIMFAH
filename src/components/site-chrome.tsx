@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { Header } from "./header";
 import { SignalLayer } from "./signal-layer";
+import { StaticLayer } from "./static-layer";
 import { useSignal } from "@/lib/signal";
 import { Footer } from "./footer";
 import { Preloader } from "./preloader";
@@ -25,7 +26,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <Preloader />
       <ScrollProgress />
       <Header />
-      {signal === "analog" ? <SignalLayer strength={0.45} /> : null}
+      {signal === "vhs" ? <SignalLayer strength={0.45} /> : null}
+      {signal === "static" ? <StaticLayer strength={0.5} /> : null}
       <main id="main">{children}</main>
       <Footer />
       <ScrollReveal />

@@ -8,6 +8,8 @@ import { Header } from "@/components/header";
 import { SwellText } from "@/components/swell-text";
 import { AnalogPortrait } from "@/components/analog-portrait";
 import { SignalLayer } from "@/components/signal-layer";
+import { StaticPortrait } from "@/components/static-portrait";
+import { StaticLayer } from "@/components/static-layer";
 import { useSignal } from "@/lib/signal";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
@@ -256,7 +258,8 @@ export function TerminalClient() {
   return (
     <div className={`tm ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable}`}>
       <div className="tm-canvas" ref={canvasHost} aria-hidden="true" />
-      {signal === "analog" ? <SignalLayer /> : null}
+      {signal === "vhs" ? <SignalLayer /> : null}
+      {signal === "static" ? <StaticLayer /> : null}
 
       {/* The same header every other page uses — same items, same order, same corner.
           This panel track used to carry its own nav (01 Work / 02 About / theme), which
@@ -313,7 +316,13 @@ export function TerminalClient() {
           </div>
           {/* The portrait sits behind the type, as on the reference: the figure is the
               ground the heading is set on, not a picture beside it. */}
-          {signal === "analog" ? (
+          {signal === "static" ? (
+            <StaticPortrait
+              className="tm-portrait"
+              src="/portrait/kwame-studio-cutout.webp"
+              alt="Kwame Nimfah, in a black knit cap and glasses, looking up and away — in grayscale, through TV static and scanlines."
+            />
+          ) : signal === "vhs" ? (
             <AnalogPortrait
               className="tm-portrait"
               src="/portrait/kwame-studio-cutout.webp"

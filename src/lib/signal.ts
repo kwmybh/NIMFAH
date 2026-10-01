@@ -2,18 +2,20 @@
 
 import { useSyncExternalStore } from "react";
 
-// Which look the hero and backgrounds wear. "pixel" is the bitmap portrait over drifting
-// pixel clouds; "analog" is the VHS variant — tracking bands and RGB split.
+// Which look the hero and backgrounds wear:
+//   "pixel"  — the bitmap portrait over drifting pixel clouds (live on main)
+//   "static" — TV static and scanlines (option 01 from the analog board)
+//   "vhs"    — tape tracking slips with red/blue split (the first analog try)
 //
 // On trial (branch try/analog-signal, 1 Oct 2026). DEFAULT_SIGNAL is the one switch:
-// keep "analog" to adopt it, set "pixel" to shelve it. Either way, ?signal=pixel or
-// ?signal=analog on any URL shows the other look for comparison.
-export type Signal = "pixel" | "analog";
-export const DEFAULT_SIGNAL: Signal = "analog";
+// set it to the look to adopt. Any URL takes ?signal=pixel, ?signal=static or
+// ?signal=vhs to compare.
+export type Signal = "pixel" | "static" | "vhs";
+export const DEFAULT_SIGNAL: Signal = "static";
 
 const read = (): Signal => {
   const q = new URLSearchParams(window.location.search).get("signal");
-  return q === "pixel" || q === "analog" ? q : DEFAULT_SIGNAL;
+  return q === "pixel" || q === "static" || q === "vhs" ? q : DEFAULT_SIGNAL;
 };
 
 export function useSignal(): Signal {
