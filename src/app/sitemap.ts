@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    { url: `${siteUrl}/work/graphic-design`, lastModified: now, changeFrequency: "yearly", priority: 0.6 },
     ...CASE_STUDIES.map((c) => ({
       url: `${siteUrl}/work/${c.slug}`,
       lastModified: now,

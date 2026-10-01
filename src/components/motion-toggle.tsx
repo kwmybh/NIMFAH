@@ -15,8 +15,7 @@ export function MotionToggle({ className }: { className?: string }) {
       onClick={() => setMotionPaused(!paused)}
     >
       <span className={`motion-glyph ${paused ? "is-play" : "is-pause"}`} aria-hidden="true" />
-      <span className="motion-word">{paused ? "Play" : "Pause"}</span>
-      <span className="vh"> motion</span>
+      <span className="vh">{paused ? "Play" : "Pause"} motion</span>
     </button>
   );
 }

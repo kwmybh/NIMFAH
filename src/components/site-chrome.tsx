@@ -8,6 +8,7 @@ import { StaticLayer } from "./static-layer";
 import { BroadcastLayer } from "./broadcast-layer";
 import { useSignal } from "@/lib/signal";
 import { Footer } from "./footer";
+import { SiteControls } from "./site-controls";
 import { Preloader } from "./preloader";
 import { ScrollProgress, ScrollReveal } from "./scroll";
 
@@ -37,6 +38,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       {textured && signal === "broadcast" ? <BroadcastLayer strength={0.5} /> : null}
       <main id="main">{children}</main>
       <Footer />
+      <SiteControls />
       <ScrollReveal />
     </div>
   );

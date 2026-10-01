@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "./theme-toggle";
-import { MotionToggle } from "./motion-toggle";
 import { useNavReveal } from "@/lib/nav-mode";
 
 // A full-width bar on a hairline: brand at left (the home link), numbered destinations
@@ -41,7 +39,7 @@ export function Header() {
     <header className="nv" data-reveal={reveal ? "true" : undefined}>
       <Link href="/" className="nv-brand" aria-label="NIMFAH — home">
         <span className="nv-mark">
-          NIMFAH<span className="nv-dot">.</span>
+          NIMFAH<span className="nv-dot blink">_</span>
         </span>
         <span className="nv-tag" aria-hidden="true">
           Portfolio/2026
@@ -65,8 +63,6 @@ export function Header() {
             <Bracket flip />
           </Link>
         ))}
-        <ThemeToggle className="nv-theme" />
-        <MotionToggle className="nv-theme nv-motion" />
       </nav>
 
       <a className="nv-cta" href="mailto:kwame.nimfah@gmail.com">

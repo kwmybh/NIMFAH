@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 import { PixelPortrait } from "@/components/pixel-portrait";
 import { Header } from "@/components/header";
+import { SiteControls } from "@/components/site-controls";
 import { SwellText } from "@/components/swell-text";
 import { AnalogPortrait } from "@/components/analog-portrait";
 import { SignalLayer } from "@/components/signal-layer";
@@ -272,6 +273,7 @@ export function TerminalClient() {
           Skip to content
         </a>
         <Header />
+        <SiteControls />
       </div>
 
       {/* The status bar: scroll position, pointer, the panel in view, theme and the
@@ -289,15 +291,12 @@ export function TerminalClient() {
           <b ref={section}>00 — Intro</b>
         </div>
         <div className="tm-status-r">
-          <span>
-            Theme <i className="tm-swatch" /> <b>#9DF133</b>
-          </span>
           <b ref={clock}>00:00:00</b>
         </div>
       </div>
 
-      {/* The panel track is a real scroll container — overflow-x auto, scroll-snap-type
-          x mandatory, panels snapping to start — which is what buys touch, trackpad,
+      {/* The panel track is a real scroll container — overflow-x auto (it snapped panel
+          to panel until 1 Oct 2026; now it scrolls freely) — which is what buys touch, trackpad,
           wheel, scrollbar and reduced-motion support without writing any of them. The
           one thing it did not buy is the keyboard: a browser scrolls a scroll container
           with the arrow keys only once that container can hold focus, and a bare <main>
@@ -351,13 +350,13 @@ export function TerminalClient() {
             <p className="tm-role">
               <SwellText text="Creative technologist" base={300} peak={700} delay={0.15} />
             </p>
-            <p className="tm-spec">Art &amp; design · Creative coding · Front-end engineering</p>
+            <p className="tm-spec">Art / Design / Technology</p>
           </div>
           <div className="tm-hero-foot tm-index-copy">
             {/* KWAME retired 1 Oct 2026: the hero is the wordmark alone, heavy, in the
                 accent, its letters thinning toward the cursor. */}
             <h1 className="tm-name">
-              <SwellText text="NIMFAH." base={900} peak={380} radius={180} className="tm-wordmark" delay={0.35} />
+              <SwellText text="NIMFAH_" label="NIMFAH" base={900} peak={380} radius={180} className="tm-wordmark" delay={0.35} />
             </h1>
             <ul className="tm-facts">
               {FACTS.map((f) => (

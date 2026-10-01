@@ -330,3 +330,16 @@
   .workidx .wc-thumb,
   .workidx .wc:first-child .wc-thumb { height: auto; aspect-ratio: 4 / 3; }
 }
+
+/* Four projects (1 Oct 2026, graphic design added): the fourth runs full width under
+   the lead and its pair, as a banner, and swaps to its banner-shaped cover. */
+.wc-img-wide { display: none; }
+.workidx .wc:nth-child(4):last-child { grid-column: 1 / -1; }
+.workidx .wc:nth-child(4):last-child .wc-thumb { height: auto; aspect-ratio: 3030 / 720; }
+.workidx .wc:nth-child(4):last-child .wc-img-wide { display: block; }
+.workidx .wc:nth-child(4):last-child .wc-img:not(.wc-img-wide) { display: none; }
+@media (max-width: 700px) {
+  .workidx .wc:nth-child(4):last-child .wc-thumb { aspect-ratio: 4 / 3; }
+  .workidx .wc:nth-child(4):last-child .wc-img-wide { display: none; }
+  .workidx .wc:nth-child(4):last-child .wc-img:not(.wc-img-wide) { display: block; }
+}

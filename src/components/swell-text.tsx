@@ -16,10 +16,12 @@ type Props = {
   peak: number;
   radius?: number;
   className?: string;
+  /** What a screen reader hears, when the visible text carries decoration (NIMFAH_). */
+  label?: string;
   delay?: number; // seconds before the first letter rises
 };
 
-export function SwellText({ text, base, peak, radius = 140, className, delay = 0 }: Props) {
+export function SwellText({ text, label, base, peak, radius = 140, className, delay = 0 }: Props) {
   const host = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export function SwellText({ text, base, peak, radius = 140, className, delay = 0
           </span>
         ))}
       </span>
-      <span className="tm-vh">{text}</span>
+      <span className="tm-vh">{label ?? text}</span>
     </span>
   );
 }

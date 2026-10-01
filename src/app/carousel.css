@@ -152,3 +152,6 @@
   .cx[data-armed="true"] .cx-word { transition: none; }
   .cx-fill[data-running="true"] { animation: none; }
 }
+
+/* Lifted clear of the display-settings cluster pinned to the corner (1 Oct 2026). */
+.tsys .cx-controls { bottom: 68px; }

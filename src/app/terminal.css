@@ -771,8 +771,8 @@ body:has(.tm) {
 .tm .tm-workcards {
   min-height: 0; /* .tsys sets 100svh for whole pages */
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* four projects since graphic design */
+  gap: clamp(1rem, 2vw, 2rem);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -795,6 +795,9 @@ body:has(.tm) {
 /* The home page sits outside the (site) group, so the scroll-reveal observer that
    un-hides [data-reveal] never runs here: show the cards outright. */
 .tm .tm-workcards [data-reveal] { opacity: 1 !important; transform: none !important; }
+@media (max-width: 1100px) {
+  .tm .tm-workcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 900px) {
   .tm .tm-workcards { grid-template-columns: 1fr; }
   .tm .tm-workcards .wc-thumb { height: auto; aspect-ratio: 4 / 3; }
@@ -822,3 +825,27 @@ body:has(.tm) {
    of 0.051em (11px at 216px), the C of the 300-weight role line 0.06em of its size.
    Pull the wordmark left by the difference so the two inks start on one vertical. */
 .tm .tm-wordmark { margin-left: calc(-0.051em + 0.06 * clamp(22px, 2.4vw, 34px)); }
+
+/* ── 1 Oct 2026, round 3 ───────────────────────────────────────────────────────
+   The wordmark ends in a blinking cursor (NIMFAH_): the last character keeps its
+   rise-in and adds the blink once it has landed. Paused with the Motion switch. */
+.tm-wordmark .swell-ch:last-child {
+  animation: swell-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, cursor-blink 1.06s steps(1) infinite;
+  animation-delay: calc(var(--d, 0s) + var(--i) * 0.035s), 1.6s;
+}
+:root[data-anim="paused"] .tm-wordmark .swell-ch:last-child { animation-name: swell-rise, none; }
+
+/* "Disable auto scroll": the panels no longer snap. The track scrolls freely and stops
+   where the visitor stops, and jumps are instant rather than gliding. */
+.tm-main { scroll-snap-type: none; scroll-behavior: auto; }
+
+/* Light mode: the role line sits on a lime marker, ink on lime. */
+:root:not([data-theme="dark"]) .tm .tm-role .swell {
+  background: linear-gradient(transparent 52%, var(--acid) 52%, var(--acid) 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* NIMFAH_ is 4.75em wide with its cursor; on phones the 88px floor ran it off the edge. */
+@media (max-width: 900px) {
+  .tm .tm-wordmark { font-size: min(88px, calc((100vw - 48px) / 4.75)); }
+}

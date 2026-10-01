@@ -15,7 +15,7 @@ import { TerminalClient } from "@/components/terminal-client";
 export const metadata: Metadata = {
   title: { absolute: "NIMFAH — Creative technologist" },
   description:
-    "NIMFAH — the studio of creative technologist Kwame Nimfah: art and design, creative coding and front-end engineering.",
+    "NIMFAH — the studio of creative technologist Kwame Nimfah: art, design and technology.",
 };
 
 export default function Home() {

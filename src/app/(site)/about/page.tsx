@@ -10,7 +10,7 @@ import "../../work.css";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "NIMFAH — the studio of creative technologist Kwame Nimfah: art and design, creative coding and front-end engineering.",
+    "NIMFAH — the studio of creative technologist Kwame Nimfah: art, design and technology.",
 };
 
 

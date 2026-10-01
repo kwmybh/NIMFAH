@@ -179,3 +179,9 @@
    at the 0.5px/1px weights the system specifies. Decorative, aria-hidden. */
 /* The .abt-* HUD was removed with the static hero it belonged to. */
 
+
+/* Four projects since graphic design joined (1 Oct 2026): one row of four on wide
+   screens; work.css's two-up / one-up steps take over below 1100px. */
+@media (min-width: 1101px) {
+  .abt-sec .wc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.25rem, 2vw, 2rem); }
+}

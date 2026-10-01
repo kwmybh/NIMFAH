@@ -8,7 +8,7 @@ export type WorkItem = {
   meta?: string;
   /** "image" uses a photograph; "plate" composes a typographic face from the
    *  project's own design system, for work that has no screenshot to show. */
-  thumb: { kind: "image"; src: string; alt: string } | { kind: "plate" };
+  thumb: { kind: "image"; src: string; alt: string; wideSrc?: string } | { kind: "plate" };
 };
 
 // The typographic thumbnail for First 15 — ink ground, gold rule, Bodoni display
@@ -75,6 +75,18 @@ export function WorkCard({
           ) : (
             <Plate />
           )}
+          {/* A banner-shaped version for where the card runs full width (the Work
+              index's last row). display:none elsewhere — which also keeps it out of the
+              accessibility tree, so only one of the two is ever announced. */}
+          {item.thumb.kind === "image" && item.thumb.wideSrc ? (
+            <Image
+              src={item.thumb.wideSrc}
+              alt={item.thumb.alt}
+              fill
+              sizes="(max-width: 1100px) 92vw, 1200px"
+              className="wc-img wc-img-wide"
+            />
+          ) : null}
           {/* Hover/focus: accent corner brackets draw into the frame. Decorative. */}
           <span className="wc-corner wc-corner-tl" aria-hidden="true" />
           <span className="wc-corner wc-corner-tr" aria-hidden="true" />

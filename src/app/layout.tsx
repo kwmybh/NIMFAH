@@ -22,7 +22,7 @@ import { siteUrl } from "@/lib/site";
 // Canonical origin lives in src/lib/site.ts so robots and sitemap agree with metadata.
 
 const description =
-  "NIMFAH — the studio of creative technologist Kwame Nimfah: art and design, creative coding and front-end engineering.";
+  "NIMFAH — the studio of creative technologist Kwame Nimfah: art, design and technology.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" className={`${bricolage.variable} ${bodoni.variable} ${plexMono.variable} ${rajdhani.variable} ${dmSans.variable} ${pressStart.variable} ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable} ${rubik.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${bricolage.variable} ${bodoni.variable} ${plexMono.variable} ${rajdhani.variable} ${dmSans.variable} ${pressStart.variable} ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable} ${rubik.variable}`} suppressHydrationWarning>
       <head>
         {/* Apply the persisted / preferred theme before first paint (no flash). */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
