@@ -835,9 +835,6 @@ body:has(.tm) {
 }
 :root[data-anim="paused"] .tm-wordmark .swell-ch:last-child { animation-name: swell-rise, none; }
 
-/* "Disable auto scroll": the panels no longer snap. The track scrolls freely and stops
-   where the visitor stops, and jumps are instant rather than gliding. */
-.tm-main { scroll-snap-type: none; scroll-behavior: auto; }
 
 /* Light mode: the role line sits on a lime marker, ink on lime. */
 :root:not([data-theme="dark"]) .tm .tm-role .swell {

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useNavReveal } from "@/lib/nav-mode";
 
 // A full-width bar on a hairline: brand at left (the home link), numbered destinations
 // and the light/dark switch in the centre, one solid action at right. Hovering a link
@@ -29,14 +28,9 @@ function Bracket({ flip = false }: { flip?: boolean }) {
 
 export function Header() {
   const pathname = usePathname();
-  const reveal = useNavReveal();
 
   return (
-    <>
-      {/* ?nav=reveal trial: an invisible strip along the top edge. Pointing at it
-          brings the bar down; the bar stays while the pointer or focus is inside it. */}
-      {reveal ? <div className="nv-zone" aria-hidden="true" /> : null}
-    <header className="nv" data-reveal={reveal ? "true" : undefined}>
+    <header className="nv">
       <Link href="/" className="nv-brand" aria-label="NIMFAH — home">
         <span className="nv-mark">
           NIMFAH<span className="nv-dot blink">_</span>
@@ -70,6 +64,5 @@ export function Header() {
         <span className="nv-cta-short">Contact</span>
       </a>
     </header>
-    </>
   );
 }

@@ -295,8 +295,8 @@ export function TerminalClient() {
         </div>
       </div>
 
-      {/* The panel track is a real scroll container — overflow-x auto (it snapped panel
-          to panel until 1 Oct 2026; now it scrolls freely) — which is what buys touch, trackpad,
+      {/* The panel track is a real scroll container — overflow-x auto, scroll-snap-type
+          x mandatory, panels snapping to start — which is what buys touch, trackpad,
           wheel, scrollbar and reduced-motion support without writing any of them. The
           one thing it did not buy is the keyboard: a browser scrolls a scroll container
           with the arrow keys only once that container can hold focus, and a bare <main>
