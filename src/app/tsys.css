@@ -87,7 +87,7 @@ body:has(.tsys) { background: #0e0e0e; }
 .tsys .abt-statement {
   font-family: var(--display);
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.015em; /* Rubik 900 is wider-set than Inter; -0.05em ran letters together */
   line-height: 0.85;
   text-transform: uppercase;
 }
