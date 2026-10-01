@@ -749,3 +749,76 @@ body:has(.tm) {
 /* The portrait sits flush to the screen's right edge (1 Oct 2026). */
 .tm .tm-portrait { right: 0; }
 @media (max-width: 900px) { .tm .tm-portrait { right: 0; } }
+
+/* ── 02 Work panel: the /work cards (1 Oct 2026) ─────────────────────────────────
+   Three across, thumbnails sized from the viewport height so heading, cards and
+   titles land on one screen — the PDF cards before them were 4:3 at panel width and
+   ran ~600px below the fold, which scrolled the panel's heading up under the nav.
+   The list wears .tsys for the card tokens; it must not paint the .tsys ground. */
+.tm-work-panel { width: 100%; }
+.tm-work-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.tm .tm-work-head h2 {
+  font-size: clamp(56px, 8vw, 128px);
+  margin: 0;
+}
+.tm-work-head .tm-cta { margin-bottom: 0; }
+.tm .tm-workcards {
+  min-height: 0; /* .tsys sets 100svh for whole pages */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  text-transform: none;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+.tm .tm-workcards .wc-thumb {
+  aspect-ratio: auto;
+  height: clamp(150px, calc(100svh - 500px), 340px);
+}
+.tm .tm-workcards .wc-meta {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 0.6rem;
+}
+/* The home page sits outside the (site) group, so the scroll-reveal observer that
+   un-hides [data-reveal] never runs here: show the cards outright. */
+.tm .tm-workcards [data-reveal] { opacity: 1 !important; transform: none !important; }
+@media (max-width: 900px) {
+  .tm .tm-workcards { grid-template-columns: 1fr; }
+  .tm .tm-workcards .wc-thumb { height: auto; aspect-ratio: 4 / 3; }
+}
+
+/* ── Lime accent (1 Oct 2026) ─────────────────────────────────────────────────
+   #9DF133 — the GET IN TOUCH fill — is the accent everywhere. Dark mode uses it as
+   text and fill. Light mode uses it only as a FILL with near-black on it (13.6:1):
+   lime text on #ece9e4 is 1.3:1, so accent text there is ink. */
+.tm { --acid: #9df133; }
+:root:not([data-theme="dark"]) .tm { --accent: #0e0e0e; }
+.tm-cta { background: var(--acid); border-color: var(--acid); color: #0e0e0e; }
+.tm-cta--ghost { background: none; border-color: var(--accent); color: var(--accent); }
+.tm-cta--ghost:hover { background: var(--acid); border-color: var(--acid); color: #0e0e0e; }
+.tm-progress-bar,
+.tm-progress-bar::after,
+.tm-swatch,
+.tm-facts li::before { background: var(--acid); }
+.tm-theme-toggle { background: var(--acid); border-color: var(--acid); color: #0e0e0e; }
+/* The wordmark's full stop carries the lime in both themes — decoration, not text. */
+.tm-wordmark .swell-ch:last-child { color: var(--acid); }
+.tm ::selection { background: var(--acid); color: #0e0e0e; }
+
+/* Optical alignment (1 Oct 2026): the N of the 900-weight wordmark has a side-bearing
+   of 0.051em (11px at 216px), the C of the 300-weight role line 0.06em of its size.
+   Pull the wordmark left by the difference so the two inks start on one vertical. */
+.tm .tm-wordmark { margin-left: calc(-0.051em + 0.06 * clamp(22px, 2.4vw, 34px)); }

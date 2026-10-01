@@ -481,3 +481,53 @@ body:has(.tsys) { background: #0e0e0e; }
 /* 2.4.11 Focus Not Obscured: the fixed bar is ~57px tall; in-page jumps and
    focus-driven scrolling stop clear of it. */
 html:has(.tsys .nv) { scroll-padding-top: 80px; }
+
+/* ── Lime accent (1 Oct 2026) — see terminal.css for the reasoning ─────────────── */
+:root:not([data-theme="dark"]) .tsys { --accent: #0e0e0e; }
+.tsys .nv-dot { color: var(--acid); }
+.tsys .wc-pill { background: var(--acid); border-color: var(--acid); color: #0e0e0e; }
+.tsys ::selection { background: var(--acid); color: #0e0e0e; }
+/* Light-mode hovers: ink-on-ink would show nothing, so links pick up a lime fill. */
+:root:not([data-theme="dark"]) .tsys .fd a:hover,
+:root:not([data-theme="dark"]) .tsys .abt-sechead a:hover {
+  background: var(--acid);
+  color: #0e0e0e;
+}
+:root:not([data-theme="dark"]) .tsys .abt-btn-ghost:hover {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: #0e0e0e;
+}
+
+/* ── ?nav=reveal trial (1 Oct 2026) ─────────────────────────────────────────────
+   The bar parks above the viewport and slides down when the pointer reaches the top
+   edge (.nv-zone), while it is hovered, or whenever focus is inside it — so a keyboard
+   user tabbing in always sees where they are (2.4.7 / 2.4.11). Touch screens have no
+   hover, so there it stays put. */
+.nv-zone {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 28px;
+  /* under the bar (40): once the bar is down it takes the pointer, not this strip */
+  z-index: 39;
+}
+.tsys .nv[data-reveal] {
+  transform: translateY(-100%);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.nv-zone:hover + .nv[data-reveal],
+.tsys .nv[data-reveal]:hover,
+.tsys .nv[data-reveal]:focus-within {
+  transform: none;
+}
+@media (hover: none) {
+  .tsys .nv[data-reveal] { transform: none; }
+  .nv-zone { display: none; }
+}
+/* The About carousel, preloader and footer read --acid-fg (acid used as a mark), which
+   globals.css darkens to #44730d in light. Under the lime rule that mark is ink; the
+   fills that also read it (carousel timer, scroll bar, preloader bars) go lime. */
+:root:not([data-theme="dark"]) .tsys { --acid-fg: #0e0e0e; }
+.tsys .cx-fill,
+.tsys .progress,
+.tsys .pre-bars i[data-on="true"] { background: var(--acid); }

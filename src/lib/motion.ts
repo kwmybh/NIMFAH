@@ -1,7 +1,6 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { MOTION_KEY } from "./motion-init";
 
 // One switch for every continuous animation on the site — the TV static, the portrait
 // signal, the pixel clouds, the blinking cursor, the About carousel. WCAG 2.2.2 (Pause,
@@ -12,6 +11,8 @@ import { MOTION_KEY } from "./motion-init";
 // made with the button is stored and wins from then on. The state lives on
 // <html data-anim>, set before first paint by motionInitScript, so CSS can read it too.
 // (Not data-motion: that one already arms the scroll-reveal layer — see motion.css.)
+import { MOTION_KEY } from "./motion-init";
+
 const EVT = "nimfah-motion";
 
 const read = () => document.documentElement.dataset.anim === "paused";

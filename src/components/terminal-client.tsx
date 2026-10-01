@@ -13,6 +13,8 @@ import { StaticLayer } from "@/components/static-layer";
 import { BroadcastPortrait } from "@/components/broadcast-portrait";
 import { BroadcastLayer } from "@/components/broadcast-layer";
 import { useSignal } from "@/lib/signal";
+import { WorkCard } from "@/components/work-card";
+import { WORK_ITEMS } from "@/lib/work-items";
 import { useMotionPaused } from "@/lib/motion";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
@@ -43,12 +45,6 @@ const SPECS: [string, string][] = [
   ["Learning", "Storyline 360 · Rise 360 · Scenario design"],
   ["Build", "React · TypeScript · Next.js · WCAG 2.1 AA"],
   ["Research", "Interviews · journey maps · usability testing"],
-];
-
-const ARTEFACTS = [
-  { label: "Design document", mark: "PDF", meta: "23 pp ↓", href: "/first-15/learning-design-document.pdf" },
-  { label: "Decision guide", mark: "PDF", meta: "1 p ↓", href: "/first-15/decision-guide-job-aid.pdf" },
-  { label: "Production storyboard", mark: "XLS", meta: "8 tabs ↓", href: "/first-15/production-storyboard.xlsx" },
 ];
 
 export function TerminalClient() {
@@ -294,8 +290,7 @@ export function TerminalClient() {
         </div>
         <div className="tm-status-r">
           <span>
-            Theme <i className="tm-swatch" /> <b className="tm-hex-dark">#9DF133</b>
-            <b className="tm-hex-light">#44730D</b>
+            Theme <i className="tm-swatch" /> <b>#9DF133</b>
           </span>
           <b ref={clock}>00:00:00</b>
         </div>
@@ -375,37 +370,26 @@ export function TerminalClient() {
           </p>
         </section>
 
-        {/* 02 — work */}
-        <section className="tm-section tm-section--wide" id="work">
+        {/* 02 — work. The same cards as /work, sized to sit on one screen (1 Oct 2026).
+            The three First 15 PDFs that used to fill this panel are still one click away
+            inside the case study. The card wrapper borrows the .tsys tokens the cards
+            are styled with — see .tm-workcards in terminal.css. */}
+        <section className="tm-section" id="work">
           <div className="tm-section-meta tm-section-meta--work" aria-hidden="true">
             Work_02
           </div>
-          <div style={{ width: "100%" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 40, marginBottom: 40, flexWrap: "wrap" }}>
-              <h2>First 15</h2>
-              <p className="tm-warning">/ Scenario-based onboarding · MileOne Logistics</p>
-            </div>
-            {/* The panel is a trailer for the case study, not a replacement: the full
-                write-up and the index both stay one click away now that this is home. */}
-            <div className="tm-panel-links">
-              <Link className="tm-cta" href="/work/first-15-last-mile-onboarding">
-                Open the case study ↗
-              </Link>
+          <div className="tm-work-panel">
+            <div className="tm-work-head">
+              <h2>Work</h2>
               <Link className="tm-cta tm-cta--ghost" href="/work">
                 All work ↗
               </Link>
             </div>
-            <div className="tm-work-grid">
-              {ARTEFACTS.map((a) => (
-                <a className="tm-work-item" key={a.href} href={a.href} target="_blank" rel="noopener">
-                  <span className="tm-work-mark" aria-hidden="true">
-                    {a.mark}
-                  </span>
-                  <span className="tm-work-meta">{a.meta}</span>
-                  <span className="tm-work-label">{a.label}</span>
-                </a>
+            <ul className="wc-grid tsys tm-workcards">
+              {WORK_ITEMS.map((item, n) => (
+                <WorkCard item={item} key={item.href} index={n} headingLevel={3} />
               ))}
-            </div>
+            </ul>
           </div>
         </section>
 
