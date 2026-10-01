@@ -534,3 +534,37 @@ body:has(.tm) {
   white-space: nowrap;
   border: 0;
 }
+
+
+/* ── pixel portrait (panel 01) ────────────────────────────────────────────────
+   Drawn by src/components/pixel-portrait.tsx. The canvas is ~100×125 cells and is
+   scaled up with nearest-neighbour, so every cell stays a hard square at any size. */
+.px-portrait { position: relative; aspect-ratio: 4 / 5; }
+.px-portrait-canvas,
+.px-portrait-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  display: block;
+}
+.px-portrait-canvas { opacity: 0; transition: opacity 0.6s ease; }
+.px-portrait[data-ready="true"] .px-portrait-canvas { opacity: 1; }
+.px-portrait[data-ready="true"] .px-portrait-fallback { visibility: hidden; }
+
+.tm .tm-portrait {
+  position: absolute;
+  right: 6vw;
+  bottom: 0;
+  height: min(92svh, 1000px);
+  z-index: 0;
+  pointer-events: none;
+  /* fade the bottom edge into the ground rather than cropping on a hard line */
+  mask-image: linear-gradient(to bottom, #000 78%, transparent);
+}
+.tm .tm-index-copy { position: relative; z-index: 1; }
+
+@media (max-width: 900px) {
+  .tm .tm-portrait { right: -10vw; height: 70svh; opacity: 0.55; }
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SERIES, SHOW_PHOTOGRAPHY } from "@/lib/data";
+import { CASE_STUDIES as PRODUCT } from "@/lib/case-studies";
 import { WorkCard, type WorkItem } from "@/components/work-card";
 import "../../work.css";
 
@@ -17,6 +18,14 @@ const CASE_STUDIES: WorkItem[] = [
     meta: "A blended Rise 360 and Storyline 360 experience that trains new delivery associates to decide under pressure. Playable scenario, design document, developer-handoff storyboard.",
     thumb: { kind: "plate" },
   },
+  // Product design, carried over from the Squarespace portfolio. Newest first.
+  ...PRODUCT.map<WorkItem>((c) => ({
+    href: `/work/${c.slug}`,
+    title: c.title,
+    category: "Case study",
+    meta: c.cardMeta,
+    thumb: { kind: "image", src: c.cover.src, alt: c.cover.alt },
+  })),
 ];
 
 export default function WorkIndex() {

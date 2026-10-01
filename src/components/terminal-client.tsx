@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useTheme } from "@/components/theme-provider";
 import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
+import { PixelPortrait } from "@/components/pixel-portrait";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
    as written. What is NOT carried over is its content: PROJECT_NEON_VOID, SYSTEM_HAPTIC
@@ -297,7 +298,15 @@ export function TerminalClient() {
           <div className="tm-section-meta" aria-hidden="true">
             Index_01
           </div>
-          <div style={{ maxWidth: 1000 }}>
+          {/* The portrait sits behind the type, as on the reference: the figure is the
+              ground the heading is set on, not a picture beside it. */}
+          <PixelPortrait
+            className="tm-portrait"
+            src="/portrait/kwame-studio-cutout.webp"
+            fallback="/portrait/kwame-studio-pixel.png"
+            alt="Kwame Yeboah, in a black knit cap and glasses, looking up and away — rendered as a coarse grey bitmap."
+          />
+          <div className="tm-index-copy" style={{ maxWidth: 1000 }}>
             <p className="tm-warning" style={{ marginBottom: 20 }}>
               [ Learning experience design ]
             </p>

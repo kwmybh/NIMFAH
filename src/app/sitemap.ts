@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site";
 import { SHOW_PHOTOGRAPHY, SERIES } from "@/lib/data";
+import { CASE_STUDIES } from "@/lib/case-studies";
 
 // Only routes that actually resolve. The photography series are behind a flag and
 // currently 404, so listing them would hand a crawler a page of dead URLs.
@@ -16,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    ...CASE_STUDIES.map((c) => ({
+      url: `${siteUrl}/work/${c.slug}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.7,
+    })),
   ];
 
   if (SHOW_PHOTOGRAPHY) {
