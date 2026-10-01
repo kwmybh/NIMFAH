@@ -90,7 +90,7 @@ body:has(.tm) {
 }
 
 /* ── noise background ─────────────────────────────────────────────────────────
-   The Three.js shader canvas mounts here. */
+   The pixel-cloud canvas mounts here (terminal-client.tsx). */
 .tm-canvas {
   position: fixed;
   inset: 0;
@@ -513,10 +513,8 @@ body:has(.tm) {
       Raising the three values is a one-line change whenever the look can afford it.
    2. `cursor: crosshair` on every element, links and buttons included, so the pointer
       no longer signals what is clickable.
-   3. Three.js is ~600KB before compression, for a grain an SVG turbulence tile can
-      draw for nothing. It runs one rAF loop, and none under reduced motion.
-
-   src/components/terminal-client.tsx is where 3 lives. */
+   3. FIXED 1 Oct 2026: the Three.js grain is gone. The pixel clouds that replaced it
+      are a small 2D canvas at ~15fps, and none at all under reduced motion. */
 
 /* Visually hidden, still announced and still indexed. Scoped to .tm because this route
    sits outside the (site) group and shares none of its utilities. The clip-path pairs
@@ -693,3 +691,15 @@ body:has(.tm) {
   .tm-scroll-cue { right: 24px; bottom: 72px; }
 }
 @media (max-width: 600px) { .tm-scroll-cue { display: none; } }
+
+/* ── pixel clouds (replaces the grain) ────────────────────────────────────────
+   The canvas is ~1/10 of the viewport and scaled up hard-edged. Its own alpha does the
+   work, so the old grain opacities are reset. */
+.tm-canvas { opacity: 1; }
+:root:not([data-theme="dark"]) .tm-canvas { opacity: 1; }
+.tm-canvas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}

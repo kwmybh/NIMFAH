@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 import { PixelPortrait } from "@/components/pixel-portrait";
 import { Header } from "@/components/header";
@@ -131,77 +130,121 @@ export function TerminalClient() {
     };
   }, []);
 
-  // ── the grain ───────────────────────────────────────────────────────────────
-  // The mockup's shader, unchanged: a full-screen quad through an orthographic camera,
-  // white noise reseeded from u_time. Three.js holds GPU resources that survive a React
-  // unmount, so everything created here is disposed on the way out.
+  // ── the pixel clouds ────────────────────────────────────────────────────────
+  // Replaces the Three.js white-noise grain (1 Oct 2026). Soft clouds of light drift
+  // across the whole hero, drawn on a coarse grid and dithered at their edges so they
+  // read as pixels, not gradients. A 2D canvas a tenth the size of the screen, scaled
+  // up with nearest-neighbour — no WebGL, and no 600KB library on the front door.
+  //
+  // Each cloud is a soft blob on a slow Lissajous path; the field is their sum, run
+  // against a fixed random threshold per cell so the falloff breaks into scattered cells. Colour
+  // comes from the page (--fg on --bg), so it follows the theme. Reduced motion draws
+  // one frame and stops.
   useEffect(() => {
     const host = canvasHost.current;
     if (!host) return;
+    const c = document.createElement("canvas");
+    host.appendChild(c);
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    host.appendChild(renderer.domElement);
+    const CELL = 10; // screen pixels per cloud pixel
+    const BLOBS = [
+      { x: 0.16, y: 0.24, r: 0.12, ax: 0.08, ay: 0.05, sx: 0.031, sy: 0.023, k: 1 },
+      { x: 0.52, y: 0.16, r: 0.1, ax: 0.1, ay: 0.04, sx: 0.019, sy: 0.029, k: 0.8 },
+      { x: 0.93, y: 0.28, r: 0.11, ax: 0.06, ay: 0.07, sx: 0.025, sy: 0.017, k: 0.9 },
+      { x: 0.32, y: 0.78, r: 0.13, ax: 0.12, ay: 0.05, sx: 0.015, sy: 0.027, k: 0.7 },
+      { x: 0.78, y: 0.84, r: 0.12, ax: 0.08, ay: 0.06, sx: 0.022, sy: 0.02, k: 0.8 },
+    ];
 
-    const geometry = new THREE.PlaneGeometry(2, 2);
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        u_time: { value: 0 },
-        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-      },
-      vertexShader: `
-        void main() {
-          gl_Position = vec4(position, 1.0);
+    let cols = 0;
+    let rows = 0;
+    let img: ImageData | null = null;
+    let seeds = new Float32Array(0);
+    const size = () => {
+      cols = Math.ceil(window.innerWidth / CELL);
+      rows = Math.ceil(window.innerHeight / CELL);
+      c.width = cols;
+      c.height = rows;
+      img = ctx.createImageData(cols, rows);
+      // One random threshold per cell, fixed: the clouds' edges break into a scatter
+      // that holds still while the clouds move through it, rather than a fizz.
+      seeds = new Float32Array(cols * rows).map(() => Math.random());
+    };
+    size();
+
+    const rgb = (name: string, fb: number[]) => {
+      const m = getComputedStyle(host).getPropertyValue(name).trim().match(/^#([0-9a-f]{6})$/i);
+      if (!m) return fb;
+      const n = parseInt(m[1], 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    };
+
+    const draw = (t: number) => {
+      if (!img) return;
+      const fg = rgb("--fg", [236, 233, 228]);
+      // dark clouds on a light ground read heavier than light on dark, so they get less
+      const alpha = document.documentElement.dataset.theme === "dark" ? 24 : 15;
+      const aspect = cols / rows;
+      const pos = BLOBS.map((b) => ({
+        x: (b.x + b.ax * Math.sin(t * b.sx)) * aspect,
+        y: b.y + b.ay * Math.cos(t * b.sy),
+        r2: b.r * b.r * aspect,
+        k: b.k,
+      }));
+      const d = img.data;
+      for (let y = 0; y < rows; y++) {
+        const fy = y / rows;
+        for (let x = 0; x < cols; x++) {
+          const fx = (x / cols) * aspect;
+          let v = 0;
+          for (const b of pos) {
+            const dx = fx - b.x;
+            const dy = fy - b.y;
+            v += b.k * Math.exp(-(dx * dx + dy * dy) / b.r2);
+          }
+          // cut the faint tail so the clouds have gaps between them, dither what is
+          // left against each cell's fixed threshold, and quantize to four steps
+          const f = Math.max(0, (v - 0.18) / 0.82);
+          const lvl = Math.min(4, Math.floor(f * 4 + seeds[y * cols + x]));
+          const i = (y * cols + x) * 4;
+          d[i] = fg[0];
+          d[i + 1] = fg[1];
+          d[i + 2] = fg[2];
+          d[i + 3] = lvl * alpha;
         }
-      `,
-      fragmentShader: `
-        uniform float u_time;
-        uniform vec2 u_resolution;
-
-        float random(vec2 st) {
-          return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-        }
-
-        void main() {
-          vec2 st = gl_FragCoord.xy / u_resolution.xy;
-          float noise = random(st + u_time * 0.01);
-          gl_FragColor = vec4(vec3(noise), 1.0);
-        }
-      `,
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+      }
+      ctx.putImageData(img, 0, 0);
+    };
 
     let frame = 0;
-    // Reduced motion gets the same grain, drawn once and left alone. The texture reseeds
-    // from u_time so slowly that a still frame is the same image — which is the honest
-    // argument for not running an uncapped loop at all.
+    let last = 0;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const animate = (time: number) => {
-      material.uniforms.u_time.value = time * 0.005;
-      renderer.render(scene, camera);
-      frame = requestAnimationFrame(animate);
+    const loop = (now: number) => {
+      if (now - last > 66) {
+        // ~15fps is plenty for something this slow
+        last = now;
+        draw(now / 1000);
+      }
+      frame = requestAnimationFrame(loop);
     };
-    if (still) renderer.render(scene, camera);
-    else frame = requestAnimationFrame(animate);
+    if (still) draw(0);
+    else frame = requestAnimationFrame(loop);
 
+    // redraw on theme change so a still frame follows the new colours too
+    const mo = new MutationObserver(() => draw(last / 1000));
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     const onResize = () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-      if (still) renderer.render(scene, camera);
+      size();
+      draw(last / 1000);
     };
     window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(frame);
+      mo.disconnect();
       window.removeEventListener("resize", onResize);
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
-      renderer.domElement.remove();
+      c.remove();
     };
   }, []);
 
