@@ -20,26 +20,26 @@ import { siteUrl } from "@/lib/site";
 // Canonical origin lives in src/lib/site.ts so robots and sitemap agree with metadata.
 
 const description =
-  "NIMFAH — multidisciplinary practice at the intersection of engineering and fine-art photography.";
+  "NIMFAH — the studio of creative technologist Kwame Nimfah: art and design, creative coding and front-end engineering.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   // Without this Next emits no canonical at all, and the site answers on three origins.
   alternates: { canonical: "./" },
   title: {
-    default: "NIMFAH — Portfolio",
+    default: "NIMFAH — Creative technologist",
     template: "NIMFAH — %s",
   },
   description,
   openGraph: {
-    title: "NIMFAH — Portfolio",
+    title: "NIMFAH — Creative technologist",
     description,
     siteName: "NIMFAH",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NIMFAH — Portfolio",
+    title: "NIMFAH — Creative technologist",
     description,
   },
 };

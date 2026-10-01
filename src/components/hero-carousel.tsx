@@ -80,7 +80,7 @@ export function HeroCarousel() {
       aria-label="Disciplines"
     >
       <div className="bleed cx-inner">
-        <h1 className="cx-name">Kwame Yeboah</h1>
+        <h1 className="cx-name">Kwame Nimfah</h1>
         <p className="cx-tag">
           I&apos;m a designer who builds. Hand me a messy operational problem and I&apos;ll
           find the <em>decision</em> hiding inside it.

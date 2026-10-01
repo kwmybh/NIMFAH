@@ -8,9 +8,9 @@ import "../../carousel.css";
 import "../../work.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Kwame Yeboah — Designer who builds" },
+  title: "About",
   description:
-    "Kwame Yeboah, creative technologist: product and learning design, design systems, front-end, and image-making.",
+    "NIMFAH — the studio of creative technologist Kwame Nimfah: art and design, creative coding and front-end engineering.",
 };
 
 

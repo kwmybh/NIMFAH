@@ -34,7 +34,7 @@ export function Footer() {
 
       <div className="bleed fd-base">
         <span>© 2026 Nimfah</span>
-        <span>Kwame Yeboah</span>
+        <span>Kwame Nimfah</span>
         <ThemeToggle text />
       </div>
     </footer>

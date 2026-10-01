@@ -167,116 +167,119 @@ body:has(.tsys) { background: #0e0e0e; }
 .tsys .wc-link:hover .wc-foot { border-bottom-color: var(--accent); }
 .tsys .wc-visit { color: var(--accent); }
 
-/* ── chrome: the nav IS the HUD's ─────────────────────────────────────────────
-   The home page puts one bordered cluster 40px from the top and 40px from the right,
-   inside the HUD's corner rules. This header was a full-width bar carrying three
-   separately-bordered objects — a monogram hard left, a capsule centred, pills right —
-   so crossing from the home page moved the navigation across the screen.
-
-   One box now, in the same corner, at the same offsets: the header itself takes the
-   hairline and the glass, and everything inside it goes borderless. */
+/* ── chrome: the top bar ──────────────────────────────────────────────────────
+   1 Oct 2026: a full-width bar on a hairline replaces the floating box. Brand left
+   (the home link), numbered destinations centred, one solid action right — the same
+   on every page, the home page included. */
 .tsys .nv {
   position: fixed;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  inset-block-end: auto;
-  width: auto;
-  justify-content: space-between;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 20px;
-  padding: 0;
-  border: 0;
-  background: none;
-}
-
-/* The wordmark sits on its own at the left; the hairline-and-glass box holds the three
-   destinations at the right, in the corner the home page's panels frame. */
-.tsys .nv-box {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 10px 20px;
-  border: 1px solid var(--edge);
-  background: var(--glass);
+  gap: 24px;
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--edge);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
 }
 
-.tsys .nv-mark,
-.tsys .nv-pod,
-.tsys .nv-btn,
-.tsys .nv-actions .theme-toggle {
+.tsys .nv-brand {
+  justify-self: start;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--fg);
+  text-decoration: none;
+}
+.tsys .nv-mark {
+  display: inline;
+  width: auto;
+  height: auto;
   border: 0;
   border-radius: 0;
   background: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   box-shadow: none;
-}
-
-/* The wordmark: the HUD's pixel face, sized to read as a logotype rather than a link. */
-.tsys .nv-mark {
-  width: auto;
-  height: auto;
-  padding: 10px 0;
   font-family: var(--pixel);
   font-size: 15px;
-  letter-spacing: 0.08em;
-  color: var(--fg);
+  letter-spacing: 0.06em;
+  font-synthesis: none;
 }
-.tsys .nv-mark:hover { background: none; color: var(--accent); }
-
-.tsys .nv-pod { padding: 0; gap: 4px; }
-/* Every link carries the current-page fill's padding, filled or not, so the row keeps
-   one width from page to page instead of shifting by 16px when an item lights up. */
-.tsys .nv-pod a { padding: 2px 8px; color: var(--fg); }
-.tsys .nv-pod a:hover { color: var(--accent); }
-/* The panels mark the current item by filling it; keep that, as a square. */
-.tsys .nv-pod a[aria-current="page"] {
-  background: var(--acid);
-  color: #0e0e0e;
-  padding: 2px 8px;
+.tsys .nv-dot { color: var(--accent); }
+.tsys .nv-tag {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
 }
+.tsys .nv-brand:hover .nv-mark { color: var(--accent); }
 
-.tsys .nv-actions { gap: 20px; }
-.tsys .nv-btn { padding: 0; color: var(--fg); }
-.tsys .nv-btn:hover { color: var(--accent); }
-/* One filled control in the cluster, as the panels have one filled toggle. */
-.tsys .nv-btn-solid {
-  background: var(--acid);
-  border: 1px solid var(--acid);
-  color: #0e0e0e;
-  padding: 2px 10px;
-}
-.tsys .nv-btn-solid:hover { background: var(--acid); color: #0e0e0e; opacity: 0.8; }
-
-.tsys .nv-actions .theme-toggle {
-  width: auto;
-  height: auto;
-  padding: 2px 8px;
-  color: var(--accent);
-  font-size: 13px;
-}
-.tsys .nv-actions .theme-toggle:hover { color: var(--fg); }
-
-/* The capsule's lift came from a shadow, which belongs to the rounded language. A
-   hairline box on a flat ground does not cast one. */
-:root:not([data-theme="dark"]) .tsys .nv-pod,
-:root:not([data-theme="dark"]) .tsys .nv-mark,
-:root:not([data-theme="dark"]) .tsys .nv-btn,
-:root:not([data-theme="dark"]) .tsys .nv-actions .theme-toggle {
+.tsys .nv-pod {
   box-shadow: none;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 0;
 }
+.tsys .nv-pod a {
+  padding: 2px 0;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: none;
+}
+.tsys .nv-pod a:hover { color: var(--accent); }
+.tsys .nv-pod a[aria-current="page"] {
+  background: none;
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+.tsys .nv-n { color: var(--dim); }
 
-/* The HUD pulls its frame in to 16px on a phone; the nav follows it. */
+/* One solid action, its corner clipped — the bar's only filled shape. */
+.tsys .nv-cta {
+  justify-self: end;
+  padding: 9px 16px 8px;
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #0e0e0e;
+  background: var(--acid);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+  transition: opacity 0.2s ease;
+}
+.tsys .nv-cta:hover { opacity: 0.85; }
+
+/* nav.css hides the first link on phones; this bar keeps both. */
+.tsys .nv-pod a:first-child { display: inline-block; }
+
 @media (max-width: 900px) {
-  .tsys .nv { top: 16px; left: 16px; right: 16px; gap: 12px; }
-  .tsys .nv-box { gap: 12px; padding: 8px 12px; }
-  .tsys .nv-mark { font-size: 13px; }
-  .tsys .nv-pod { gap: 0; }
+  .tsys .nv { padding: 12px 16px; gap: 12px; grid-template-columns: auto 1fr auto; }
+  .tsys .nv-tag { display: none; }
+  .tsys .nv-pod { justify-self: center; gap: 20px; }
 }
-
+@media (max-width: 480px) {
+  .tsys .nv-n { display: none; }
+  .tsys .nv-pod { gap: 14px; }
+  .tsys .nv-cta { padding: 8px 10px 7px; letter-spacing: 0.1em; }
+}
 
 /* ── chrome: the footer dock ── */
 .tsys .fd { border-top: 1px dashed var(--line); }
@@ -323,9 +326,6 @@ body:has(.tsys) { background: #0e0e0e; }
   .tsys .wc-foot { transition: none !important; }
 }
 
-/* nav.css hides "About" on phones because the capsule nav had four items to fit. This
-   one has three, and About is one of the three that stays. */
-.tsys .nv-pod a:first-child { display: inline-block; }
 
 /* The footer's theme switch: a text control in the baseline row, not a glyph. */
 .tsys .fd-base .theme-toggle {
@@ -339,3 +339,8 @@ body:has(.tsys) { background: #0e0e0e; }
   cursor: pointer;
 }
 .tsys .fd-base .theme-toggle:hover { color: var(--accent); }
+
+/* nav.css lifts the old capsule pieces with a light-mode shadow at higher specificity;
+   the bar's pieces are flat. */
+:root:not([data-theme="dark"]) .tsys .nv-pod,
+:root:not([data-theme="dark"]) .tsys .nv-mark { box-shadow: none; background: none; }

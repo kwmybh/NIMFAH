@@ -5,7 +5,7 @@ import { FlowMap } from "./flow-map";
 import { ObjectiveMap } from "./objective-map";
 
 export const metadata: Metadata = {
-  title: "First 15: Scenario-Based Delivery Onboarding | Kwame Yeboah, LXD",
+  title: "First 15: Scenario-Based Delivery Onboarding",
   description:
     "A blended Rise 360 and Storyline 360 experience that trains last-mile delivery associates to make safe, service-protecting decisions in the first 15 minutes.",
 };

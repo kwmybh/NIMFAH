@@ -20,11 +20,15 @@ import { ThemeToggle } from "@/components/theme-toggle";
    The interaction bill this design runs up — wheel-only scrolling, 10px type, a
    crosshair over everything — is listed at the foot of terminal.css. */
 
-const FACTS: [string, string][] = [
-  ["Discipline", "Creative technologist"],
-  ["Practice", "Product · learning · front-end"],
-  ["Stack", "React · TypeScript · CSS"],
-  ["Status", "Open to roles"],
+// The hero's foot: short facts, square-marked. Location-agnostic on purpose.
+const FACTS = ["Design + code", "Open to roles & commissions"];
+
+// Status-bar names for the four panels, in track order.
+const PANELS: [string, string][] = [
+  ["home", "00 — Intro"],
+  ["work", "01 — Work"],
+  ["about", "02 — About"],
+  ["contact", "03 — Contact"],
 ];
 
 const SPECS: [string, string][] = [
@@ -42,7 +46,7 @@ const ARTEFACTS = [
 
 export function TerminalClient() {
   const track = useRef<HTMLDivElement>(null);
-  const bar = useRef<HTMLDivElement>(null);
+  const section = useRef<HTMLSpanElement>(null);
   const depth = useRef<HTMLSpanElement>(null);
   const clock = useRef<HTMLSpanElement>(null);
   const xCoord = useRef<HTMLSpanElement>(null);
@@ -62,11 +66,20 @@ export function TerminalClient() {
     const el = track.current;
     if (!el) return;
 
+    // The status bar's SCRL readout (0.00–1.00) and the name of the panel in view.
     const paint = () => {
       const span = el.scrollWidth - el.clientWidth;
-      const pct = span > 0 ? (el.scrollLeft / span) * 100 : 0;
-      if (bar.current) bar.current.style.width = `${pct}%`;
-      if (depth.current) depth.current.textContent = `${Math.round(pct)}%`;
+      const t = span > 0 ? el.scrollLeft / span : 0;
+      if (depth.current) depth.current.textContent = t.toFixed(2);
+      if (section.current) {
+        const mid = el.scrollLeft + el.clientWidth / 2;
+        let label = PANELS[0][1];
+        for (const [id, name] of PANELS) {
+          const p = document.getElementById(id);
+          if (p && p.offsetLeft - el.offsetLeft <= mid) label = name;
+        }
+        section.current.textContent = label;
+      }
     };
     paint();
 
@@ -89,43 +102,30 @@ export function TerminalClient() {
     };
   }, []);
 
-  // ── HUD clock and pointer readout ───────────────────────────────────────────
-  // The mockup repaints hundredths from inside a rAF loop. Kept, and folded into the
-  // same loop as the coordinates so it is one loop rather than two.
+  // ── status bar: clock and pointer readout ──────────────────────────────────
+  // The visitor's own local time and UTC offset — the site is location-agnostic, so
+  // the clock belongs to whoever is reading. It ticks once a second; nothing finer
+  // is legible anyway, and it keeps the bar still under reduced motion.
   useEffect(() => {
-    let frame = 0;
-    let timer = 0;
     const pad = (n: number) => n.toString().padStart(2, "0");
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const stamp = (withHundredths: boolean) => {
+    const stamp = () => {
       const now = new Date();
       if (!clock.current) return;
+      const off = -now.getTimezoneOffset() / 60;
+      const sign = off < 0 ? "−" : "+";
+      const offStr = Number.isInteger(off) ? pad(Math.abs(off)) : Math.abs(off).toFixed(1);
       clock.current.textContent =
-        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}` +
-        (withHundredths ? `:${pad(Math.floor(now.getMilliseconds() / 10))}` : "");
+        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} ${sign}${offStr}`;
     };
-
-    if (still) {
-      // Hundredths repainted sixty times a second is motion, and it is the kind nobody
-      // can read anyway. Reduced motion gets a clock that ticks once a second.
-      stamp(false);
-      timer = window.setInterval(() => stamp(false), 1000);
-    } else {
-      const tick = () => {
-        stamp(true);
-        frame = requestAnimationFrame(tick);
-      };
-      frame = requestAnimationFrame(tick);
-    }
+    stamp();
+    const timer = window.setInterval(stamp, 1000);
 
     const onMove = (e: PointerEvent) => {
-      if (xCoord.current) xCoord.current.textContent = (e.clientX / window.innerWidth).toFixed(3);
-      if (yCoord.current) yCoord.current.textContent = (e.clientY / window.innerHeight).toFixed(3);
+      if (xCoord.current) xCoord.current.textContent = String(Math.round(e.clientX));
+      if (yCoord.current) yCoord.current.textContent = String(Math.round(e.clientY));
     };
     window.addEventListener("pointermove", onMove);
     return () => {
-      cancelAnimationFrame(frame);
       window.clearInterval(timer);
       window.removeEventListener("pointermove", onMove);
     };
@@ -218,39 +218,27 @@ export function TerminalClient() {
         <Header />
       </div>
 
-      {/* Corner rules, a build string and a pointer readout: decorative, and told so. */}
-      <div className="tm-hud" aria-hidden="true">
-        <div className="tm-corner tm-corner--tl" />
-        <div className="tm-hud-label tm-hud-label--center">Nimfah // terminal view</div>
-        <div className="tm-corner tm-corner--tr" />
-
-        <div className="tm-hud-label tm-hud-label--left">
-          L-Coord: <span ref={yCoord}>0.000</span>
+      {/* The status bar: scroll position, pointer, the panel in view, theme and the
+          visitor's local time. Decorative readouts, so hidden from assistive tech. */}
+      <div className="tm-status" aria-hidden="true">
+        <div className="tm-status-l">
+          <span>
+            Scrl <b ref={depth}>0.00</b>
+          </span>
+          <span>
+            Crsr <b ref={xCoord}>0</b>.<b ref={yCoord}>0</b>
+          </span>
         </div>
-        <div />
-        <div className="tm-hud-label tm-hud-label--right">
-          R-Coord: <span ref={xCoord}>0.000</span>
+        <div className="tm-status-c">
+          <b ref={section}>00 — Intro</b>
         </div>
-
-        <div className="tm-corner tm-corner--bl" />
-        <div className="tm-hud-label tm-hud-label--center">© 2026 Nimfah</div>
-        <div className="tm-corner tm-corner--br" />
-      </div>
-
-      <div className="tm-telemetry" aria-hidden="true">
-        <div>
-          <span className="tm-status-dot" /> Connection: secure
+        <div className="tm-status-r">
+          <span>
+            Theme <i className="tm-swatch" /> <b className="tm-hex-dark">#9DF133</b>
+            <b className="tm-hex-light">#44730D</b>
+          </span>
+          <b ref={clock}>00:00:00</b>
         </div>
-        <div>
-          <span ref={clock}>00:00:00:00</span>
-        </div>
-        <div>
-          Scan_depth: <span ref={depth}>0%</span>
-        </div>
-      </div>
-
-      <div className="tm-progress-track" aria-hidden="true">
-        <div className="tm-progress-bar" ref={bar} />
       </div>
 
       {/* The panel track is a real scroll container — overflow-x auto, scroll-snap-type
@@ -270,7 +258,7 @@ export function TerminalClient() {
         aria-label="Panels. Scroll horizontally, or use the left and right arrow keys."
       >
         {/* 01 — index */}
-        <section className="tm-section" id="home">
+        <section className="tm-section tm-section--hero" id="home">
           <div className="tm-section-meta" aria-hidden="true">
             Index_01
           </div>
@@ -280,36 +268,30 @@ export function TerminalClient() {
             className="tm-portrait"
             src="/portrait/kwame-studio-cutout.webp"
             fallback="/portrait/kwame-studio-pixel.png"
-            alt="Kwame Yeboah, in a black knit cap and glasses, looking up and away — rendered as a coarse grey bitmap."
+            alt="Kwame Nimfah, in a black knit cap and glasses, looking up and away — rendered as a coarse gray bitmap."
           />
-          <div className="tm-index-copy" style={{ maxWidth: 1000 }}>
-            <p className="tm-warning" style={{ marginBottom: 20 }}>
-              [ Creative technologist ]
-            </p>
-            {/* The visible wordmark stays exactly as designed. What changes is what the
-                heading *says*: this is the only h1 on the front door of a job-search
-                portfolio, and it read as the site's name rather than the person's. The
-                title element already says "Kwame Yeboah — Creative technologist";
-                the heading now agrees with it, for search and for anyone arriving by
-                screen reader. The trailing cursor is decoration and is hidden from
-                assistive tech rather than announced as an underscore. */}
-            <h1 className="tm-pixel-heading">
-              <span className="tm-vh">Kwame Yeboah, creative technologist. </span>
-              Nimfah<span className="tm-accent tm-cursor" aria-hidden="true">_</span>
-            </h1>
-            <div className="tm-desc">
-              Kwame Yeboah. A designer who builds — hand me a messy operational problem and
-              I&rsquo;ll find the decision hiding inside it, then design and build the thing that solves it.
-            </div>
-            <dl className="tm-data tm-data--narrow">
-              {FACTS.map(([k, v]) => (
-                <div className="tm-data-row" key={k}>
-                  <dt>{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
+          {/* Role at the top, name at the foot — the structure of the reference the
+              owner chose, in NIMFAH's own faces: mono light over the pixel wordmark. */}
+          <div className="tm-hero-top tm-index-copy">
+            <p className="tm-role">Creative technologist</p>
+            <p className="tm-spec">Art &amp; design · Creative coding · Front-end engineering</p>
           </div>
+          <div className="tm-hero-foot tm-index-copy">
+            <h1 className="tm-name">
+              <span className="tm-name-thin">Kwame</span>{" "}
+              <span className="tm-pixel-heading">
+                Nimfah<span className="tm-accent">.</span>
+              </span>
+            </h1>
+            <ul className="tm-facts">
+              {FACTS.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </div>
+          <p className="tm-scroll-cue" aria-hidden="true">
+            ▶ Scroll
+          </p>
         </section>
 
         {/* 02 — work */}

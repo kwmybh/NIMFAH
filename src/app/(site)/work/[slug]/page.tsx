@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const cs = getCaseStudy(slug);
   if (!cs) return {};
   return {
-    title: `${cs.title} | Kwame Yeboah`,
+    title: cs.title,
     description: cs.cardMeta,
     openGraph: { images: [{ url: cs.cover.src, width: cs.cover.w, height: cs.cover.h }] },
   };

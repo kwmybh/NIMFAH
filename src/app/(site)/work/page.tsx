@@ -7,7 +7,7 @@ import "../../work.css";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Selected product design, learning design and photography by Kwame Yeboah, creative technologist.",
+    "Case studies from NIMFAH, the studio of creative technologist Kwame Nimfah — product, learning and front-end work, documented end to end.",
 };
 
 

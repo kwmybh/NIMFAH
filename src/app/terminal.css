@@ -589,3 +589,107 @@ body:has(.tm) {
 /* The NIMFAH wordmark now sits in the top-left corner, where this vertical readout
    began; start the readout below it. */
 .tm-hud-label--left { padding-top: 56px; }
+
+/* ── 1 Oct 2026: top bar + status bar replace the HUD frame ────────────────────
+   The shared header now spans the top edge, so the corner rules, the vertical coord
+   labels and the floating telemetry go; their readouts move into one status bar
+   along the bottom. */
+.tm-hud, .tm-telemetry, .tm-progress-track { display: none; }
+
+.tm-status {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 102;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 32px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+.tm-status b { font-weight: 700; color: var(--fg); }
+.tm-status span { color: color-mix(in srgb, var(--fg) 60%, transparent); }
+.tm-status-l { display: flex; gap: 28px; }
+.tm-status-c { justify-self: center; }
+.tm-status-r { justify-self: end; display: flex; gap: 28px; align-items: center; }
+.tm-swatch {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin: 0 6px -1px 4px;
+  background: var(--accent);
+}
+.tm-hex-light { display: none; }
+:root:not([data-theme="dark"]) .tm-hex-light { display: inline; }
+:root:not([data-theme="dark"]) .tm-hex-dark { display: none; }
+
+/* ── the hero panel ───────────────────────────────────────────────────────────── */
+.tm-section--hero {
+  justify-content: space-between;
+  padding: 120px 80px 96px;
+}
+.tm-hero-top { margin-top: 24px; }
+.tm-role {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-weight: 300;
+  font-size: clamp(22px, 2.4vw, 34px);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.tm-spec {
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: color-mix(in srgb, var(--fg) 75%, transparent);
+}
+.tm-name { margin: 0; line-height: 0.9; }
+.tm-name-thin {
+  display: block;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-weight: 300;
+  font-size: clamp(56px, 8.5vw, 132px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.tm-name .tm-pixel-heading { display: block; }
+.tm-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin-top: 28px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+.tm-facts li { display: flex; align-items: center; gap: 10px; }
+.tm-facts li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+.tm-scroll-cue {
+  position: absolute;
+  right: 80px;
+  bottom: 96px;
+  z-index: 1;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: color-mix(in srgb, var(--fg) 60%, transparent);
+}
+.tm-scroll-cue::first-letter { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .tm-section--hero { padding: 84px 24px 72px; }
+  .tm-status { padding: 10px 16px; grid-template-columns: 1fr auto; }
+  .tm-status-l { display: none; }
+  .tm-status-c { justify-self: start; }
+  .tm-status-r { gap: 14px; }
+  .tm-scroll-cue { right: 24px; bottom: 72px; }
+}
+@media (max-width: 600px) { .tm-scroll-cue { display: none; } }
