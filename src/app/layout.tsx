@@ -11,6 +11,7 @@ import {
   plexMono,
   pressStart,
   rajdhani,
+  rubik,
   silkscreen,
 } from "@/lib/fonts";
 import { Providers } from "@/components/providers";
@@ -50,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" className={`${bricolage.variable} ${bodoni.variable} ${plexMono.variable} ${rajdhani.variable} ${dmSans.variable} ${pressStart.variable} ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="light" className={`${bricolage.variable} ${bodoni.variable} ${plexMono.variable} ${rajdhani.variable} ${dmSans.variable} ${pressStart.variable} ${jetbrainsMono.variable} ${inter.variable} ${silkscreen.variable} ${rubik.variable}`} suppressHydrationWarning>
       <head>
         {/* Apply the persisted / preferred theme before first paint (no flash). */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

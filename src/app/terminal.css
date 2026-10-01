@@ -61,7 +61,6 @@
 .tm *::before,
 .tm *::after {
   box-sizing: border-box;
-  cursor: crosshair;
 }
 .tm :where(h1, h2, h3, p, dl, dd, figure) { margin: 0; }
 .tm :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
@@ -702,4 +701,42 @@ body:has(.tm) {
   height: 100%;
   display: block;
   image-rendering: pixelated;
+}
+
+/* ── 1 Oct 2026: Rubik on the front door ──────────────────────────────────────
+   Every face this page referenced now resolves to the one variable family. */
+.tm {
+  --font-jetbrains: var(--font-rubik);
+  --font-inter: var(--font-rubik);
+  --font-silkscreen: var(--font-rubik);
+}
+.tm-role { font-weight: 300; }
+.tm-wordmark {
+  display: block;
+  font-family: var(--font-rubik), system-ui, sans-serif;
+  font-size: clamp(88px, 15vw, 240px);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.swell-ch {
+  display: inline-block;
+  will-change: font-variation-settings;
+  animation: swell-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--d, 0s) + var(--i) * 0.035s);
+}
+@keyframes swell-rise {
+  from { opacity: 0; transform: translateY(0.45em); }
+  to { opacity: 1; transform: none; }
+}
+.tm-facts li, .tm-spec, .tm-scroll-cue {
+  animation: swell-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: 0.7s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .swell-ch, .tm-facts li, .tm-spec, .tm-scroll-cue { animation: none; }
+}
+@media (max-width: 900px) {
+  .tm-wordmark { font-size: clamp(64px, 20vw, 120px); }
 }

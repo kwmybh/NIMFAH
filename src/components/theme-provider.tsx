@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -15,8 +16,9 @@ export type Theme = "light" | "dark";
 export const THEME_KEY = "nimfah-theme-v2";
 
 // Inline script injected into <head> so the theme is applied before first paint (no flash).
-// Light is the default (1 Oct 2026). A persisted choice from the footer switch still wins.
-export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();`;
+// No stored choice → follow the device (prefers-color-scheme). A choice made with the nav
+// switch is stored and wins from then on.
+export const themeInitScript = `(function(){try{var t=localStorage.getItem("${THEME_KEY}")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();`;
 
 type ThemeContextValue = {
   theme: Theme;
@@ -37,6 +39,23 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
     return "light";
   });
+
+  // While the visitor hasn't chosen, track the device as it changes (e.g. at dusk).
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => {
+      let stored: string | null = null;
+      try {
+        stored = localStorage.getItem(THEME_KEY);
+      } catch {}
+      if (stored) return;
+      const next: Theme = mq.matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      setTheme(next);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const toggle = useCallback(() => {
     setTheme((prev) => {

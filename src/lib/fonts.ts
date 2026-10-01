@@ -7,6 +7,7 @@ import {
   JetBrains_Mono,
   Press_Start_2P,
   Rajdhani,
+  Rubik,
   Silkscreen,
 } from "next/font/google";
 
@@ -115,4 +116,14 @@ export const silkscreen = Silkscreen({
   display: "swap",
   variable: "--font-silkscreen",
   fallback: ["ui-monospace", "Consolas", "monospace"],
+});
+
+// The site face since 1 Oct 2026: one variable family (wght 300–900) for every page
+// except the case studies, which keep their editorial pair. Variable, so per-letter
+// weight can be animated with font-variation-settings. Exposed as `--font-rubik`.
+export const rubik = Rubik({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-rubik",
+  fallback: ["system-ui", "sans-serif"],
 });

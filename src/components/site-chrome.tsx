@@ -3,9 +3,7 @@
 import type { ReactNode } from "react";
 import { Header } from "./header";
 import { Footer } from "./footer";
-import { Cursor } from "./cursor";
 import { Preloader } from "./preloader";
-import { DotTrail } from "./dot-trail";
 import { ScrollProgress, ScrollReveal } from "./scroll";
 
 // The shared chrome, lifted out of Providers so a route can decline it by living
@@ -27,8 +25,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <main id="main">{children}</main>
       <Footer />
       <ScrollReveal />
-      <DotTrail />
-      <Cursor />
     </div>
   );
 }

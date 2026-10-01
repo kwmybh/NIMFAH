@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
 
 // The reference closes on a footer-dock: a large call to action, then letter-spaced link
 // columns under tracked headings, then a baseline row — full-bleed and left-aligned, not
@@ -35,7 +34,6 @@ export function Footer() {
       <div className="bleed fd-base">
         <span>© 2026 Nimfah</span>
         <span>Kwame Nimfah</span>
-        <ThemeToggle text />
       </div>
     </footer>
   );

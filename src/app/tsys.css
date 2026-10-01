@@ -344,3 +344,83 @@ body:has(.tsys) { background: #0e0e0e; }
    the bar's pieces are flat. */
 :root:not([data-theme="dark"]) .tsys .nv-pod,
 :root:not([data-theme="dark"]) .tsys .nv-mark { box-shadow: none; background: none; }
+
+/* ── 1 Oct 2026: Rubik, bracket hovers, the nav theme switch ─────────────────────
+   One variable face across the (site) pages. The case studies keep Bodoni/Bricolage:
+   they read --font-bodoni / --font-bricolage / --font-plex-mono, none of which change. */
+.tsys {
+  --display: var(--font-rubik), system-ui, sans-serif;
+  --body: var(--font-rubik), system-ui, sans-serif;
+  --pixel: var(--font-rubik), system-ui, sans-serif;
+  --font-jetbrains: var(--font-rubik);
+  --font-inter: var(--font-rubik);
+  --font-silkscreen: var(--font-rubik);
+}
+.tsys .nv-mark { font-weight: 800; letter-spacing: 0.02em; font-size: 16px; }
+
+.tsys .nv-pod { gap: 28px; }
+.tsys .nv-pod a {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 0;
+  font-weight: 500;
+}
+.tsys .nv-pod a[aria-current="page"] { border-bottom: 0; }
+.tsys .nv-lbl { padding: 0 6px; }
+.tsys .nv-br {
+  width: 5px;
+  height: 14px;
+  opacity: 0;
+  color: var(--accent);
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateX(4px);
+}
+.tsys .nv-br-r { transform: rotate(180deg) translateX(4px); }
+.tsys .nv-pod a:hover .nv-br,
+.tsys .nv-pod a:focus-visible .nv-br,
+.tsys .nv-pod a[aria-current="page"] .nv-br { opacity: 1; transform: none; }
+.tsys .nv-pod a:hover .nv-br-r,
+.tsys .nv-pod a:focus-visible .nv-br-r,
+.tsys .nv-pod a[aria-current="page"] .nv-br-r { transform: rotate(180deg); }
+
+.tsys .nv-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 6px;
+  border: 0;
+  background: none;
+  font: 500 11px/1 var(--body);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  cursor: pointer;
+  width: auto;
+  height: auto;
+}
+.tsys .nv-theme:hover { color: var(--fg); }
+.theme-toggle-mark {
+  width: 10px;
+  height: 10px;
+  border: 1px solid currentColor;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+@media (max-width: 480px) {
+  .tsys .nv-pod { gap: 10px; }
+  .tsys .nv-lbl { padding: 0 2px; }
+}
+
+/* Covers are white-ground boards letterboxed into 4:3: the frame matches them. */
+.tsys .wc-thumb:has(.wc-img) { background: #fff; }
+
+.theme-to-light { display: none; }
+:root[data-theme="dark"] .theme-to-light { display: inline; }
+:root[data-theme="dark"] .theme-to-dark { display: none; }
+.tsys .nv-cta { white-space: nowrap; }
+@media (max-width: 480px) {
+  .tsys .nv-theme .theme-to-dark,
+  .tsys .nv-theme .theme-to-light { display: none; }
+  .tsys .nv-cta { letter-spacing: 0.06em; font-size: 10px; }
+  .tsys .nv-tag { display: none; }
+}

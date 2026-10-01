@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PixelResolve } from "./pixel-resolve";
 
 export type WorkItem = {
   href: string;
@@ -66,21 +65,21 @@ export function WorkCard({
       <Link href={item.href} className="wc-link">
         <div className="wc-thumb">
           {item.thumb.kind === "image" ? (
-            <PixelResolve className="wc-px">
-              <Image
-                src={item.thumb.src}
-                alt={item.thumb.alt}
-                fill
-                sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px"
-                className="wc-img"
-              />
-            </PixelResolve>
+            <Image
+              src={item.thumb.src}
+              alt={item.thumb.alt}
+              fill
+              sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px"
+              className="wc-img"
+            />
           ) : (
-            // The plate is live type, so the bitmap is sampled from a snapshot of it.
-            <PixelResolve className="wc-px wc-px-plate" source="/work/first-15-plate.png">
-              <Plate />
-            </PixelResolve>
+            <Plate />
           )}
+          {/* Hover/focus: accent corner brackets draw into the frame. Decorative. */}
+          <span className="wc-corner wc-corner-tl" aria-hidden="true" />
+          <span className="wc-corner wc-corner-tr" aria-hidden="true" />
+          <span className="wc-corner wc-corner-bl" aria-hidden="true" />
+          <span className="wc-corner wc-corner-br" aria-hidden="true" />
           <span className="wc-pill">{item.category}</span>
         </div>
         <div className="wc-foot">

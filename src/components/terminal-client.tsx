@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { inter, jetbrainsMono, silkscreen } from "@/lib/fonts";
 import { PixelPortrait } from "@/components/pixel-portrait";
 import { Header } from "@/components/header";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { SwellText } from "@/components/swell-text";
 
 /* The mockup's four panels, its HUD, its lerped wheel track and its WebGL grain, built
    as written. What is NOT carried over is its content: PROJECT_NEON_VOID, SYSTEM_HAPTIC
@@ -316,15 +316,16 @@ export function TerminalClient() {
           {/* Role at the top, name at the foot — the structure of the reference the
               owner chose, in NIMFAH's own faces: mono light over the pixel wordmark. */}
           <div className="tm-hero-top tm-index-copy">
-            <p className="tm-role">Creative technologist</p>
+            <p className="tm-role">
+              <SwellText text="Creative technologist" base={300} peak={700} delay={0.15} />
+            </p>
             <p className="tm-spec">Art &amp; design · Creative coding · Front-end engineering</p>
           </div>
           <div className="tm-hero-foot tm-index-copy">
+            {/* KWAME retired 1 Oct 2026: the hero is the wordmark alone, heavy, in the
+                accent, its letters thinning toward the cursor. */}
             <h1 className="tm-name">
-              <span className="tm-name-thin">Kwame</span>{" "}
-              <span className="tm-pixel-heading">
-                Nimfah<span className="tm-accent">.</span>
-              </span>
+              <SwellText text="NIMFAH." base={900} peak={380} radius={180} className="tm-wordmark" delay={0.35} />
             </h1>
             <ul className="tm-facts">
               {FACTS.map((f) => (
@@ -425,9 +426,6 @@ export function TerminalClient() {
               </a>
               <Link href="/about">About.sys</Link>
               <Link href="/work">Work.sys</Link>
-              {/* The front door has no footer, so its theme switch lives with the other
-                  closing links, as the footer's does on every other page. */}
-              <ThemeToggle text />
             </div>
           </div>
         </section>
