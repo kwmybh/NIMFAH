@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { Header } from "./header";
 import { SignalLayer } from "./signal-layer";
 import { StaticLayer } from "./static-layer";
@@ -16,6 +17,10 @@ import { ScrollProgress, ScrollReveal } from "./scroll";
 // with an attribute instead of becoming client components.
 export function SiteChrome({ children }: { children: ReactNode }) {
   const signal = useSignal();
+  // The background signal runs on About and the Work index only — never on a case
+  // study, where the work itself has to read clean.
+  const pathname = usePathname();
+  const textured = pathname === "/about" || pathname === "/work";
   // .tsys carries the home page's palette, faces and hard-edged geometry onto these
   // pages — see tsys.css. It wraps the chrome as well as the content, because a rounded
   // capsule nav over a squared-off HUD page is the seam it exists to close.
@@ -27,9 +32,9 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <Preloader />
       <ScrollProgress />
       <Header />
-      {signal === "vhs" ? <SignalLayer strength={0.45} /> : null}
-      {signal === "static" ? <StaticLayer strength={0.5} /> : null}
-      {signal === "broadcast" ? <BroadcastLayer strength={0.5} /> : null}
+      {textured && signal === "vhs" ? <SignalLayer strength={0.45} /> : null}
+      {textured && signal === "static" ? <StaticLayer strength={0.5} /> : null}
+      {textured && signal === "broadcast" ? <BroadcastLayer strength={0.5} /> : null}
       <main id="main">{children}</main>
       <Footer />
       <ScrollReveal />

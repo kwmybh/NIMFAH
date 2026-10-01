@@ -525,14 +525,20 @@ video {
 }
 
 /* ── analog signal variant (src/lib/signal.ts) ───────────────────────────────── */
+/* Behind the content, not over it (1 Oct 2026): the signal shows only in empty
+   background, so links, buttons and cards are never textured. The page's own content
+   is lifted to z-index 1 above it. */
 .signal-layer {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 30;
+  z-index: 0;
   pointer-events: none;
 }
+.tsys > main,
+.tsys > footer { position: relative; z-index: 1; }
+.tm .tm-main { position: relative; z-index: 1; }
 .an-portrait { position: relative; aspect-ratio: 4 / 5; }
 .an-portrait-canvas {
   position: absolute;

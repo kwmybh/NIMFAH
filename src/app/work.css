@@ -288,3 +288,30 @@
   .wc-grid { grid-template-columns: 1fr; }
   .wc-title { font-size: 1.35rem; }
 }
+
+/* ── /work: a bento grid (1 Oct 2026) ───────────────────────────────────────────
+   Three columns; cards alternate wide and narrow — wide, narrow / narrow, wide — so
+   each row is two projects with the weight swapping sides. Every thumbnail in a row
+   shares one height, wide or narrow, so the rows read as clean bands. Applies to the
+   Work index only; the About page keeps its even grid. */
+.workidx .wc-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+.workidx .wc:nth-child(4n + 1),
+.workidx .wc:nth-child(4n + 4) { grid-column: span 2; }
+.workidx .wc-thumb {
+  aspect-ratio: auto;
+  height: clamp(240px, 24vw, 380px);
+}
+@media (max-width: 1100px) {
+  .workidx .wc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .workidx .wc:nth-child(4n + 1),
+  .workidx .wc:nth-child(4n + 4) { grid-column: span 2; }
+  .workidx .wc-thumb { height: clamp(220px, 32vw, 340px); }
+}
+@media (max-width: 700px) {
+  .workidx .wc-grid { grid-template-columns: 1fr; }
+  .workidx .wc:nth-child(n) { grid-column: auto; }
+  .workidx .wc-thumb { height: auto; aspect-ratio: 4 / 3; }
+}
