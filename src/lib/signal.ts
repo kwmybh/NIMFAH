@@ -8,11 +8,12 @@ import { useSyncExternalStore } from "react";
 //   "vhs"    — tape tracking slips with red/blue split (the first analog try)
 //   "broadcast" — colour, a multipath ghost, chroma drift, woven interference (option 03)
 //
-// On trial (branch try/analog-signal, 1 Oct 2026). DEFAULT_SIGNAL is the one switch:
+// Static adopted as the default, 1 Oct 2026 (trialled on branch try/analog-signal).
+// DEFAULT_SIGNAL is the one switch:
 // set it to the look to adopt. Any URL takes ?signal=pixel, static, vhs or broadcast
 // to compare.
 export type Signal = "pixel" | "static" | "vhs" | "broadcast";
-export const DEFAULT_SIGNAL: Signal = "broadcast";
+export const DEFAULT_SIGNAL: Signal = "static";
 
 const read = (): Signal => {
   const q = new URLSearchParams(window.location.search).get("signal");
